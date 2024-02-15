@@ -1,0 +1,23 @@
+{
+    "social":
+    [
+        {
+            "imagem": "IconSocial/linkedin.png",
+            "link": "https://www.linkedin.com/in/jpgasparsr7/",
+            "nome": "Linkedin",
+            "cor": "#3068F9"
+        },
+        {
+            "imagem": "IconSocial/github.png",
+            "link": "https://www.linkedin.com/in/jpgasparsr7/",
+            "nome": "GitHub",
+            "cor": "#000000"
+        },
+        {
+            "imagem": "IconSocial/wpp.png",
+            "link": "https://www.linkedin.com/in/jpgasparsr7/",
+            "nome": "WhatsApp",
+            "cor": "#30FF45"
+        }
+    ]
+}

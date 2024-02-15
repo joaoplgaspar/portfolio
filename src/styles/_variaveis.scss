@@ -1,0 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=Anek+Malayalam&display=swap');
+
+@font-face {
+    font-family: 'MetropolisBold';
+    src: url("../fonts/Metropolis-Bold.otf") format("truetype");
+}
+
+@font-face {
+    font-family: 'AvenirNextLTProBold';
+    src: url("../fonts/AvenirNextLTPro-Bold.otf") format("truetype");
+}
+
+@font-face {
+    font-family: 'AvenirNextLTProRegular';
+    src: url("../fonts/AvenirNextLTPro-Regular.otf") format("truetype");
+}
+
+$font-padrao: 'Anek Malayalam';
+$font-titulo: 'MetropolisBold';
+$font-AvenirBold: 'AvenirNextLTProBold';
+$font-AvenirRegular: 'AvenirNextLTProRegular';
+
+
+$branco: #FFFFFF;
+$preto: #171717;
+$preto-mais-escuro: #111111;
+$rosa: #F6325A;
+$vermelho: #9A1832;
+
+$background: #191921; 
+$background-escuro: #0B0B11;

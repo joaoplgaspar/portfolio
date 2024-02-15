@@ -1,0 +1,50 @@
+{
+    "projetos":
+    [
+        {
+            "nome": "AnimeRank",
+            "descricao": "O AnimeRank é um projeto que tem como propósito descobrir e rankear animes pelos usuário, que são salvos localmente no seu computador e dessa maneira poder compartilhar ao mundo seu próprio rank ou manter para si mesmo como forma de recordação de seu histórico. O projeto foi iniciado em apenas HTML, SCSS e Javascript, mas com a proporção do projeto decidi utilizar o react como forma de estudo e aprendizado para a linguagem, priorizando a reutilização de componentes e estilos, novas funcionalidades e entre outros. Utilização como Single Page Application (SPA) com React router dom, contextos, localStorage e manipulação de API",
+            "tecnologias": ["React", "Sass", "JavaScript", "TypeScript"],
+            "github": "https://github.com/joaoplgaspar/animerank-ts",
+            "site": "https://animerank-ts.vercel.app",
+            "id": 1,
+            "images": ["Anirank/Anirank1.png", "Anirank/Anirank2.png", "Anirank/Anirank3.png", "Anirank/Anirank4.png", "Anirank/Anirank5.png"]
+        },
+        {
+            "nome": "Venda de Frutas",
+            "descricao": "Venda de frutas é um exemplo para sites de comercialização, nesse caso, um comércio de venda de frutas. Com diversas opções de colocar nome e saldo, após isso escolher suas frutas, a todo momento podendo adicionar ou remover do seu carrinho, e na ultima tela concluir a compra, podendo modificar os itens no carrinho, escolher metodo de pagamento e conferir seu saldo final após o pagamento. O site foi criado a partir do React como uma SPA (Single Page Application), com fins de estudos principalmente em contextos do react, com o useContext, causando a interação de informações entre diferentes páginas do projeto.",
+            "tecnologias": ["React", "JavaScript", "HTML5", "CSS3"],
+            "github": "https://github.com/joaoplgaspar/venda-frutas",
+            "site": "https://venda-frutas.vercel.app",
+            "id": 2,
+            "images": ["VendaDeFrutas/1.gif"]
+        },
+        {
+            "nome": "TechLearn",
+            "descricao": "TechLearn é um projeto que visa ensinar pessoas com mais idade a configurarem seus dispositivos novos ou antigos, e ter consciência em alguns pontos importantes ao ter um dispositivo, como a criação de contas, segurança de dados, problemas técnicos, prevenção de erros e entre outros. O site foi construído de forma intuitiva com várias etapas e com legenda para uma melhor navegação, com cada tópico acompanhado com um vídeo para explicação de quaisquer dúvidas que os usuários venham ter.",
+            "tecnologias": ["HTML5", "CSS3", "JavaScript"],
+            "github": "https://github.com/joaoplgaspar/techLearn",
+            "site": "https://tech-learn.vercel.app",
+            "id": 3,
+            "images": ["TechLearn/1.png", "TechLearn/2.gif"]
+        },
+        {
+            "nome": "Aluroni",
+            "descricao": "TechLearn é um projeto que visa ensinar pessoas com mais idade a configurarem seus dispositivos novos ou antigos, e ter consciência em alguns pontos importantes ao ter um dispositivo, como a criação de contas, segurança de dados, problemas técnicos, prevenção de erros e entre outros. O site foi construído de forma intuitiva com várias etapas e com legenda para uma melhor navegação, com cada tópico acompanhado com um vídeo para explicação de quaisquer dúvidas que os usuários venham ter.",
+            "tecnologias": ["React", "TypeScript", "JavaScript", "Sass"],
+            "github": "https://github.com/joaoplgaspar/aluroni",
+            "site": "https://aluroni-lw98.vercel.app",
+            "id": 4,
+            "images": ["Aluroni/Aluroni1.gif", "Aluroni/Aluroni2.gif"]
+        },
+        {
+            "nome": "Alura Space",
+            "descricao": "O Alura Space é um projeto website que mostra diversas fotos de galáxias, planetas, estrelas e outros, com a opção de filtrar por imagens que você preferir, com a utlização de imagens ao mockar uma API. Criado com react e diversos componentes react e estilos reutilizaveis a partir do SASS. Proposto por um curso ALURA.",
+            "tecnologias": ["React", "TypeScript", "JavaScript", "Sass"],
+            "github": "https://github.com/joaoplgaspar/alura-space",
+            "site": "https://alura-space-liard.vercel.app",
+            "id": 5,
+            "images": ["Alura Space/AluraSpace1.png", "Alura Space/AluraSpace2.gif"]
+        }
+    ]
+}

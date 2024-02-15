@@ -1,0 +1,37 @@
+@import 'styles/variaveis';
+
+footer {
+    background: #000000;
+    padding: 3.6rem 8rem;
+    padding-top: 8rem;
+    border-top: 2px $rosa solid;
+
+    .contato {
+        h4 {
+            margin-bottom: 2rem;
+        }
+
+        ul {
+            color: $branco;
+            list-style-type: none;
+            font-size: 1.6rem;
+            display: flex;
+            flex-direction: column;
+            gap: 9px;
+
+            li {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+        }
+    }
+
+    .copyright {
+        margin-top: 2rem;
+        text-align: center;
+        color: $branco;
+        opacity: 0.8;
+        font-size: 1.4rem;
+    }
+}

@@ -1,0 +1,60 @@
+@import 'styles/variaveis';
+@import 'styles/breakpoints';
+
+.container {
+    background: $preto;
+    padding: 1rem 2rem;
+    display: inline-block;
+    border-radius: 10px;
+
+    input {
+        background: transparent;
+        border: none;
+        font-size: 2rem;
+        width: 60rem;
+        color: $branco;
+
+        &::placeholder {
+            color: $rosa;
+            font-family: $font-AvenirRegular;
+        }
+
+        &:focus {
+            outline: none;
+        }
+    }
+}
+
+.container:has(input:focus) {
+    outline: 1px solid $rosa;
+
+    input::placeholder {
+        opacity: 0.5;
+    }
+}
+
+@media only screen and (max-width: $desktop_md) {
+    .container {
+        input {
+            width: 46rem;
+        }
+    }
+}
+
+@media only screen and (max-width: $desktop_sm) {
+    .container {
+        input {
+            width: 40rem;
+            font-size: 1.8rem;
+        }
+    }
+}
+
+@media only screen and (max-width: $mobile) {
+    .container {
+        input {
+            width: 30rem;
+            font-size: 1.6rem;
+        }
+    }
+}

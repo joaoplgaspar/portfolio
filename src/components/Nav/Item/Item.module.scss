@@ -1,0 +1,59 @@
+@import 'styles/variaveis';
+@import 'styles/breakpoints';
+
+.item {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 5px;
+    position: relative;
+
+    img {
+        width: 24px;
+    }
+
+    p {
+        display: none;
+        color: $branco;
+        text-decoration: none;
+        font-size: 1.6rem;
+        position: absolute;
+        margin-right: 5rem;
+        background: rgba($color: #303030, $alpha: 0.7);
+        padding: 1rem;
+        border-radius: 20px;
+        min-width: 120px;
+        text-align: center;
+        opacity: 0;
+    }
+
+    &:hover {
+        p {
+            display: block;
+            opacity: 1;
+            animation: paragrafo linear .5s;
+        }
+    }
+}
+
+@keyframes paragrafo{
+    from {
+        display: none;
+        opacity: 0;
+    }
+
+    to {
+        display: block;
+        opacity: 1;
+    }
+}
+
+@media only screen and (max-width: $mobile) {
+    .item {
+        &:hover {
+            p {
+                display: none;
+            }
+        }
+    }
+}
