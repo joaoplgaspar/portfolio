@@ -1,0 +1,95 @@
+@import 'styles/variaveis';
+@import 'styles/breakpoints';
+
+.container {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    min-height: 90vh;
+    position: relative;
+
+    &__image {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .foto {
+            position: absolute;
+        }
+    }
+
+    &__texts {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 0 1rem;
+    }
+}
+
+@media only screen and (max-width: $desktop_md) {
+    .container {
+        &__texts {
+            padding: 0;
+            padding-inline: 0 9rem;
+        }
+    }
+}
+
+
+@media only screen and (max-width: $desktop_xsm) {
+    .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        &__texts {
+            align-items: center;
+            padding-inline: 4rem;
+
+            p {
+                text-align: center;
+                padding-inline: 4rem;
+            }
+        }
+
+        &__image {
+            margin: 4rem 0;
+
+            .background {
+                width: 80%;
+            }
+
+            .foto {
+                width: 65%;
+                right: 30%;
+                top: 20px;
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: $mobile) {
+    .container {
+        &__texts {
+            p {
+                padding-inline: 0.2rem;
+            }
+        }
+
+        &__image {
+            margin: 4rem 0;
+    
+            .background {
+                width: 90%;
+                margin-left: 2rem;
+            }
+    
+            .foto {
+                width: 65%;
+                right: 15%;
+                top: 40px;
+            }
+        }
+    }
+}

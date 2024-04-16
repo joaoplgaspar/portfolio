@@ -1,0 +1,74 @@
+{
+    "habilidades":
+    [
+        {
+            "habilidade": "React",
+            "icon": "react.png",
+            "nivel": "Avançado"
+        },
+        {
+            "habilidade": "TypeScript",
+            "icon": "typescript.png",
+            "nivel": "Básico"
+        },
+        {
+            "habilidade": "JavaScript",
+            "icon": "js.png",
+            "nivel": "Avançado"
+        },
+        {
+            "habilidade": "HTML5",
+            "icon": "html.png",
+            "nivel": "Avançado"
+        },{
+            "habilidade": "CSS3",
+            "icon": "css.svg",
+            "nivel": "Avançado"
+        },
+        {
+            "habilidade": "SASS",
+            "icon": "sass.png",
+            "nivel": "Avançado"
+        },
+        {
+            "habilidade": "Git",
+            "icon": "git.png",
+            "nivel": "Básico"
+        },
+        {
+            "habilidade": "Figma",
+            "icon": "figma.png",
+            "nivel": "Intermediário"
+        },
+        {
+            "habilidade": "Canva",
+            "icon": "canva.png",
+            "nivel": "Intermediário"
+        },
+        {
+            "habilidade": "Photoshop",
+            "icon": "photoshop.svg",
+            "nivel": "Intermediário"
+        },
+        {
+            "habilidade": "Python",
+            "icon": "python.png",
+            "nivel": "Básico"
+        },
+        {
+            "habilidade": "Linguagem C",
+            "icon": "c.png",
+            "nivel": "Intermediário"
+        },
+        {
+            "habilidade": "MySQL",
+            "icon": "mysql.png",
+            "nivel": "Básico"
+        },
+        {
+            "habilidade": "Arduino",
+            "icon": "arduino.png",
+            "nivel": "Intermediário"
+        }
+    ]
+}

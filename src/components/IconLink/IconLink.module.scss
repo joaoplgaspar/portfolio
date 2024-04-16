@@ -1,0 +1,21 @@
+.social {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-block: 2rem;
+    text-decoration: none;
+    animation: widthV .2s linear;
+    transition: 500ms;
+
+    img {
+        max-width: 32px;
+        max-height: 32px;
+    }
+
+    &:hover {
+        transform: scale(1.2);
+    }
+}

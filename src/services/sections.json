@@ -1,0 +1,30 @@
+{
+    "sections":
+    [
+        {
+            "imagem": "IconSections/inicio.png",
+            "link": "#inicio",
+            "nome": "Inicio"
+        },
+        {
+            "imagem": "IconSections/sobremim.png",
+            "link": "#sobre",
+            "nome": "Sobre Mim"
+        },
+        {
+            "imagem": "IconSections/habilidades.png",
+            "link": "#habilidades",
+            "nome": "Habilidades"
+        },
+        {
+            "imagem": "IconSections/projetos.png",
+            "link": "#projetos",
+            "nome": "Projetos"
+        },
+        {
+            "imagem": "IconSections/contato.png",
+            "link": "#contato",
+            "nome": "Contato"
+        }
+    ]
+}

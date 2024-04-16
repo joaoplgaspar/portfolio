@@ -1,0 +1,42 @@
+@import 'styles/variaveis';
+@import 'styles/breakpoints';
+
+.card {
+    width: 19rem;
+    height: 19rem;
+    background: $background;
+    box-shadow: 3px 7px 4px rgba(0, 0, 0, 0.30);
+    padding: 1.8rem 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 18px;
+    border-radius: 20px;
+
+    img {
+        width: 60%;
+        max-height: 80%;
+    }
+
+    .skill {
+        color: $branco;
+        font-family: $font-AvenirBold;
+        font-size: 1.6rem;
+        text-align: center;
+    }
+
+    .nivel {
+        color: $branco;
+        font-family: $font-AvenirRegular;
+        font-size: 1.2rem;
+        margin-top: 3px;
+    }
+}
+
+@media only screen and (max-width: $mobile) {
+    .card {
+        width: 13rem;
+        height: 16rem;
+    }
+}

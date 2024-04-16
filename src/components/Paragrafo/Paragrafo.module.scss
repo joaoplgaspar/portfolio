@@ -1,0 +1,25 @@
+@import 'styles/variaveis';
+@import 'styles/breakpoints';
+
+.paragrafo {
+    font-family: $font-padrao;
+    font-size: 1.6rem;
+    color: $branco;
+    margin-bottom: 3rem;
+    padding-inline: 0 20rem;
+    letter-spacing: 1px;
+
+    
+}
+
+@media only screen and (max-width: 1440px) {
+    .paragrafo {
+        padding-inline: 0 10rem;
+    }
+}
+
+@media only screen and (max-width: $desktop_md) {
+    .paragrafo {
+        padding-inline: 0;
+    }
+}

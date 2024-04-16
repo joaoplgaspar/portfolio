@@ -1,0 +1,71 @@
+@import 'styles/variaveis';
+@import 'styles/breakpoints';
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 3rem 0;
+    position: absolute;
+    width: 100%;
+
+    h1 {
+        font-family: $font-titulo;
+        color: $rosa;
+        font-size: 4.4rem;
+        padding: 0 0 0 6rem;
+        margin: 0;
+    }
+
+    nav {
+        display: flex;
+        gap: 4rem;
+        padding: 0 6rem 0 0;
+
+        a {
+            text-decoration: none;
+            color: $branco;
+            font-family: $font-titulo;
+            font-size: 2rem;
+        }
+    }
+}
+
+@media only screen and (max-width: $desktop_md) {
+    header {
+        nav {
+            gap: 3rem;
+    
+            a {
+                font-size: 1.8rem;
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: $desktop_sm) {
+    header {
+        nav {
+            gap: 2rem;
+    
+            a {
+                font-size: 1.6rem;
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: $mobile) {
+    header {
+        justify-content: center;
+        position: static;
+
+        nav {
+            display: none;
+    
+            a {
+                font-size: 1.6rem;
+            }
+        }
+    }
+}

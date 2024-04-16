@@ -1,0 +1,19 @@
+@import 'styles/variaveis';
+@import 'styles/breakpoints';
+
+.container {
+    margin-top: 3.6rem;
+    background: $vermelho;
+    padding: 5.5rem 8rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 80px;
+}
+
+@media only screen and (max-width: $mobile) {
+    .container {
+        gap: 40px;
+        padding: 5.5rem 2rem;
+    }
+}

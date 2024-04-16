@@ -1,0 +1,32 @@
+@import 'styles/variaveis';
+@import 'styles/breakpoints';
+
+.nav {
+    position: fixed;
+    bottom: 40vh;
+    opacity: 0;
+    transition: 500ms;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    right: 20px;
+    background: rgba($color: #303030, $alpha: 0.7);
+    padding: 0.6rem;
+    border-radius: 40px;
+}
+
+.scrollado {
+    opacity: 1;
+}
+
+@media only screen and (max-width: $mobile) {
+    .nav {
+        bottom: auto;
+        bottom: 30px;
+        flex-direction: row;
+        justify-content: space-evenly;
+        width: 100%;
+        right: auto;
+    }
+}
