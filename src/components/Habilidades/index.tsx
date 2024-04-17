@@ -7,7 +7,7 @@ import skills from 'services/habilidades.json'
 
 export default function Habilidades() {
   return (
-    <Section id='habilidades' background='linear-gradient(180deg, rgba(25,25,33,1) 0%, rgba(0,0,0,1) 75%)'>
+    <Section id='habilidades' background='linear-gradient(180deg, rgba(25,25,33,1) 0%, #000000 75%)'>
         <Subtitulo>
             <h3>
                 <strong>Habilidades</strong>
