@@ -30,7 +30,7 @@
         },
         {
             "nome": "Aluroni",
-            "descricao": "TechLearn é um projeto que visa ensinar pessoas com mais idade a configurarem seus dispositivos novos ou antigos, e ter consciência em alguns pontos importantes ao ter um dispositivo, como a criação de contas, segurança de dados, problemas técnicos, prevenção de erros e entre outros. O site foi construído de forma intuitiva com várias etapas e com legenda para uma melhor navegação, com cada tópico acompanhado com um vídeo para explicação de quaisquer dúvidas que os usuários venham ter.",
+            "descricao": "O Aluroni é um projeto React com Typescript de um curso Alura, se trata de um site para mostrar pratos de um restaurante e tratar cada prato dinamicamente de acordo com suas informações de categoria (massas, carnes, etc), com opções de filtragem, ordenação e busca.",
             "tecnologias": ["React", "TypeScript", "JavaScript", "Sass"],
             "github": "https://github.com/joaoplgaspar/aluroni",
             "site": "https://aluroni-lw98.vercel.app",
