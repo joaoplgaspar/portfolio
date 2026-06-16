@@ -1,106 +1,117 @@
+"use client";
+
+import { useEffect, useRef } from "react";
+import dynamic from "next/dynamic";
+import clsx from "clsx";
 import Reveal from "@/components/ui/Reveal";
 import { bio, jornada } from "@/lib/content";
+import { useEnable3D } from "@/lib/useEnable3D";
 
-const dots = [
-  { l: "12%", t: "18%", s: 6, d: "0s" },
-  { l: "82%", t: "26%", s: 4, d: "1.5s" },
-  { l: "28%", t: "52%", s: 5, d: "0.8s" },
-  { l: "68%", t: "64%", s: 7, d: "2.2s" },
-  { l: "48%", t: "38%", s: 3, d: "1.1s" },
-  { l: "88%", t: "78%", s: 5, d: "0.4s" },
-  { l: "18%", t: "82%", s: 4, d: "1.9s" },
-];
+const DiveScene = dynamic(() => import("@/components/three/DiveScene"), {
+  ssr: false,
+});
 
-/** 🌊 Mundo 02 — O Mergulho. Scroll = descer no oceano; a trajetória acende nas profundezas. */
+/** 🌊 Mundo 02 — O Mergulho. Fundo 3D fixo; o scroll controla a descida. */
 export default function SobreSubnautica() {
+  const enable3D = useEnable3D();
+  const sectionRef = useRef<HTMLElement>(null);
+  const progress = useRef(0);
+
+  useEffect(() => {
+    const onScroll = () => {
+      const el = sectionRef.current;
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      const total = rect.height - window.innerHeight;
+      const scrolled = Math.min(Math.max(-rect.top, 0), Math.max(total, 1));
+      progress.current = total > 0 ? scrolled / total : 0;
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, []);
+
   return (
-    <section
-      id="sobre"
-      className="relative overflow-hidden px-6 py-28"
-      style={{
-        background:
-          "linear-gradient(180deg, #0a0b10 0%, #06304f 12%, #042742 45%, #02101f 100%)",
-      }}
-    >
-      <div aria-hidden className="pointer-events-none absolute inset-0">
-        {dots.map((p, i) => (
-          <span
-            key={i}
-            className="anim-floaty absolute rounded-full bg-biolum"
-            style={{
-              left: p.l,
-              top: p.t,
-              width: p.s,
-              height: p.s,
-              animationDelay: p.d,
-              boxShadow: "0 0 12px var(--color-biolum)",
-              opacity: 0.7,
-            }}
-          />
-        ))}
-      </div>
-
-      <div className="relative z-10 mx-auto max-w-5xl">
-        <Reveal>
-          <span className="world-tag mb-6">🌊 Mundo 02 — O Mergulho</span>
-        </Reveal>
-        <Reveal delay={0.05}>
-          <h2 className="font-display text-4xl font-bold tracking-tight sm:text-6xl">
-            Sobre <span className="text-biolum">/</span> O Mergulho
-          </h2>
-        </Reveal>
-        <Reveal delay={0.1}>
-          <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ink/75">
-            {bio.resumo}
-          </p>
-        </Reveal>
-
-        {/* Timeline em profundidade */}
-        <div className="relative mt-16 pl-8 sm:pl-0">
-          {/* linha vertical */}
+    <section id="sobre" ref={sectionRef} className="relative bg-abyss">
+      {/* fundo 3D fixo enquanto a seção passa */}
+      <div className="sticky top-0 h-screen w-full overflow-hidden">
+        {enable3D ? (
+          <DiveScene progress={progress} />
+        ) : (
           <div
-            aria-hidden
-            className="absolute left-2 top-2 h-full w-px sm:left-1/2"
+            className="absolute inset-0"
             style={{
               background:
-                "linear-gradient(180deg, var(--color-biolum), var(--color-aqua) 40%, var(--color-deep) 100%)",
+                "linear-gradient(180deg, #0e5f70 0%, #063048 45%, #02101f 100%)",
             }}
           />
+        )}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(120% 80% at 50% 0%, transparent 45%, rgba(2,16,31,0.55))",
+          }}
+        />
+      </div>
 
-          <ol className="space-y-12">
-            {jornada.map((m, i) => (
-              <li key={m.titulo} className="relative sm:grid sm:grid-cols-2 sm:gap-10">
-                {/* nó na linha */}
-                <span
-                  aria-hidden
-                  className="absolute -left-[1.6rem] top-1.5 h-3 w-3 rounded-full bg-biolum sm:left-1/2 sm:-translate-x-1/2"
-                  style={{ boxShadow: "0 0 14px var(--color-biolum)" }}
-                />
-                {/* lado par/ímpar no desktop */}
-                <Reveal
-                  delay={0.05 * i}
-                  className={
-                    i % 2 === 0
-                      ? "sm:col-start-1 sm:text-right sm:pr-10"
-                      : "sm:col-start-2 sm:pl-10"
-                  }
-                >
+      {/* conteúdo sobre o fundo */}
+      <div className="relative z-10 -mt-[100vh]">
+        <div className="mx-auto max-w-5xl px-6 pb-32 pt-32">
+          <Reveal>
+            <span className="world-tag mb-6">🌊 Mundo 02 — O Mergulho</span>
+          </Reveal>
+          <Reveal delay={0.05}>
+            <h2 className="font-display text-4xl font-bold tracking-tight drop-shadow-[0_2px_24px_rgba(0,0,0,0.6)] sm:text-6xl">
+              Sobre <span className="text-biolum">/</span> O Mergulho
+            </h2>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ink/80">
+              {bio.resumo}
+            </p>
+          </Reveal>
+          <Reveal delay={0.15}>
+            <p className="mt-6 font-mono text-xs uppercase tracking-[0.2em] text-aqua/80">
+              role para descer ↓
+            </p>
+          </Reveal>
+        </div>
+
+        {/* timeline com bastante respiro: dura o mergulho inteiro */}
+        <ol className="mx-auto max-w-5xl space-y-[36vh] px-6 pb-[30vh]">
+          {jornada.map((m, i) => (
+            <li
+              key={m.titulo}
+              className={clsx("flex", i % 2 ? "justify-end" : "justify-start")}
+            >
+              <Reveal>
+                <div className="glass max-w-sm rounded-2xl p-6">
                   <div className="font-mono text-xs uppercase tracking-widest text-aqua">
                     {m.depth} · {m.ano}
                   </div>
-                  <h3 className="mt-1 font-display text-xl font-semibold">{m.titulo}</h3>
-                  <p className="mt-2 text-ink/70">{m.texto}</p>
-                </Reveal>
-              </li>
-            ))}
-          </ol>
-        </div>
+                  <h3 className="mt-1 font-display text-xl font-semibold">
+                    {m.titulo}
+                  </h3>
+                  <p className="mt-2 text-ink/75">{m.texto}</p>
+                </div>
+              </Reveal>
+            </li>
+          ))}
+        </ol>
 
-        <Reveal delay={0.1}>
-          <p className="mt-14 font-mono text-sm text-biolum/80">
-            › Cena 3D imersiva (águas, bioluminescência, pressão) chega na Fase 2.
-          </p>
-        </Reveal>
+        <div className="mx-auto max-w-5xl px-6 pb-28">
+          <Reveal>
+            <p className="font-mono text-sm text-biolum/80">
+              › você chegou ao fundo — a cena reage à profundidade do seu scroll.
+            </p>
+          </Reveal>
+        </div>
       </div>
     </section>
   );

@@ -1,38 +1,17 @@
 "use client";
 
-import { useSyncExternalStore } from "react";
 import dynamic from "next/dynamic";
 import { motion } from "motion/react";
 import { siteConfig } from "@/lib/site";
+import { useEnable3D } from "@/lib/useEnable3D";
 
 const HeroScene = dynamic(() => import("@/components/three/HeroScene"), {
   ssr: false,
 });
 
-// Detecção de capacidade (tela larga + sem reduced-motion) sem setState-em-effect.
-function subscribe(cb: () => void) {
-  const wide = window.matchMedia("(min-width: 768px)");
-  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
-  wide.addEventListener("change", cb);
-  reduce.addEventListener("change", cb);
-  return () => {
-    wide.removeEventListener("change", cb);
-    reduce.removeEventListener("change", cb);
-  };
-}
-function getSnapshot() {
-  return (
-    window.matchMedia("(min-width: 768px)").matches &&
-    !window.matchMedia("(prefers-reduced-motion: reduce)").matches
-  );
-}
-function getServerSnapshot() {
-  return false;
-}
-
 /** 🦇 Mundo 01 — Gotham. Hero 3D com bat-signal (fallback leve no mobile). */
 export default function HeroBatman() {
-  const enable3D = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+  const enable3D = useEnable3D();
 
   return (
     <section
