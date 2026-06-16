@@ -9,7 +9,7 @@ export default function Footer() {
           © {year} {siteConfig.name}. Feito com Next.js, R3F, GSAP & Firebase.
         </p>
         <p className="font-mono text-xs">
-          <span className="text-biolum">●</span> Fase 0 — fundação
+          <span className="text-biolum">●</span> Fase 1 — a jornada
         </p>
       </div>
     </footer>

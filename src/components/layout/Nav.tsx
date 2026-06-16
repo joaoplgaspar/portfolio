@@ -3,20 +3,12 @@
 import { useEffect, useState } from "react";
 import clsx from "clsx";
 import { navItems } from "@/lib/site";
-
-/** Rola suavemente até a seção usando o Lenis (com fallback nativo). */
-function goTo(id: string) {
-  const target = document.getElementById(id);
-  if (!target) return;
-  if (window.__lenis) {
-    window.__lenis.scrollTo(target, { offset: 0, duration: 1.4 });
-  } else {
-    target.scrollIntoView({ behavior: "smooth" });
-  }
-}
+import { goTo } from "@/lib/scroll";
+import { useActiveSection } from "@/lib/useActiveSection";
 
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
+  const active = useActiveSection();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -49,16 +41,24 @@ export default function Nav() {
         </button>
 
         <ul className="hidden items-center gap-1 md:flex">
-          {navItems.map((item) => (
-            <li key={item.id}>
-              <button
-                onClick={() => goTo(item.id)}
-                className="rounded-full px-3.5 py-1.5 text-sm text-ink/70 transition-colors hover:bg-white/5 hover:text-ink"
-              >
-                {item.label}
-              </button>
-            </li>
-          ))}
+          {navItems.map((item) => {
+            const isActive = item.id === active;
+            return (
+              <li key={item.id}>
+                <button
+                  onClick={() => goTo(item.id)}
+                  className={clsx(
+                    "rounded-full px-3.5 py-1.5 text-sm transition-colors",
+                    isActive
+                      ? "bg-white/10 text-ink"
+                      : "text-ink/60 hover:bg-white/5 hover:text-ink",
+                  )}
+                >
+                  {item.label}
+                </button>
+              </li>
+            );
+          })}
         </ul>
 
         <button

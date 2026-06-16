@@ -3,6 +3,7 @@ import { Space_Grotesk, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import SmoothScroll from "@/components/providers/SmoothScroll";
 import Nav from "@/components/layout/Nav";
+import WorldRail from "@/components/layout/WorldRail";
 import ScrollProgress from "@/components/ui/ScrollProgress";
 import { siteConfig } from "@/lib/site";
 
@@ -71,6 +72,7 @@ export default function RootLayout({
       <body className="antialiased">
         <ScrollProgress />
         <Nav />
+        <WorldRail />
         <SmoothScroll>{children}</SmoothScroll>
       </body>
     </html>
