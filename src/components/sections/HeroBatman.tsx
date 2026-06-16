@@ -1,35 +1,71 @@
 "use client";
 
+import { useSyncExternalStore } from "react";
+import dynamic from "next/dynamic";
 import { motion } from "motion/react";
 import { siteConfig } from "@/lib/site";
 
-/** 🦇 Mundo 01 — Gotham. A entrada cinematográfica. */
+const HeroScene = dynamic(() => import("@/components/three/HeroScene"), {
+  ssr: false,
+});
+
+// Detecção de capacidade (tela larga + sem reduced-motion) sem setState-em-effect.
+function subscribe(cb: () => void) {
+  const wide = window.matchMedia("(min-width: 768px)");
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
+  wide.addEventListener("change", cb);
+  reduce.addEventListener("change", cb);
+  return () => {
+    wide.removeEventListener("change", cb);
+    reduce.removeEventListener("change", cb);
+  };
+}
+function getSnapshot() {
+  return (
+    window.matchMedia("(min-width: 768px)").matches &&
+    !window.matchMedia("(prefers-reduced-motion: reduce)").matches
+  );
+}
+function getServerSnapshot() {
+  return false;
+}
+
+/** 🦇 Mundo 01 — Gotham. Hero 3D com bat-signal (fallback leve no mobile). */
 export default function HeroBatman() {
+  const enable3D = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+
   return (
     <section
       id="inicio"
       className="relative flex min-h-screen items-center justify-center overflow-hidden bg-gotham px-6"
     >
-      {/* atmosfera */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0"
-        style={{
-          background:
-            "radial-gradient(60% 50% at 50% 35%, rgba(255,210,63,0.10), transparent 70%), radial-gradient(120% 120% at 50% 120%, #000 20%, transparent 60%)",
-        }}
-      />
-      {/* bat-signal pulsante */}
-      <div
-        aria-hidden
-        className="anim-signal pointer-events-none absolute left-1/2 top-[34%] h-[42vmin] w-[42vmin] -translate-x-1/2 -translate-y-1/2 rounded-full blur-2xl"
-        style={{
-          background:
-            "radial-gradient(circle, rgba(255,210,63,0.22), transparent 65%)",
-        }}
-      />
+      {enable3D ? (
+        <div className="absolute inset-0">
+          <HeroScene />
+        </div>
+      ) : (
+        <>
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-0"
+            style={{
+              background:
+                "radial-gradient(60% 50% at 50% 35%, rgba(255,210,63,0.12), transparent 70%), radial-gradient(120% 120% at 50% 120%, #000 20%, transparent 60%)",
+            }}
+          />
+          <div
+            aria-hidden
+            className="anim-signal pointer-events-none absolute left-1/2 top-[34%] h-[42vmin] w-[42vmin] -translate-x-1/2 -translate-y-1/2 rounded-full blur-2xl"
+            style={{
+              background:
+                "radial-gradient(circle, rgba(255,210,63,0.22), transparent 65%)",
+            }}
+          />
+        </>
+      )}
 
-      <div className="relative z-10 mx-auto max-w-4xl text-center">
+      {/* overlay de texto (nítido + SEO). pointer-events-none deixa o mouse chegar no 3D */}
+      <div className="pointer-events-none relative z-10 mx-auto max-w-4xl text-center">
         <motion.span
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
@@ -43,7 +79,7 @@ export default function HeroBatman() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.1 }}
-          className="font-display text-5xl font-bold leading-[0.95] tracking-tight sm:text-7xl md:text-8xl"
+          className="font-display text-5xl font-bold leading-[0.95] tracking-tight drop-shadow-[0_2px_30px_rgba(0,0,0,0.85)] sm:text-7xl md:text-8xl"
         >
           {siteConfig.name}
         </motion.h1>
@@ -52,7 +88,7 @@ export default function HeroBatman() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.25 }}
-          className="mx-auto mt-6 max-w-xl text-lg text-ink/70 sm:text-xl"
+          className="mx-auto mt-6 max-w-xl text-lg text-ink/80 sm:text-xl"
         >
           <span className="text-bat">{siteConfig.role}</span> — {siteConfig.tagline}
         </motion.p>
@@ -67,7 +103,6 @@ export default function HeroBatman() {
         </motion.p>
       </div>
 
-      {/* indicador de scroll */}
       <div
         aria-hidden
         className="absolute bottom-8 left-1/2 flex h-10 w-6 -translate-x-1/2 justify-center rounded-full border border-white/20 pt-2"
