@@ -4,6 +4,7 @@ import { useMemo, useRef } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { EffectComposer, Bloom } from "@react-three/postprocessing";
 import * as THREE from "three";
+import { thunder } from "@/lib/audio";
 
 /** emblema: disco luminoso com a silhueta do morcego. */
 function makeSignalTexture(): THREE.CanvasTexture {
@@ -68,6 +69,7 @@ function Storm() {
     t.current += dt;
     if (t.current >= next.current) {
       STORM.flash = 1;
+      thunder(); // só soa se o usuário ligou o som
       t.current = 0;
       next.current = 2.4 + Math.random() * 5.5;
     }
