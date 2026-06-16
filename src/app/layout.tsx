@@ -9,6 +9,7 @@ import Atmosphere from "@/components/layout/Atmosphere";
 import ScrollProgress from "@/components/ui/ScrollProgress";
 import SoundToggle from "@/components/ui/SoundToggle";
 import EasterEggFifa from "@/components/ui/EasterEggFifa";
+import ClickFX from "@/components/ui/ClickFX";
 import { siteConfig } from "@/lib/site";
 
 const display = Space_Grotesk({
@@ -81,6 +82,7 @@ export default function RootLayout({
         <Atmosphere />
         <SoundToggle />
         <EasterEggFifa />
+        <ClickFX />
         <SmoothScroll>{children}</SmoothScroll>
       </body>
     </html>

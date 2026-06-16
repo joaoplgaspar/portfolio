@@ -2,12 +2,7 @@
 
 import { useRef } from "react";
 import dynamic from "next/dynamic";
-import {
-  motion,
-  useScroll,
-  useTransform,
-  useMotionValueEvent,
-} from "motion/react";
+import { motion, useScroll, useTransform } from "motion/react";
 import { siteConfig } from "@/lib/site";
 import { useEnable3D } from "@/lib/useEnable3D";
 import { useInView } from "@/lib/useInView";
@@ -21,20 +16,16 @@ export default function HeroBatman() {
   const enable3D = useEnable3D();
   const sectionRef = useRef<HTMLElement>(null);
   const inView = useInView(sectionRef);
-  const progress = useRef(0);
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start start", "end start"],
   });
-  useMotionValueEvent(scrollYProgress, "change", (v) => {
-    progress.current = v;
-  });
 
-  // o conteúdo voa junto com a câmera no primeiro scroll
-  const y = useTransform(scrollYProgress, [0, 1], [0, -160]);
-  const scale = useTransform(scrollYProgress, [0, 1], [1, 1.3]);
-  const opacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
+  // o conteúdo some suavemente no scroll (sem sequestrar a câmera)
+  const y = useTransform(scrollYProgress, [0, 1], [0, -90]);
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 1.1]);
+  const opacity = useTransform(scrollYProgress, [0, 0.75], [1, 0]);
   const cueOpacity = useTransform(scrollYProgress, [0, 0.15], [1, 0]);
 
   return (
@@ -45,7 +36,7 @@ export default function HeroBatman() {
     >
       {enable3D ? (
         <div className="absolute inset-0">
-          <HeroScene active={inView} progress={progress} />
+          <HeroScene active={inView} />
         </div>
       ) : (
         <>

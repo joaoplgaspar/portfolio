@@ -5,8 +5,6 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { EffectComposer, Bloom } from "@react-three/postprocessing";
 import * as THREE from "three";
 
-type Progress = { current: number };
-
 /** emblema: disco luminoso com a silhueta do morcego. */
 function makeSignalTexture(): THREE.CanvasTexture {
   const size = 512;
@@ -280,26 +278,19 @@ function Signal() {
   );
 }
 
-// ── câmera: parallax do mouse + voo pra dentro do sinal no 1º scroll ──
-function Rig({ progress }: { progress: Progress }) {
+// ── câmera: só parallax suave do mouse (controlável, sem sequestrar o scroll) ──
+function Rig() {
   useFrame((state) => {
-    const p = progress.current;
     const { camera, pointer } = state;
-    camera.position.x = THREE.MathUtils.lerp(camera.position.x, pointer.x * 0.5, 0.05);
-    camera.position.y = THREE.MathUtils.lerp(camera.position.y, 0.4 + p * 2.4 + pointer.y * 0.25, 0.06);
-    camera.position.z = THREE.MathUtils.lerp(camera.position.z, 6 - p * 5.2, 0.06);
-    camera.lookAt(0, 0.7 + p * 2.9, 0);
+    camera.position.x = THREE.MathUtils.lerp(camera.position.x, pointer.x * 0.45, 0.04);
+    camera.position.y = THREE.MathUtils.lerp(camera.position.y, 0.4 + pointer.y * 0.22, 0.04);
+    camera.position.z = THREE.MathUtils.lerp(camera.position.z, 6, 0.04);
+    camera.lookAt(0, 0.8, 0);
   });
   return null;
 }
 
-export default function HeroScene({
-  active = true,
-  progress,
-}: {
-  active?: boolean;
-  progress: Progress;
-}) {
+export default function HeroScene({ active = true }: { active?: boolean }) {
   return (
     <Canvas
       camera={{ position: [0, 0.4, 6], fov: 48 }}
@@ -314,7 +305,7 @@ export default function HeroScene({
       <Rain />
       <Signal />
       <Dust />
-      <Rig progress={progress} />
+      <Rig />
       <EffectComposer>
         <Bloom mipmapBlur intensity={1.0} luminanceThreshold={0.3} luminanceSmoothing={0.3} />
       </EffectComposer>

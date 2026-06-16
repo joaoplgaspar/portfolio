@@ -69,7 +69,7 @@ function makeBatTexture(): THREE.CanvasTexture {
   return tex;
 }
 
-const BAT_N = 72;
+const BAT_N = 46;
 const batData = Array.from({ length: BAT_N }, () => ({
   x: (Math.random() - 0.5) * 16,
   y: (Math.random() - 0.5) * 16,
@@ -88,14 +88,20 @@ function Bats() {
     const m = mesh.current;
     if (!m) return;
     const t = state.clock.elapsedTime;
+    const leanX = state.pointer.x * 1.8; // o enxame reage ao mouse
+    const leanY = state.pointer.y * 0.8;
     for (let i = 0; i < BAT_N; i++) {
       const b = batData[i];
       b.y += b.speed * dt; // sobem = sensação de descida
       if (b.y > 8) b.y = -8;
-      dummy.position.set(b.x + Math.sin(t * 0.5 + b.phase) * b.sway, b.y, b.z);
+      dummy.position.set(
+        b.x + Math.sin(t * 0.5 + b.phase) * b.sway + leanX,
+        b.y + leanY,
+        b.z,
+      );
       const flap = 0.32 + Math.abs(Math.sin(t * b.flap + b.phase)) * 0.68;
       dummy.scale.set(b.size * flap, b.size, 1);
-      dummy.rotation.z = Math.sin(t * 0.7 + b.phase) * 0.22;
+      dummy.rotation.z = Math.sin(t * 0.7 + b.phase) * 0.22 + state.pointer.x * 0.2;
       dummy.updateMatrix();
       m.setMatrixAt(i, dummy.matrix);
     }
@@ -172,12 +178,12 @@ function Batcomputer({ progress }: { progress: Progress }) {
   const mat = useRef<THREE.MeshBasicMaterial>(null);
   const light = useRef<THREE.PointLight>(null);
   useFrame(() => {
-    const i = Math.max(0, (progress.current - 0.35) / 0.65);
-    if (mat.current) mat.current.opacity = 0.12 + i * 0.85;
+    const i = Math.max(0, (progress.current - 0.25) / 0.75);
+    if (mat.current) mat.current.opacity = 0.16 + i * 0.84;
     if (light.current) light.current.intensity = i * 9;
   });
   return (
-    <group position={[0, -6, -3]}>
+    <group position={[0, -5, -3]}>
       <mesh>
         <planeGeometry args={[7.5, 2.8]} />
         <meshBasicMaterial ref={mat} color="#2ad4ff" transparent opacity={0.12} depthWrite={false} blending={THREE.AdditiveBlending} toneMapped={false} />
@@ -191,14 +197,14 @@ function Batcomputer({ progress }: { progress: Progress }) {
 function Batmobile({ progress }: { progress: Progress }) {
   const group = useRef<THREE.Group>(null);
   useFrame(() => {
-    const v = Math.max(0, (progress.current - 0.72) / 0.28);
+    const v = Math.max(0, (progress.current - 0.6) / 0.4);
     if (group.current) {
       group.current.visible = v > 0.01;
       group.current.scale.setScalar(0.6 + v * 0.4);
     }
   });
   return (
-    <group ref={group} position={[0, -9.4, -1]} visible={false}>
+    <group ref={group} position={[0, -7.2, -1]} visible={false}>
       <mesh>
         <boxGeometry args={[3.6, 0.5, 1.5]} />
         <meshStandardMaterial color="#050609" metalness={0.7} roughness={0.35} />
@@ -284,10 +290,10 @@ function Rig({ progress }: { progress: Progress }) {
   useFrame((state) => {
     const p = progress.current;
     const { camera, pointer } = state;
-    camera.position.x = THREE.MathUtils.lerp(camera.position.x, pointer.x * 0.6, 0.05);
-    camera.position.y = THREE.MathUtils.lerp(camera.position.y, 0.5 - p * 8.6 + pointer.y * 0.3, 0.06);
-    camera.position.z = THREE.MathUtils.lerp(camera.position.z, 6.5, 0.05);
-    camera.lookAt(0, -p * 8.6, -1);
+    camera.position.x = THREE.MathUtils.lerp(camera.position.x, pointer.x * 0.5, 0.06);
+    camera.position.y = THREE.MathUtils.lerp(camera.position.y, 0.5 - p * 6.5 + pointer.y * 0.25, 0.08);
+    camera.position.z = THREE.MathUtils.lerp(camera.position.z, 6.5, 0.06);
+    camera.lookAt(0, -p * 6.5, -1);
   });
   return null;
 }
@@ -306,7 +312,7 @@ export default function BatcaveScene({
       gl={{ antialias: true }}
       frameloop={active ? "always" : "never"}
     >
-      <ambientLight intensity={0.12} />
+      <ambientLight intensity={0.22} />
       <CaveEnv progress={progress} />
       <EntranceLight progress={progress} />
       <Rocks />

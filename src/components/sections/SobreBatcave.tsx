@@ -86,14 +86,14 @@ export default function SobreBatcave() {
         </div>
 
         {/* trajetória: cada nível acende mais fundo na caverna */}
-        <ol className="mx-auto max-w-5xl space-y-[36vh] px-6 pb-[30vh]">
+        <ol className="mx-auto max-w-5xl space-y-[26vh] px-6 pb-[16vh]">
           {jornada.map((m, i) => (
             <li
               key={m.titulo}
               className={clsx("flex", i % 2 ? "justify-end" : "justify-start")}
             >
               <Reveal>
-                <div className="glass max-w-sm rounded-2xl p-6">
+                <div className="glass max-w-sm rounded-2xl bg-gotham/60 p-6 shadow-xl shadow-black/40">
                   <div className="font-mono text-xs uppercase tracking-widest text-aqua">
                     nível {m.depth} · {m.ano}
                   </div>
