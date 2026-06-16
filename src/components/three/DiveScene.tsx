@@ -170,9 +170,20 @@ function GodRays({ progress }: { progress: Progress }) {
   );
 }
 
-export default function DiveScene({ progress }: { progress: Progress }) {
+export default function DiveScene({
+  progress,
+  active = true,
+}: {
+  progress: Progress;
+  active?: boolean;
+}) {
   return (
-    <Canvas camera={{ position: [0, 0, 6], fov: 50 }} dpr={[1, 2]} gl={{ antialias: true }}>
+    <Canvas
+      camera={{ position: [0, 0, 6], fov: 50 }}
+      dpr={[1, 2]}
+      gl={{ antialias: true }}
+      frameloop={active ? "always" : "never"}
+    >
       <ambientLight intensity={0.4} />
       <Environment progress={progress} />
       <GodRays progress={progress} />

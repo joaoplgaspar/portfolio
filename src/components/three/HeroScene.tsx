@@ -165,9 +165,14 @@ function Rig() {
   return null;
 }
 
-export default function HeroScene() {
+export default function HeroScene({ active = true }: { active?: boolean }) {
   return (
-    <Canvas camera={{ position: [0, 0.4, 6], fov: 45 }} dpr={[1, 2]} gl={{ antialias: true }}>
+    <Canvas
+      camera={{ position: [0, 0.4, 6], fov: 45 }}
+      dpr={[1, 2]}
+      gl={{ antialias: true }}
+      frameloop={active ? "always" : "never"}
+    >
       <color attach="background" args={["#06070b"]} />
       <fog attach="fog" args={["#06070b", 6, 17]} />
       <ambientLight intensity={0.2} />

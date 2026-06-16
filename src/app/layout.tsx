@@ -4,6 +4,8 @@ import "./globals.css";
 import SmoothScroll from "@/components/providers/SmoothScroll";
 import Nav from "@/components/layout/Nav";
 import WorldRail from "@/components/layout/WorldRail";
+import Preloader from "@/components/layout/Preloader";
+import Atmosphere from "@/components/layout/Atmosphere";
 import ScrollProgress from "@/components/ui/ScrollProgress";
 import { siteConfig } from "@/lib/site";
 
@@ -70,9 +72,11 @@ export default function RootLayout({
       className={`${display.variable} ${sans.variable} ${mono.variable}`}
     >
       <body className="antialiased">
+        <Preloader />
         <ScrollProgress />
         <Nav />
         <WorldRail />
+        <Atmosphere />
         <SmoothScroll>{children}</SmoothScroll>
       </body>
     </html>

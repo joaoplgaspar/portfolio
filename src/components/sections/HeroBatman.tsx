@@ -1,9 +1,11 @@
 "use client";
 
+import { useRef } from "react";
 import dynamic from "next/dynamic";
 import { motion } from "motion/react";
 import { siteConfig } from "@/lib/site";
 import { useEnable3D } from "@/lib/useEnable3D";
+import { useInView } from "@/lib/useInView";
 
 const HeroScene = dynamic(() => import("@/components/three/HeroScene"), {
   ssr: false,
@@ -12,15 +14,18 @@ const HeroScene = dynamic(() => import("@/components/three/HeroScene"), {
 /** 🦇 Mundo 01 — Gotham. Hero 3D com bat-signal (fallback leve no mobile). */
 export default function HeroBatman() {
   const enable3D = useEnable3D();
+  const sectionRef = useRef<HTMLElement>(null);
+  const inView = useInView(sectionRef);
 
   return (
     <section
       id="inicio"
+      ref={sectionRef}
       className="relative flex min-h-screen items-center justify-center overflow-hidden bg-gotham px-6"
     >
       {enable3D ? (
         <div className="absolute inset-0">
-          <HeroScene />
+          <HeroScene active={inView} />
         </div>
       ) : (
         <>

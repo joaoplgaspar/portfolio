@@ -6,6 +6,7 @@ import clsx from "clsx";
 import Reveal from "@/components/ui/Reveal";
 import { bio, jornada } from "@/lib/content";
 import { useEnable3D } from "@/lib/useEnable3D";
+import { useInView } from "@/lib/useInView";
 
 const DiveScene = dynamic(() => import("@/components/three/DiveScene"), {
   ssr: false,
@@ -16,6 +17,7 @@ export default function SobreSubnautica() {
   const enable3D = useEnable3D();
   const sectionRef = useRef<HTMLElement>(null);
   const progress = useRef(0);
+  const inView = useInView(sectionRef);
 
   useEffect(() => {
     const onScroll = () => {
@@ -40,7 +42,7 @@ export default function SobreSubnautica() {
       {/* fundo 3D fixo enquanto a seção passa */}
       <div className="sticky top-0 h-screen w-full overflow-hidden">
         {enable3D ? (
-          <DiveScene progress={progress} />
+          <DiveScene progress={progress} active={inView} />
         ) : (
           <div
             className="absolute inset-0"
