@@ -8,12 +8,12 @@ import { bio, jornada } from "@/lib/content";
 import { useEnable3D } from "@/lib/useEnable3D";
 import { useInView } from "@/lib/useInView";
 
-const DiveScene = dynamic(() => import("@/components/three/DiveScene"), {
+const BatcaveScene = dynamic(() => import("@/components/three/BatcaveScene"), {
   ssr: false,
 });
 
-/** 🌊 Mundo 02 — O Mergulho. Fundo 3D fixo; o scroll controla a descida. */
-export default function SobreSubnautica() {
+/** 🦇 Mundo 02 — A Descida à Batcave. Fundo 3D fixo; o scroll controla a descida. */
+export default function SobreBatcave() {
   const enable3D = useEnable3D();
   const sectionRef = useRef<HTMLElement>(null);
   const progress = useRef(0);
@@ -38,17 +38,17 @@ export default function SobreSubnautica() {
   }, []);
 
   return (
-    <section id="sobre" ref={sectionRef} className="relative bg-abyss">
+    <section id="sobre" ref={sectionRef} className="relative bg-gotham">
       {/* fundo 3D fixo enquanto a seção passa */}
       <div className="sticky top-0 h-screen w-full overflow-hidden">
         {enable3D ? (
-          <DiveScene progress={progress} active={inView} />
+          <BatcaveScene progress={progress} active={inView} />
         ) : (
           <div
             className="absolute inset-0"
             style={{
               background:
-                "linear-gradient(180deg, #0e5f70 0%, #063048 45%, #02101f 100%)",
+                "linear-gradient(180deg, #0c0c14 0%, #06080f 45%, #02040a 100%)",
             }}
           />
         )}
@@ -57,7 +57,7 @@ export default function SobreSubnautica() {
           className="pointer-events-none absolute inset-0"
           style={{
             background:
-              "radial-gradient(120% 80% at 50% 0%, transparent 45%, rgba(2,16,31,0.55))",
+              "radial-gradient(120% 80% at 50% 0%, transparent 45%, rgba(2,4,10,0.6))",
           }}
         />
       </div>
@@ -66,11 +66,11 @@ export default function SobreSubnautica() {
       <div className="relative z-10 -mt-[100vh]">
         <div className="mx-auto max-w-5xl px-6 pb-32 pt-32">
           <Reveal>
-            <span className="world-tag mb-6">🌊 Mundo 02 — O Mergulho</span>
+            <span className="world-tag mb-6">🦇 Mundo 02 — A Descida</span>
           </Reveal>
           <Reveal delay={0.05}>
-            <h2 className="font-display text-4xl font-bold tracking-tight drop-shadow-[0_2px_24px_rgba(0,0,0,0.6)] sm:text-6xl">
-              Sobre <span className="text-biolum">/</span> O Mergulho
+            <h2 className="font-display text-4xl font-bold tracking-tight drop-shadow-[0_2px_24px_rgba(0,0,0,0.7)] sm:text-6xl">
+              Sobre <span className="text-aqua">/</span> A Descida à Batcave
             </h2>
           </Reveal>
           <Reveal delay={0.1}>
@@ -80,12 +80,12 @@ export default function SobreSubnautica() {
           </Reveal>
           <Reveal delay={0.15}>
             <p className="mt-6 font-mono text-xs uppercase tracking-[0.2em] text-aqua/80">
-              role para descer ↓
+              role para descer na caverna ↓
             </p>
           </Reveal>
         </div>
 
-        {/* timeline com bastante respiro: dura o mergulho inteiro */}
+        {/* trajetória: cada nível acende mais fundo na caverna */}
         <ol className="mx-auto max-w-5xl space-y-[36vh] px-6 pb-[30vh]">
           {jornada.map((m, i) => (
             <li
@@ -95,7 +95,7 @@ export default function SobreSubnautica() {
               <Reveal>
                 <div className="glass max-w-sm rounded-2xl p-6">
                   <div className="font-mono text-xs uppercase tracking-widest text-aqua">
-                    {m.depth} · {m.ano}
+                    nível {m.depth} · {m.ano}
                   </div>
                   <h3 className="mt-1 font-display text-xl font-semibold">
                     {m.titulo}
@@ -109,8 +109,8 @@ export default function SobreSubnautica() {
 
         <div className="mx-auto max-w-5xl px-6 pb-28">
           <Reveal>
-            <p className="font-mono text-sm text-biolum/80">
-              › você chegou ao fundo — a cena reage à profundidade do seu scroll.
+            <p className="font-mono text-sm text-aqua/80">
+              › você chegou à Batcave — o Batcomputador e o Batmóvel reagem à sua descida.
             </p>
           </Reveal>
         </div>

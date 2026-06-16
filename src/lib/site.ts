@@ -28,7 +28,7 @@ export interface NavItem {
 
 export const navItems: NavItem[] = [
   { id: "inicio", label: "Início", world: "Gotham", emoji: "🦇", accent: "var(--color-bat)" },
-  { id: "sobre", label: "Sobre", world: "O Mergulho", emoji: "🌊", accent: "var(--color-biolum)" },
+  { id: "sobre", label: "Sobre", world: "A Descida", emoji: "🦇", accent: "var(--color-bat)" },
   { id: "skills", label: "Arsenal", world: "Batcave", emoji: "🦇", accent: "var(--color-bat)" },
   { id: "projetos", label: "Projetos", world: "Build Mode", emoji: "🧱", accent: "var(--color-lego-yellow)" },
   { id: "contato", label: "Contato", world: "Bat-Signal", emoji: "📡", accent: "var(--color-bat)" },
