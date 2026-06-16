@@ -1,0 +1,154 @@
+@import "tailwindcss";
+
+/* ─────────────────────────────────────────────────────────────
+   Design tokens — um sistema, vários "mundos".
+   Cada universo do portfólio tem sua paleta, mas tudo parte daqui.
+   ───────────────────────────────────────────────────────────── */
+@theme {
+  --font-display: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, SFMono-Regular, monospace;
+
+  /* Base / espaço */
+  --color-void: #04060c;
+  --color-ink: #e8edf6;
+
+  /* 🦇 Gotham (Batman) — intro & contato */
+  --color-gotham: #0a0b10;
+  --color-gotham-steel: #14161f;
+  --color-bat: #ffd23f;
+
+  /* 🌊 Subnautica — sobre / o mergulho */
+  --color-abyss: #02101f;
+  --color-deep: #06304f;
+  --color-biolum: #2ce6c9;
+  --color-aqua: #38d0ff;
+  --color-coral: #ff6b4a;
+
+  /* ⚽ FIFA / FUT — skills */
+  --color-fut-gold: #e9c46a;
+  --color-fut-gold-bright: #f7d774;
+  --color-pitch: #16a34a;
+
+  /* 🧱 LEGO — projetos / build mode */
+  --color-lego-red: #d4131a;
+  --color-lego-yellow: #ffcf00;
+  --color-lego-blue: #0057a8;
+  --color-lego-green: #00852b;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Base
+   ───────────────────────────────────────────────────────────── */
+:root {
+  color-scheme: dark;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: var(--color-void);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background: var(--color-biolum);
+  color: var(--color-void);
+}
+
+/* Scrollbar discreta (Lenis cuida da suavidade do scroll) */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-void);
+}
+::-webkit-scrollbar-thumb {
+  background: #1d2230;
+  border-radius: 99px;
+  border: 2px solid var(--color-void);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #2a3142;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Lenis (smooth scroll) — recomendações oficiais
+   ───────────────────────────────────────────────────────────── */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: clip;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Utilitários / componentes leves
+   ───────────────────────────────────────────────────────────── */
+.glass {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+}
+
+.world-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 0.35rem 0.85rem;
+  border-radius: 99px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+/* Animações utilitárias */
+@keyframes floaty {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+@keyframes signal-pulse {
+  0%, 100% { opacity: 0.55; transform: scale(1); }
+  50% { opacity: 0.9; transform: scale(1.06); }
+}
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+@keyframes scroll-cue {
+  0% { transform: translateY(0); opacity: 0; }
+  40% { opacity: 1; }
+  80% { transform: translateY(10px); opacity: 0; }
+  100% { opacity: 0; }
+}
+
+.anim-floaty { animation: floaty 6s ease-in-out infinite; }
+.anim-signal { animation: signal-pulse 4s ease-in-out infinite; }
+
+/* Respeita quem prefere menos movimento */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
