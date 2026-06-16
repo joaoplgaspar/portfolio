@@ -1,0 +1,25 @@
+import { siteConfig } from "@/lib/site";
+
+export default function Footer() {
+  const year = new Date().getFullYear();
+  return (
+    <footer className="border-t border-white/10 bg-gotham px-6 py-10">
+      <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 text-sm text-ink/50 sm:flex-row">
+        <p>
+          © {year} {siteConfig.name}. Feito com Next.js, R3F, GSAP & Firebase.
+        </p>
+        <div className="flex flex-col items-center gap-1 sm:items-end">
+          <p className="font-mono text-xs">
+            <span className="text-biolum">●</span> transmissão completa
+          </p>
+          <p
+            className="font-mono text-[10px] tracking-[0.25em] text-ink/25"
+            title="experimente digitar…"
+          >
+            ↑ ↑ ↓ ↓ ← → ← → B A
+          </p>
+        </div>
+      </div>
+    </footer>
+  );
+}
