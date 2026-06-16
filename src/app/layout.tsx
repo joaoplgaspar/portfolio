@@ -7,6 +7,8 @@ import WorldRail from "@/components/layout/WorldRail";
 import Preloader from "@/components/layout/Preloader";
 import Atmosphere from "@/components/layout/Atmosphere";
 import ScrollProgress from "@/components/ui/ScrollProgress";
+import SoundToggle from "@/components/ui/SoundToggle";
+import EasterEggFifa from "@/components/ui/EasterEggFifa";
 import { siteConfig } from "@/lib/site";
 
 const display = Space_Grotesk({
@@ -77,6 +79,8 @@ export default function RootLayout({
         <Nav />
         <WorldRail />
         <Atmosphere />
+        <SoundToggle />
+        <EasterEggFifa />
         <SmoothScroll>{children}</SmoothScroll>
       </body>
     </html>

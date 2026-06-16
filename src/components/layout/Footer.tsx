@@ -8,9 +8,17 @@ export default function Footer() {
         <p>
           © {year} {siteConfig.name}. Feito com Next.js, R3F, GSAP & Firebase.
         </p>
-        <p className="font-mono text-xs">
-          <span className="text-biolum">●</span> mundos polidos
-        </p>
+        <div className="flex flex-col items-center gap-1 sm:items-end">
+          <p className="font-mono text-xs">
+            <span className="text-biolum">●</span> transmissão completa
+          </p>
+          <p
+            className="font-mono text-[10px] tracking-[0.25em] text-ink/25"
+            title="experimente digitar…"
+          >
+            ↑ ↑ ↓ ↓ ← → ← → B A
+          </p>
+        </div>
       </div>
     </footer>
   );
