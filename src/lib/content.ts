@@ -151,7 +151,35 @@ const projetos: Projeto[] = [
   },
 ];
 
-/** Ponto único de acesso aos projetos (trocar por Firestore na Fase 4). */
+/** Acesso síncrono (SSR / fallback): usado enquanto o Firestore não responde. */
 export function getProjetos(): Projeto[] {
   return projetos;
+}
+
+/**
+ * Acesso real aos projetos. Lê a coleção `projetos` no Firestore quando o
+ * Firebase está configurado; senão (ou se a coleção estiver vazia/erro) cai
+ * nos mocks acima. Tudo via import dinâmico, então o Firestore só entra no
+ * bundle quando realmente usado.
+ */
+export async function fetchProjetos(): Promise<Projeto[]> {
+  try {
+    const { isFirebaseConfigured, getFirebaseApp } = await import("@/lib/firebase");
+    const app = getFirebaseApp();
+    if (!isFirebaseConfigured || !app) return getProjetos();
+
+    const { getFirestore, collection, getDocs } = await import("firebase/firestore");
+    const db = getFirestore(app);
+    const snap = await getDocs(collection(db, "projetos"));
+    if (snap.empty) return getProjetos();
+
+    const list = snap.docs.map((d) => ({
+      id: d.id,
+      ...(d.data() as Omit<Projeto, "id">),
+    }));
+    // destaques primeiro
+    return list.sort((a, b) => Number(Boolean(b.destaque)) - Number(Boolean(a.destaque)));
+  } catch {
+    return getProjetos();
+  }
 }

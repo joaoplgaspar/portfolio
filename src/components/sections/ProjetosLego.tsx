@@ -1,5 +1,8 @@
+"use client";
+
 import Reveal from "@/components/ui/Reveal";
-import { getProjetos, type Empresa } from "@/lib/content";
+import { type Empresa } from "@/lib/content";
+import { useProjetos } from "@/lib/useProjetos";
 
 const empresaStyle: Record<Empresa, { label: string; cls: string }> = {
   SHAKERS: { label: "SHAKERS", cls: "border-lego-red/50 bg-lego-red/15 text-lego-red" },
@@ -11,7 +14,7 @@ const studColors = ["var(--color-lego-red)", "var(--color-lego-yellow)", "var(--
 
 /** 🧱 Mundo 04 — Build Mode. Projetos como sets de LEGO (montagem física vem na Fase 4). */
 export default function ProjetosLego() {
-  const projetos = getProjetos();
+  const projetos = useProjetos();
 
   return (
     <section id="projetos" className="relative bg-gotham-steel px-6 py-28">
@@ -26,9 +29,9 @@ export default function ProjetosLego() {
         </Reveal>
         <Reveal delay={0.1}>
           <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ink/75">
-            Cada projeto se monta peça por peça, como um set de LEGO. Os da{" "}
-            <span className="text-lego-red">SHAKERS</span> abaixo são prévias — os
-            cases reais (e-commerces headless) entram em breve via painel.
+            Cada projeto se monta peça por peça, como um set de LEGO. Os cases da{" "}
+            <span className="text-lego-red">SHAKERS</span> e os projetos pessoais
+            são gerenciados por mim num painel — sempre atualizados.
           </p>
         </Reveal>
 
@@ -126,7 +129,7 @@ export default function ProjetosLego() {
 
         <Reveal delay={0.1}>
           <p className="mt-10 font-mono text-sm text-lego-yellow/80">
-            › Montagem com física (LEGO/Rapier) + painel admin no Firebase chegam na Fase 4.
+            › Galeria conectada ao Firestore — atualizada pelo painel /admin.
           </p>
         </Reveal>
       </div>
