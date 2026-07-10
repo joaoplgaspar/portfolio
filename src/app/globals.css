@@ -150,6 +150,13 @@ html.has-cursor .cursor-layer {
   display: block;
 }
 
+/* Marquee (faixa de clientes/capabilities) */
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
 /* ── Reduced motion: fallback completo ──────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   *,

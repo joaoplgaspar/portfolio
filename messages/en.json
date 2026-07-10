@@ -8,7 +8,9 @@
     "about": "About",
     "lab": "Lab",
     "contact": "Contact",
-    "startProject": "Start a project"
+    "startProject": "Start a project",
+    "menu": "Menu",
+    "close": "Close"
   },
   "home": {
     "eyebrow": "Front-end · E-commerce · Craft",
@@ -17,9 +19,83 @@
     "cta": "Start a project",
     "availability": "Available for new projects"
   },
-  "foundation": {
-    "badge": "Phase 0 · Foundation",
-    "note": "System base in place: tokens, type, i18n, smooth scroll and grain. Sections land in Phase 1."
+  "selectedWork": {
+    "eyebrow": "Selected work",
+    "title": "Built to sell.",
+    "lede": "Every project treated as a product — not a portfolio slide.",
+    "viewAll": "View all work"
+  },
+  "capabilities": {
+    "eyebrow": "What I do",
+    "title": "Four things, done well."
+  },
+  "socialProof": {
+    "eyebrow": "Trust",
+    "title": "Brands that trusted the work."
+  },
+  "aboutTeaser": {
+    "eyebrow": "Who's behind it",
+    "readMore": "More about me"
+  },
+  "contactCta": {
+    "title": "Let's build something that sells.",
+    "cta": "Start a project",
+    "note": "Reply within 1 business day."
+  },
+  "work": {
+    "eyebrow": "Work",
+    "title": "Work",
+    "lede": "Stores, landings and apps — from the problem to the number."
+  },
+  "project": {
+    "overview": "Overview",
+    "problem": "The problem",
+    "contribution": "What I did",
+    "results": "Results",
+    "gallery": "Gallery",
+    "next": "Next project",
+    "backToWork": "All work",
+    "spec": {
+      "client": "Client",
+      "role": "Role",
+      "stack": "Stack",
+      "year": "Year",
+      "type": "Type"
+    }
+  },
+  "about": {
+    "eyebrow": "About",
+    "title": "A product developer, obsessed with craft.",
+    "cta": "Start a project"
+  },
+  "lab": {
+    "eyebrow": "Lab",
+    "title": "Lab",
+    "lede": "Experiments, demos and curiosities — where I test ideas outside client work."
+  },
+  "contact": {
+    "eyebrow": "Contact",
+    "title": "Start a project",
+    "lede": "Tell me briefly what you need. I'll reply with a clear next step.",
+    "or": "or reach out directly",
+    "form": {
+      "name": "Name",
+      "email": "Email",
+      "company": "Company",
+      "type": "Project type",
+      "budget": "Approx. budget",
+      "message": "Message",
+      "submit": "Send message",
+      "sending": "Sending…",
+      "success": "Got it. I'll reply within 1 business day.",
+      "error": "Please fill in name, email and message."
+    }
+  },
+  "notFound": {
+    "title": "Page not found.",
+    "lede": "The link got lost — but the work is right here.",
+    "home": "Go home",
+    "work": "See the work"
   },
   "footer": {
     "rights": "All rights reserved.",

@@ -8,7 +8,9 @@
     "about": "Sobre",
     "lab": "Lab",
     "contact": "Contato",
-    "startProject": "Iniciar um projeto"
+    "startProject": "Iniciar um projeto",
+    "menu": "Menu",
+    "close": "Fechar"
   },
   "home": {
     "eyebrow": "Front-end · E-commerce · Craft",
@@ -17,9 +19,83 @@
     "cta": "Iniciar um projeto",
     "availability": "Disponível para novos projetos"
   },
-  "foundation": {
-    "badge": "Fase 0 · Fundação",
-    "note": "Base do sistema montada: tokens, tipografia, i18n, scroll suave e grão. As seções entram na Fase 1."
+  "selectedWork": {
+    "eyebrow": "Trabalho selecionado",
+    "title": "Feito para vender.",
+    "lede": "Cada projeto tratado como um produto — não como um slide de portfólio.",
+    "viewAll": "Ver todo o trabalho"
+  },
+  "capabilities": {
+    "eyebrow": "O que eu faço",
+    "title": "Quatro coisas, bem feitas."
+  },
+  "socialProof": {
+    "eyebrow": "Confiança",
+    "title": "Marcas que confiaram no trabalho."
+  },
+  "aboutTeaser": {
+    "eyebrow": "Quem faz",
+    "readMore": "Mais sobre mim"
+  },
+  "contactCta": {
+    "title": "Vamos construir algo que vende.",
+    "cta": "Iniciar um projeto",
+    "note": "Resposta em até 1 dia útil."
+  },
+  "work": {
+    "eyebrow": "Trabalho",
+    "title": "Trabalho",
+    "lede": "Lojas, landings e apps — do problema ao número."
+  },
+  "project": {
+    "overview": "Visão geral",
+    "problem": "O problema",
+    "contribution": "O que eu fiz",
+    "results": "Resultado",
+    "gallery": "Galeria",
+    "next": "Próximo projeto",
+    "backToWork": "Todo o trabalho",
+    "spec": {
+      "client": "Cliente",
+      "role": "Papel",
+      "stack": "Stack",
+      "year": "Ano",
+      "type": "Tipo"
+    }
+  },
+  "about": {
+    "eyebrow": "Sobre",
+    "title": "Desenvolvedor de produto, obcecado por craft.",
+    "cta": "Iniciar um projeto"
+  },
+  "lab": {
+    "eyebrow": "Lab",
+    "title": "Lab",
+    "lede": "Experimentos, demos e curiosidades — onde testo ideias fora do trabalho."
+  },
+  "contact": {
+    "eyebrow": "Contato",
+    "title": "Iniciar um projeto",
+    "lede": "Conta rápido o que você precisa. Eu respondo com um próximo passo claro.",
+    "or": "ou fale direto",
+    "form": {
+      "name": "Nome",
+      "email": "E-mail",
+      "company": "Empresa",
+      "type": "Tipo de projeto",
+      "budget": "Orçamento aproximado",
+      "message": "Mensagem",
+      "submit": "Enviar mensagem",
+      "sending": "Enviando…",
+      "success": "Recebido. Respondo em até 1 dia útil.",
+      "error": "Preencha nome, e-mail e mensagem."
+    }
+  },
+  "notFound": {
+    "title": "Página não encontrada.",
+    "lede": "O link se perdeu — mas o trabalho está aqui.",
+    "home": "Ir para o início",
+    "work": "Ver o trabalho"
   },
   "footer": {
     "rights": "Todos os direitos reservados.",
