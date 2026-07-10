@@ -1,0 +1,28 @@
+{
+  "meta": {
+    "title": "João Pedro Gaspar — Front-end for premium e-commerce",
+    "description": "Front-end developer specialized in premium e-commerce: Shopify, headless, 3D and performance. Store-grade craft applied to a portfolio."
+  },
+  "nav": {
+    "work": "Work",
+    "about": "About",
+    "lab": "Lab",
+    "contact": "Contact",
+    "startProject": "Start a project"
+  },
+  "home": {
+    "eyebrow": "Front-end · E-commerce · Craft",
+    "headline": "Front-end for premium e-commerce.",
+    "lede": "I build storefronts that load fast, convert, and feel expensive — Shopify, headless, motion and 3D under a strict performance budget.",
+    "cta": "Start a project",
+    "availability": "Available for new projects"
+  },
+  "foundation": {
+    "badge": "Phase 0 · Foundation",
+    "note": "System base in place: tokens, type, i18n, smooth scroll and grain. Sections land in Phase 1."
+  },
+  "footer": {
+    "rights": "All rights reserved.",
+    "crafted": "Built with Next.js, TypeScript and care."
+  }
+}
