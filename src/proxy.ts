@@ -1,6 +1,7 @@
 import createMiddleware from "next-intl/middleware";
-import { routing } from "./src/i18n/routing";
+import { routing } from "./i18n/routing";
 
+// Next 16: convenção "proxy" (substitui "middleware").
 export default createMiddleware(routing);
 
 export const config = {
