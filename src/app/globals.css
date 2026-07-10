@@ -157,6 +157,62 @@ html.has-cursor .cursor-layer {
   }
 }
 
+/* Entrada above-the-fold — transform-only (não segura o LCP) */
+@keyframes rise {
+  from {
+    transform: translateY(16px);
+  }
+  to {
+    transform: none;
+  }
+}
+.rise {
+  animation: rise var(--dur-reveal) var(--ease-premium) both;
+}
+.rise-1 {
+  animation-delay: 70ms;
+}
+.rise-2 {
+  animation-delay: 150ms;
+}
+.rise-3 {
+  animation-delay: 230ms;
+}
+
+/* Transição de página (transform-only) */
+@keyframes pageEnter {
+  from {
+    transform: translateY(10px);
+  }
+  to {
+    transform: none;
+  }
+}
+.page-enter {
+  animation: pageEnter var(--dur-page) var(--ease-premium) both;
+}
+
+/* Linhas do SplitText */
+.split-line {
+  will-change: transform;
+}
+
+/* Cursor: cresce sobre elementos interativos */
+.cursor-ring {
+  transition:
+    width 0.22s var(--ease-premium),
+    height 0.22s var(--ease-premium),
+    margin 0.22s var(--ease-premium),
+    border-color 0.22s var(--ease-premium);
+}
+html.cursor-hover .cursor-ring {
+  width: 3rem;
+  height: 3rem;
+  margin-left: -24px;
+  margin-top: -24px;
+  border-color: var(--accent-lift);
+}
+
 /* ── Reduced motion: fallback completo ──────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   *,

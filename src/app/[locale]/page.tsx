@@ -7,6 +7,7 @@ import SectionHeading from "@/components/ui/SectionHeading";
 import AvailabilityBadge from "@/components/ui/AvailabilityBadge";
 import Marquee from "@/components/ui/Marquee";
 import ProjectCard from "@/components/work/ProjectCard";
+import Hero3DMount from "@/components/three/Hero3DMount";
 import { btn } from "@/components/ui/button";
 import { getFeaturedProjects } from "@/data/projects";
 import { capabilities } from "@/data/capabilities";
@@ -33,30 +34,27 @@ export default async function HomePage({
 
   return (
     <>
-      {/* Hero — craft leve (tipografia + reveal), sem 3D pesado */}
-      <section className="relative flex min-h-[92vh] items-center">
-        <Container>
-          <Reveal>
-            <p className="text-label text-accent-lift">{th("eyebrow")}</p>
-          </Reveal>
-          <Reveal delay={80}>
-            <h1 className="text-display-xl mt-6 max-w-[15ch] text-balance">
+      {/* Hero — craft (3D leve + posicionamento). Above-the-fold usa .rise (LCP-safe) */}
+      <section className="relative flex min-h-[92vh] items-center overflow-hidden">
+        <Container className="grid w-full items-center gap-10 lg:grid-cols-[1.1fr_0.9fr]">
+          <div>
+            <p className="rise rise-1 text-label text-accent-lift">{th("eyebrow")}</p>
+            <h1 className="rise rise-2 text-display-xl mt-6 max-w-[15ch] text-balance">
               {th("headline")}
             </h1>
-          </Reveal>
-          <Reveal delay={160}>
-            <p className="mt-8 max-w-xl text-lg leading-relaxed text-muted">
+            <p className="rise rise-3 mt-8 max-w-xl text-lg leading-relaxed text-muted">
               {th("lede")}
             </p>
-          </Reveal>
-          <Reveal delay={240}>
-            <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-4">
+            <div className="rise rise-3 mt-10 flex flex-wrap items-center gap-x-6 gap-y-4">
               <Link href="/contato" className={btn("primary")}>
                 {th("cta")}
               </Link>
               <AvailabilityBadge label={th("availability")} />
             </div>
-          </Reveal>
+          </div>
+          <div className="relative hidden h-[520px] lg:block">
+            <Hero3DMount />
+          </div>
         </Container>
       </section>
 

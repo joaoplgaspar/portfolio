@@ -34,13 +34,24 @@ export default function Cursor() {
       raf = requestAnimationFrame(loop);
     };
 
+    const onOver = (e: PointerEvent) => {
+      const target = e.target as Element | null;
+      const interactive = target?.closest?.(
+        "a,button,input,textarea,select,label,[role='button']",
+      );
+      html.classList.toggle("cursor-hover", Boolean(interactive));
+    };
+
     window.addEventListener("pointermove", onMove);
+    document.addEventListener("pointerover", onOver);
     raf = requestAnimationFrame(loop);
 
     return () => {
       window.removeEventListener("pointermove", onMove);
+      document.removeEventListener("pointerover", onOver);
       cancelAnimationFrame(raf);
       html.classList.remove("has-cursor");
+      html.classList.remove("cursor-hover");
     };
   }, []);
 
@@ -49,7 +60,7 @@ export default function Cursor() {
       <div
         ref={ring}
         aria-hidden
-        className="cursor-layer pointer-events-none fixed left-0 top-0 z-[70] hidden size-8 rounded-full border border-fg/40"
+        className="cursor-ring cursor-layer pointer-events-none fixed left-0 top-0 z-[70] hidden size-8 rounded-full border border-fg/40"
         style={{ marginLeft: -16, marginTop: -16 }}
       />
       <div

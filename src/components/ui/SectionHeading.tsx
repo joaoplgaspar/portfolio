@@ -1,4 +1,5 @@
 import Reveal from "@/components/fx/Reveal";
+import SplitReveal from "@/components/fx/SplitReveal";
 
 export default function SectionHeading({
   eyebrow,
@@ -14,9 +15,9 @@ export default function SectionHeading({
       <Reveal>
         <p className="text-label text-accent-lift">{eyebrow}</p>
       </Reveal>
-      <Reveal delay={80}>
-        <h2 className="text-h2 mt-4">{title}</h2>
-      </Reveal>
+      <h2 className="text-h2 mt-4">
+        <SplitReveal>{title}</SplitReveal>
+      </h2>
       {lede && (
         <Reveal delay={140}>
           <p className="mt-4 text-lg text-muted">{lede}</p>
