@@ -8,14 +8,13 @@ import JsonLd from "@/components/seo/JsonLd";
 import Container from "@/components/layout/Container";
 import Reveal from "@/components/fx/Reveal";
 import SectionHeading from "@/components/ui/SectionHeading";
-import AvailabilityBadge from "@/components/ui/AvailabilityBadge";
 import Marquee from "@/components/ui/Marquee";
 import ProjectCard from "@/components/work/ProjectCard";
 import Hero3DMount from "@/components/three/Hero3DMount";
 import { btn } from "@/components/ui/button";
 import { getFeaturedProjects } from "@/data/projects";
 import { capabilities } from "@/data/capabilities";
-import { testimonials, clients } from "@/data/testimonials";
+import { clients } from "@/data/testimonials";
 
 export async function generateMetadata({
   params,
@@ -54,7 +53,7 @@ export default async function HomePage({
   const th = await getTranslations("home");
   const tsw = await getTranslations("selectedWork");
   const tc = await getTranslations("capabilities");
-  const tsp = await getTranslations("socialProof");
+  const texp = await getTranslations("experience");
   const tat = await getTranslations("aboutTeaser");
   const tab = await getTranslations("about");
   const tcc = await getTranslations("contactCta");
@@ -76,11 +75,10 @@ export default async function HomePage({
             <p className="rise rise-3 mt-8 max-w-xl text-lg leading-relaxed text-muted">
               {th("lede")}
             </p>
-            <div className="rise rise-3 mt-10 flex flex-wrap items-center gap-x-6 gap-y-4">
+            <div className="rise rise-3 mt-10">
               <Link href="/contato" className={btn("primary")}>
                 {th("cta")}
               </Link>
-              <AvailabilityBadge label={th("availability")} />
             </div>
           </div>
           <div className="relative hidden h-[520px] lg:block">
@@ -133,26 +131,12 @@ export default async function HomePage({
         </Container>
       </section>
 
-      {/* Prova social */}
+      {/* Trajetória / experiência */}
       <section className="border-t border-line py-24 md:py-40">
         <Container>
-          <SectionHeading eyebrow={tsp("eyebrow")} title={tsp("title")} />
+          <SectionHeading eyebrow={texp("eyebrow")} title={texp("title")} />
           <div className="mt-12">
             <Marquee items={clients} />
-          </div>
-          <div className="mt-16 grid gap-8 sm:grid-cols-2">
-            {testimonials.map((tm, i) => (
-              <Reveal key={i} delay={i * 80}>
-                <figure className="h-full rounded-[4px] border border-line bg-raised p-8">
-                  <blockquote className="text-lg leading-relaxed text-fg">
-                    “{tm.quote[l]}”
-                  </blockquote>
-                  <figcaption className="mt-6 text-label text-muted">
-                    {tm.author} · {tm.role[l]}, {tm.company}
-                  </figcaption>
-                </figure>
-              </Reveal>
-            ))}
           </div>
         </Container>
       </section>

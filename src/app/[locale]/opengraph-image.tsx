@@ -30,19 +30,19 @@ export default function Image() {
             color: "#a84343",
           }}
         >
-          Front-end · E-commerce · Craft
+          Front-end Engineer
         </div>
         <div
           style={{
             display: "flex",
-            fontSize: "92px",
+            fontSize: "88px",
             fontWeight: 700,
             lineHeight: 1.02,
-            maxWidth: "920px",
+            maxWidth: "960px",
             letterSpacing: "-2px",
           }}
         >
-          Front-end para e-commerce premium.
+          Craft e performance, do pixel à arquitetura.
         </div>
         <div
           style={{

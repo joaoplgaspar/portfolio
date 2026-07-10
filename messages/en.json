@@ -1,51 +1,50 @@
 {
   "meta": {
-    "title": "João Pedro Gaspar — Front-end for premium e-commerce",
-    "description": "Front-end developer specialized in premium e-commerce: Shopify, headless, 3D and performance. Store-grade craft applied to a portfolio."
+    "title": "João Pedro Gaspar — Front-end Engineer",
+    "description": "Front-end engineer focused on performance, craft and clean code — e-commerce, headless (Shopify Hydrogen) and 3D experiences."
   },
   "nav": {
     "work": "Work",
     "about": "About",
     "lab": "Lab",
     "contact": "Contact",
-    "startProject": "Start a project",
+    "startProject": "Get in touch",
     "menu": "Menu",
     "close": "Close"
   },
   "home": {
-    "eyebrow": "Front-end · E-commerce · Craft",
-    "headline": "Front-end for premium e-commerce.",
-    "lede": "I build storefronts that load fast, convert, and feel expensive — Shopify, headless, motion and 3D under a strict performance budget.",
-    "cta": "Start a project",
-    "availability": "Available for new projects"
+    "eyebrow": "Front-end Engineer",
+    "headline": "Craft and performance, from pixel to architecture.",
+    "lede": "I work with e-commerce, headless (Shopify Hydrogen) and 3D experiences — always obsessed with performance and clean code.",
+    "cta": "Get in touch"
   },
   "selectedWork": {
     "eyebrow": "Selected work",
-    "title": "Built to sell.",
-    "lede": "Every project treated as a product — not a portfolio slide.",
+    "title": "A few cases, up close.",
+    "lede": "The problem, the technical decisions and the result — no fluff.",
     "viewAll": "View all work"
   },
   "capabilities": {
     "eyebrow": "What I do",
-    "title": "Four things, done well."
+    "title": "Four fronts, done well."
   },
-  "socialProof": {
-    "eyebrow": "Trust",
-    "title": "Brands that trusted the work."
+  "experience": {
+    "eyebrow": "Track record",
+    "title": "Where I've been."
   },
   "aboutTeaser": {
     "eyebrow": "Who's behind it",
     "readMore": "More about me"
   },
   "contactCta": {
-    "title": "Let's build something that sells.",
-    "cta": "Start a project",
-    "note": "Reply within 1 business day."
+    "title": "Want to talk shop?",
+    "cta": "Get in touch",
+    "note": "I usually reply fast."
   },
   "work": {
     "eyebrow": "Work",
     "title": "Work",
-    "lede": "Stores, landings and apps — from the problem to the number."
+    "lede": "Cases up close: problem, technical decisions and result."
   },
   "project": {
     "overview": "Overview",
@@ -65,29 +64,27 @@
   },
   "about": {
     "eyebrow": "About",
-    "title": "A product developer, obsessed with craft.",
-    "cta": "Start a project"
+    "title": "A developer obsessed with craft and performance.",
+    "cta": "Get in touch"
   },
   "lab": {
     "eyebrow": "Lab",
     "title": "Lab",
-    "lede": "Experiments, demos and curiosities — where I test ideas outside client work."
+    "lede": "Experiments, demos and curiosities — where I test new ideas and techniques."
   },
   "contact": {
     "eyebrow": "Contact",
-    "title": "Start a project",
-    "lede": "Tell me briefly what you need. I'll reply with a clear next step.",
-    "or": "or reach out directly",
+    "title": "Let's talk",
+    "lede": "Drop me a message — about work, an idea, or just to talk front-end.",
+    "or": "or find me on",
     "form": {
       "name": "Name",
       "email": "Email",
-      "company": "Company",
-      "type": "Project type",
-      "budget": "Approx. budget",
+      "company": "Company (optional)",
       "message": "Message",
       "submit": "Send message",
       "sending": "Sending…",
-      "success": "Got it. I'll reply within 1 business day.",
+      "success": "Got it. I'll reply soon.",
       "error": "Please fill in name, email and message."
     }
   },
