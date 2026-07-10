@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
+import { pageMeta } from "@/lib/metadata";
 import Container from "@/components/layout/Container";
 import Reveal from "@/components/fx/Reveal";
 import { btn } from "@/components/ui/button";
@@ -13,8 +14,14 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
+  const l = locale as Locale;
   const t = await getTranslations({ locale, namespace: "about" });
-  return { title: t("eyebrow") };
+  return pageMeta({
+    locale: l,
+    path: "/sobre",
+    title: t("eyebrow"),
+    description: about.paragraphs[l][0],
+  });
 }
 
 export default async function AboutPage({

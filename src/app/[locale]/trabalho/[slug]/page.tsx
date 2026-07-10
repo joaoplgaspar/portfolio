@@ -3,10 +3,13 @@ import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
+import { pageMeta } from "@/lib/metadata";
+import { siteConfig } from "@/lib/site";
 import Container from "@/components/layout/Container";
 import Reveal from "@/components/fx/Reveal";
 import ProjectCover from "@/components/work/ProjectCover";
 import SpecSheet from "@/components/work/SpecSheet";
+import JsonLd from "@/components/seo/JsonLd";
 import { getProjects, getProject } from "@/data/projects";
 
 export function generateStaticParams() {
@@ -18,10 +21,16 @@ export async function generateMetadata({
 }: {
   params: Promise<{ locale: string; slug: string }>;
 }): Promise<Metadata> {
-  const { slug } = await params;
+  const { locale, slug } = await params;
   const project = getProject(slug);
   if (!project) return {};
-  return { title: `${project.title} — ${project.client}` };
+  const l = locale as Locale;
+  return pageMeta({
+    locale: l,
+    path: `/trabalho/${slug}`,
+    title: project.title,
+    description: project.summary[l],
+  });
 }
 
 export default async function ProjectPage({
@@ -40,8 +49,19 @@ export default async function ProjectPage({
   const idx = all.findIndex((p) => p.slug === slug);
   const next = all[(idx + 1) % all.length];
 
+  const creativeWork = {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    name: project.title,
+    about: project.summary[l],
+    creator: { "@type": "Person", name: siteConfig.name, url: siteConfig.url },
+    dateCreated: String(project.year),
+    keywords: project.stack.join(", "),
+  };
+
   return (
     <article>
+      <JsonLd data={creativeWork} />
       {/* Hero do projeto: product shot + título + resultado */}
       <Container className="pt-32 md:pt-40">
         <Reveal>

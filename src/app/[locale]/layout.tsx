@@ -27,7 +27,31 @@ export async function generateMetadata({
     metadataBase: new URL(siteConfig.url),
     title: { default: t("title"), template: `%s — ${siteConfig.name}` },
     description: t("description"),
+    applicationName: siteConfig.name,
+    authors: [{ name: siteConfig.name, url: siteConfig.url }],
+    creator: siteConfig.name,
+    keywords: [
+      "front-end",
+      "e-commerce",
+      "Shopify",
+      "headless",
+      "React",
+      "Next.js",
+      "3D",
+      "GSAP",
+      "performance",
+      "portfólio",
+    ],
     icons: { icon: "/favicon-32x32.png" },
+    robots: { index: true, follow: true },
+    openGraph: {
+      type: "website",
+      siteName: siteConfig.name,
+      locale: locale === "en" ? "en_US" : "pt_BR",
+      title: t("title"),
+      description: t("description"),
+    },
+    twitter: { card: "summary_large_image" },
   };
 }
 

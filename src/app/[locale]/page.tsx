@@ -1,6 +1,10 @@
+import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
+import { pageMeta } from "@/lib/metadata";
+import { siteConfig } from "@/lib/site";
+import JsonLd from "@/components/seo/JsonLd";
 import Container from "@/components/layout/Container";
 import Reveal from "@/components/fx/Reveal";
 import SectionHeading from "@/components/ui/SectionHeading";
@@ -13,6 +17,22 @@ import { getFeaturedProjects } from "@/data/projects";
 import { capabilities } from "@/data/capabilities";
 import { testimonials, clients } from "@/data/testimonials";
 
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "meta" });
+  const base = pageMeta({
+    locale: locale as Locale,
+    path: "/",
+    title: t("title"),
+    description: t("description"),
+  });
+  return { ...base, title: { absolute: t("title") } };
+}
+
 export default async function HomePage({
   params,
 }: {
@@ -21,6 +41,15 @@ export default async function HomePage({
   const { locale } = await params;
   setRequestLocale(locale);
   const l = locale as Locale;
+
+  const person = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: siteConfig.name,
+    url: siteConfig.url,
+    jobTitle: siteConfig.role,
+    sameAs: [siteConfig.social.linkedin, siteConfig.social.github].filter(Boolean),
+  };
 
   const th = await getTranslations("home");
   const tsw = await getTranslations("selectedWork");
@@ -34,6 +63,8 @@ export default async function HomePage({
 
   return (
     <>
+      <JsonLd data={person} />
+
       {/* Hero — craft (3D leve + posicionamento). Above-the-fold usa .rise (LCP-safe) */}
       <section className="relative flex min-h-[92vh] items-center overflow-hidden">
         <Container className="grid w-full items-center gap-10 lg:grid-cols-[1.1fr_0.9fr]">
