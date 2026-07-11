@@ -6,15 +6,23 @@ import { pageMeta } from "@/lib/metadata";
 import { siteConfig } from "@/lib/site";
 import JsonLd from "@/components/seo/JsonLd";
 import Container from "@/components/layout/Container";
-import Reveal from "@/components/fx/Reveal";
-import SectionHeading from "@/components/ui/SectionHeading";
 import Marquee from "@/components/ui/Marquee";
-import ProjectCard from "@/components/work/ProjectCard";
 import Hero3DMount from "@/components/three/Hero3DMount";
 import { btn } from "@/components/ui/button";
 import { getFeaturedProjects } from "@/data/projects";
 import { capabilities } from "@/data/capabilities";
 import { clients } from "@/data/testimonials";
+
+const STACK = [
+  "React",
+  "Next.js",
+  "TypeScript",
+  "Shopify Hydrogen",
+  "GraphQL",
+  "GSAP",
+  "Three.js",
+  "Tailwind",
+];
 
 export async function generateMetadata({
   params,
@@ -32,6 +40,9 @@ export async function generateMetadata({
   return { ...base, title: { absolute: t("title") } };
 }
 
+const tile =
+  "group relative flex flex-col overflow-hidden rounded-[6px] border border-line bg-raised transition-colors duration-300";
+
 export default async function HomePage({
   params,
 }: {
@@ -40,6 +51,16 @@ export default async function HomePage({
   const { locale } = await params;
   setRequestLocale(locale);
   const l = locale as Locale;
+
+  const th = await getTranslations("home");
+  const tw = await getTranslations("selectedWork");
+  const tc = await getTranslations("capabilities");
+  const texp = await getTranslations("experience");
+  const tlab = await getTranslations("lab");
+  const tcc = await getTranslations("contactCta");
+
+  const featured = getFeaturedProjects();
+  const top = featured[0];
 
   const person = {
     "@context": "https://schema.org",
@@ -50,140 +71,120 @@ export default async function HomePage({
     sameAs: [siteConfig.social.linkedin, siteConfig.social.github].filter(Boolean),
   };
 
-  const th = await getTranslations("home");
-  const tsw = await getTranslations("selectedWork");
-  const tc = await getTranslations("capabilities");
-  const texp = await getTranslations("experience");
-  const tat = await getTranslations("aboutTeaser");
-  const tab = await getTranslations("about");
-  const tcc = await getTranslations("contactCta");
-
-  const featured = getFeaturedProjects();
-
   return (
-    <>
+    <Container className="pb-16 pt-28 md:pt-32">
       <JsonLd data={person} />
 
-      {/* Hero — craft (3D leve + posicionamento). Above-the-fold usa .rise (LCP-safe) */}
-      <section className="relative flex min-h-[92vh] items-center overflow-hidden">
-        <Container className="grid w-full items-center gap-10 lg:grid-cols-[1.1fr_0.9fr]">
+      <div className="grid auto-rows-[minmax(148px,auto)] grid-cols-2 gap-3 lg:auto-rows-[212px] lg:grid-cols-4">
+        {/* Identidade */}
+        <section className="group relative col-span-2 row-span-2 flex flex-col justify-between overflow-hidden rounded-[6px] border border-line bg-raised p-7">
+          <p className="rise text-label text-accent-lift">{th("eyebrow")}</p>
           <div>
-            <p className="rise rise-1 text-label text-accent-lift">{th("eyebrow")}</p>
-            <h1 className="rise rise-2 text-display-xl mt-6 max-w-[15ch] text-balance">
+            <h1 className="rise rise-1 font-display text-[clamp(2rem,4vw,3.4rem)] font-semibold leading-[0.98] tracking-tight text-balance">
               {th("headline")}
             </h1>
-            <p className="rise rise-3 mt-8 max-w-xl text-lg leading-relaxed text-muted">
+            <p className="rise rise-2 mt-4 max-w-md leading-relaxed text-muted">
               {th("lede")}
             </p>
-            <div className="rise rise-3 mt-10">
-              <Link href="/contato" className={btn("primary")}>
-                {th("cta")}
-              </Link>
+            <Link href="/contato" className={`rise rise-3 mt-6 ${btn("primary")}`}>
+              {th("cta")}
+            </Link>
+          </div>
+        </section>
+
+        {/* 3D — tile "vivo" */}
+        <div className={`rise rise-1 col-span-2 row-span-1 lg:row-span-2 ${tile}`}>
+          <Hero3DMount />
+          <span className="pointer-events-none absolute bottom-4 left-5 text-label text-muted/70">
+            WebGL
+          </span>
+        </div>
+
+        {/* Projeto em destaque */}
+        {top && (
+          <Link
+            href={`/trabalho/${top.slug}`}
+            className={`rise rise-2 col-span-2 row-span-1 justify-between p-6 hover:border-fg/25 ${tile}`}
+          >
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <p className="text-label text-muted">{tw("eyebrow")}</p>
+                <h2 className="text-h3 mt-2">{top.title}</h2>
+                <p className="mt-1 line-clamp-2 text-sm text-muted">{top.summary[l]}</p>
+              </div>
+              <span className="text-label text-muted transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1">
+                ↗
+              </span>
             </div>
-          </div>
-          <div className="relative hidden h-[520px] lg:block">
-            <Hero3DMount />
-          </div>
-        </Container>
-      </section>
+            <div className="mt-4 h-1 w-full rounded-full bg-accent/25 transition-colors duration-300 group-hover:bg-accent" />
+          </Link>
+        )}
 
-      {/* Selected work */}
-      <section className="border-t border-line py-24 md:py-40">
-        <Container>
-          <div className="flex items-end justify-between gap-6">
-            <SectionHeading eyebrow={tsw("eyebrow")} title={tsw("title")} lede={tsw("lede")} />
-            <Reveal>
-              <Link
-                href="/trabalho"
-                className="hidden shrink-0 text-label text-muted transition-colors hover:text-fg sm:inline"
-              >
-                {tsw("viewAll")} ↗
-              </Link>
-            </Reveal>
-          </div>
-          <div className="mt-14 grid gap-x-8 gap-y-14 sm:grid-cols-2">
-            {featured.map((p, i) => (
-              <Reveal key={p.slug} delay={i * 80}>
-                <ProjectCard project={p} locale={l} />
-              </Reveal>
-            ))}
-          </div>
-        </Container>
-      </section>
-
-      {/* Capabilities */}
-      <section className="border-t border-line py-24 md:py-40">
-        <Container>
-          <SectionHeading eyebrow={tc("eyebrow")} title={tc("title")} />
-          <div className="mt-14 grid gap-x-10 gap-y-10 sm:grid-cols-2">
+        {/* Capabilities */}
+        <div className={`rise rise-2 col-span-1 row-span-1 p-6 ${tile}`}>
+          <p className="text-label text-accent-lift">{tc("eyebrow")}</p>
+          <ul className="mt-auto flex flex-col gap-1.5">
             {capabilities.map((c, i) => (
-              <Reveal key={i} delay={i * 70}>
-                <div className="border-t border-line pt-6">
-                  <span className="text-label text-muted">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <h3 className="text-h3 mt-3">{c.title[l]}</h3>
-                  <p className="mt-2 leading-relaxed text-muted">{c.desc[l]}</p>
-                </div>
-              </Reveal>
+              <li key={i} className="text-sm font-medium">
+                {c.title[l]}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Lab */}
+        <Link
+          href="/lab"
+          className={`rise rise-3 col-span-1 row-span-1 justify-between p-6 hover:border-fg/25 ${tile}`}
+        >
+          <p className="text-label text-accent-lift">{tlab("eyebrow")}</p>
+          <div>
+            <p className="line-clamp-2 text-sm text-muted">{tlab("lede")}</p>
+            <span className="mt-2 inline-block text-label text-muted transition-colors group-hover:text-fg">
+              ↗
+            </span>
+          </div>
+        </Link>
+
+        {/* Stack */}
+        <div className={`rise rise-3 col-span-2 row-span-1 justify-between p-6 ${tile}`}>
+          <p className="text-label text-muted">Stack</p>
+          <div className="flex flex-wrap gap-2">
+            {STACK.map((s) => (
+              <span
+                key={s}
+                className="rounded-[3px] border border-line px-2.5 py-1 font-mono text-xs text-muted"
+              >
+                {s}
+              </span>
             ))}
           </div>
-        </Container>
-      </section>
+        </div>
 
-      {/* Trajetória / experiência */}
-      <section className="border-t border-line py-24 md:py-40">
-        <Container>
-          <SectionHeading eyebrow={texp("eyebrow")} title={texp("title")} />
-          <div className="mt-12">
+        {/* Trajetória */}
+        <div className={`rise rise-3 col-span-2 row-span-1 justify-between p-6 ${tile}`}>
+          <p className="text-label text-accent-lift">{texp("eyebrow")}</p>
+          <div className="-mx-6">
             <Marquee items={clients} />
           </div>
-        </Container>
-      </section>
+        </div>
 
-      {/* About teaser */}
-      <section className="border-t border-line py-24 md:py-40">
-        <Container className="grid gap-12 md:grid-cols-[0.9fr_1.1fr] md:items-center">
-          <Reveal>
-            <div className="aspect-[4/5] w-full max-w-sm rounded-[4px] border border-line bg-raised" />
-          </Reveal>
-          <div>
-            <Reveal>
-              <p className="text-label text-accent-lift">{tat("eyebrow")}</p>
-            </Reveal>
-            <Reveal delay={80}>
-              <p className="text-h2 mt-4 max-w-xl text-balance">{tab("title")}</p>
-            </Reveal>
-            <Reveal delay={160}>
-              <Link
-                href="/sobre"
-                className="mt-8 inline-block text-label text-muted transition-colors hover:text-fg"
-              >
-                {tat("readMore")} ↗
-              </Link>
-            </Reveal>
-          </div>
-        </Container>
-      </section>
-
-      {/* CTA final */}
-      <section className="border-t border-line py-28 md:py-48">
-        <Container className="text-center">
-          <Reveal>
-            <h2 className="text-display mx-auto max-w-[18ch] text-balance">
-              {tcc("title")}
-            </h2>
-          </Reveal>
-          <Reveal delay={100}>
-            <div className="mt-10 flex flex-col items-center gap-4">
-              <Link href="/contato" className={btn("primary")}>
-                {tcc("cta")}
-              </Link>
-              <span className="text-label text-muted">{tcc("note")}</span>
+        {/* Contato — faixa */}
+        <Link
+          href="/contato"
+          className={`rise rise-3 col-span-2 row-span-1 justify-center p-7 hover:border-fg/25 lg:col-span-4 ${tile}`}
+        >
+          <div className="flex items-center justify-between gap-4">
+            <div>
+              <p className="text-h3">{tcc("title")}</p>
+              <p className="mt-1 text-sm text-muted">{siteConfig.email}</p>
             </div>
-          </Reveal>
-        </Container>
-      </section>
-    </>
+            <span className={`hidden shrink-0 sm:inline-flex ${btn("primary")}`}>
+              {tcc("cta")}
+            </span>
+          </div>
+        </Link>
+      </div>
+    </Container>
   );
 }
