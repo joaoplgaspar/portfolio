@@ -25,4 +25,8 @@ export const about = {
     { label: { pt: "Stack", en: "Stack" }, value: "React · Next.js · Shopify" },
     { label: { pt: "Extra", en: "Extra" }, value: "3D · GSAP · Performance" },
   ] satisfies Fact[],
+  interests: {
+    pt: "Fora do código: música, vinil e times de futebol perdidos.",
+    en: "Off the clock: music, vinyl and hopeless football teams.",
+  } satisfies Record<"pt" | "en", string>,
 };

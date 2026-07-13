@@ -37,7 +37,9 @@ export default async function LabPage({
         <p className="text-label text-accent-lift">{t("eyebrow")}</p>
       </Reveal>
       <Reveal delay={80}>
-        <h1 className="text-display mt-4">{t("title")}</h1>
+        <h1 className="mt-4 font-display text-[clamp(2.5rem,6vw,4.8rem)] font-semibold leading-[0.95] tracking-tight">
+          {t("title")}
+        </h1>
       </Reveal>
       <Reveal delay={140}>
         <p className="mt-4 max-w-xl text-lg text-muted">{t("lede")}</p>

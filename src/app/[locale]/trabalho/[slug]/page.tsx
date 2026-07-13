@@ -66,14 +66,14 @@ export default async function ProjectPage({
       <Container className="pt-32 md:pt-40">
         <Reveal>
           <Link
-            href="/trabalho"
+            href="/"
             className="text-label text-muted transition-colors hover:text-fg"
           >
             ← {t("backToWork")}
           </Link>
         </Reveal>
         <Reveal delay={60}>
-          <h1 className="text-display mt-6 max-w-[16ch] text-balance">
+          <h1 className="mt-6 max-w-[14ch] font-display text-[clamp(2.6rem,7vw,5.4rem)] font-semibold leading-[0.95] tracking-tight text-balance">
             {project.title}
           </h1>
         </Reveal>

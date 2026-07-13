@@ -1,11 +1,9 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { Link } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
 import { pageMeta } from "@/lib/metadata";
 import Container from "@/components/layout/Container";
 import Reveal from "@/components/fx/Reveal";
-import { btn } from "@/components/ui/button";
 import { about } from "@/data/about";
 
 export async function generateMetadata({
@@ -40,7 +38,9 @@ export default async function AboutPage({
         <p className="text-label text-accent-lift">{t("eyebrow")}</p>
       </Reveal>
       <Reveal delay={80}>
-        <h1 className="text-display mt-4 max-w-[18ch] text-balance">{t("title")}</h1>
+        <h1 className="mt-4 max-w-[18ch] font-display text-[clamp(2.5rem,6vw,4.8rem)] font-semibold leading-[0.95] tracking-tight text-balance">
+          {t("title")}
+        </h1>
       </Reveal>
 
       <div className="mt-14 grid gap-12 md:grid-cols-[0.8fr_1.2fr]">
@@ -68,9 +68,9 @@ export default async function AboutPage({
             </Reveal>
           ))}
           <Reveal delay={200}>
-            <Link href="/contato" className={`${btn("primary")} mt-4 self-start`}>
-              {t("cta")}
-            </Link>
+            <p className="mt-2 font-mono text-sm text-stone-400">
+              {about.interests[l]}
+            </p>
           </Reveal>
         </div>
       </div>
