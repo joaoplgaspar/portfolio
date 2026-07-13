@@ -6,6 +6,7 @@ import { pageMeta } from "@/lib/metadata";
 import { siteConfig } from "@/lib/site";
 import JsonLd from "@/components/seo/JsonLd";
 import Container from "@/components/layout/Container";
+import IndexList from "@/components/work/IndexList";
 import { getProjects } from "@/data/projects";
 
 export async function generateMetadata({
@@ -55,29 +56,17 @@ export default async function HomePage({
         <p className="mt-1 text-label text-stone-400">{siteConfig.location}</p>
       </div>
 
-      {/* Índice — a lista É o hero */}
-      <ul id="work" className="mt-14 border-t border-line md:mt-20">
-        {projects.map((p, i) => (
-          <li
-            key={p.slug}
-            className="rise"
-            style={{ animationDelay: `${Math.min(i * 55, 330)}ms` }}
-          >
-            <Link
-              href={`/trabalho/${p.slug}`}
-              className="group flex items-baseline justify-between gap-6 border-b border-line py-6 md:py-8"
-            >
-              <span className="font-display text-[clamp(1.7rem,5.5vw,4.2rem)] font-semibold leading-[0.95] tracking-tight transition-colors duration-300 group-hover:text-accent-lift">
-                {p.title}
-              </span>
-              <span className="flex shrink-0 items-baseline gap-4 font-mono text-xs uppercase tracking-widest text-stone-400 sm:gap-8">
-                <span className="hidden sm:inline">{p.type}</span>
-                <span>{p.year}</span>
-              </span>
-            </Link>
-          </li>
-        ))}
-      </ul>
+      {/* Índice interativo — a lista É o hero */}
+      <div id="work">
+        <IndexList
+          items={projects.map((p) => ({
+            slug: p.slug,
+            title: p.title,
+            type: p.type,
+            year: p.year,
+          }))}
+        />
+      </div>
 
       {/* Faixa Lab */}
       <Link

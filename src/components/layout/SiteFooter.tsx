@@ -47,7 +47,7 @@ export default async function SiteFooter() {
           <p className="font-mono text-sm text-stone-400">{siteConfig.stack}</p>
         </div>
 
-        <div className="mt-12 flex items-center justify-between border-t border-line pt-6 text-label text-muted">
+        <div className="mt-12 flex flex-col gap-2 border-t border-line pt-6 text-label text-muted sm:flex-row sm:items-center sm:justify-between">
           <span>{siteConfig.location}</span>
           <span>
             © {year} {siteConfig.name}

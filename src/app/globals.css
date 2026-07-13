@@ -12,6 +12,7 @@
   --line: #3a362d;
   --fg: #ede8de;
   --muted: #b7b1a4;
+  --stone-400: #a69f91;
 
   /* acento premium (oxblood/bordô — NÃO terracota) */
   --accent: #7c2d2d;
@@ -211,6 +212,190 @@ html.cursor-hover .cursor-ring {
   margin-left: -24px;
   margin-top: -24px;
   border-color: var(--accent-lift);
+}
+
+/* ── Index list (home v2) — assinatura: preview seguindo o cursor ── */
+.idx-list {
+  list-style: none;
+  margin: clamp(22px, 3vw, 40px) 0 0;
+  padding: 0;
+  border-top: 1px solid var(--line);
+}
+.idx-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 24px;
+  padding: clamp(18px, 2.4vw, 30px) 0;
+  border-bottom: 1px solid var(--line);
+  color: var(--fg);
+  text-decoration: none;
+  opacity: 1;
+  transition: opacity var(--dur-micro) var(--ease-premium);
+  outline: none;
+}
+.idx-list:hover .idx-row,
+.idx-list:focus-within .idx-row {
+  opacity: 0.3;
+}
+.idx-list .idx-row:hover,
+.idx-list .idx-row:focus-visible {
+  opacity: 1;
+}
+.idx-row:focus-visible {
+  outline: 2px solid var(--accent-lift);
+  outline-offset: 6px;
+}
+.idx-title {
+  font-family: var(--ff-display), sans-serif;
+  font-weight: 600;
+  white-space: nowrap;
+  font-size: clamp(1.9rem, 8.8vw, 5.5rem);
+  line-height: 0.92;
+  letter-spacing: -0.028em;
+  transition:
+    color 0.3s var(--ease-premium),
+    transform 0.4s var(--ease-premium);
+}
+.idx-row:hover .idx-title,
+.idx-row:focus-visible .idx-title {
+  color: var(--accent-lift);
+  transform: translateX(12px);
+}
+.idx-meta {
+  display: flex;
+  align-items: baseline;
+  flex-shrink: 0;
+  font-family: var(--ff-mono), monospace;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--stone-400);
+}
+.idx-type {
+  width: 180px;
+  text-align: right;
+  white-space: nowrap;
+}
+.idx-year {
+  width: 58px;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.idx-inline {
+  display: none;
+}
+
+.idx-preview {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 45;
+  width: 360px;
+  height: 238px;
+  pointer-events: none;
+  opacity: 0;
+  transform: translate(-999px, -999px);
+  transition: opacity 0.3s var(--ease-premium);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 30px 80px -22px rgba(0, 0, 0, 0.75);
+  will-change: transform;
+}
+.idx-preview[data-on="true"] {
+  opacity: 1;
+}
+.idx-preview.anchored {
+  left: auto;
+  right: 5vw;
+  top: 50vh;
+  transform: translateY(-50%) !important;
+}
+
+.idx-shot {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px;
+  background: linear-gradient(150deg, #28221b, #1b1a17 62%);
+  animation: shotIn 0.28s var(--ease-premium) both;
+}
+.idx-shot::before {
+  content: "";
+  position: absolute;
+  right: -40px;
+  top: -40px;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--accent) 58%, transparent), transparent 66%);
+}
+.idx-shot-title {
+  position: relative;
+  font-family: var(--ff-display), sans-serif;
+  font-weight: 600;
+  font-size: 28px;
+  line-height: 0.98;
+  letter-spacing: -0.02em;
+  color: var(--fg);
+}
+.idx-shot-meta {
+  position: relative;
+  font-family: var(--ff-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--stone-400);
+}
+.idx-shot-bar {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 4px;
+  width: 100%;
+  background: var(--accent);
+}
+@keyframes shotIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (hover: none), (pointer: coarse), (max-width: 760px) {
+  .idx-preview {
+    display: none;
+  }
+  .idx-list:hover .idx-row,
+  .idx-list:focus-within .idx-row {
+    opacity: 1;
+  }
+  .idx-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .idx-row:hover .idx-title {
+    transform: none;
+  }
+  .idx-title {
+    white-space: normal;
+    font-size: clamp(2rem, 9vw, 3rem);
+  }
+  .idx-inline {
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 190px;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    overflow: hidden;
+  }
 }
 
 /* ── Reduced motion: fallback completo ──────────────────────── */
