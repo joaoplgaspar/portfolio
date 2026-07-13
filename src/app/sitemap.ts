@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { getProjects } from "@/data/projects";
 import { siteConfig } from "@/lib/site";
 
-const PATHS = ["/", "/trabalho", "/sobre", "/lab", "/contato"];
+const PATHS = ["/", "/sobre", "/lab"];
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const projectPaths = getProjects().map((p) => `/trabalho/${p.slug}`);

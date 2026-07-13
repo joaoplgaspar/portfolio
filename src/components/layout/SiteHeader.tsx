@@ -4,13 +4,12 @@ import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
 import { siteConfig } from "@/lib/site";
-import { btn } from "@/components/ui/button";
 import LocaleSwitch from "@/components/i18n/LocaleSwitch";
 
 const LINKS = [
-  { href: "/trabalho", key: "work" },
-  { href: "/sobre", key: "about" },
+  { href: "/", key: "work" },
   { href: "/lab", key: "lab" },
+  { href: "/sobre", key: "about" },
 ] as const;
 
 export default function SiteHeader() {
@@ -49,26 +48,21 @@ export default function SiteHeader() {
           {siteConfig.name}
         </Link>
 
-        {/* desktop */}
         <nav className="hidden items-center gap-8 md:flex">
           {LINKS.map((l) => (
             <Link
               key={l.href}
               href={l.href}
               className={`text-label transition-colors hover:text-fg ${
-                pathname.startsWith(l.href) ? "text-fg" : "text-muted"
+                pathname === l.href ? "text-fg" : "text-muted"
               }`}
             >
               {t(l.key)}
             </Link>
           ))}
           <LocaleSwitch />
-          <Link href="/contato" className={btn("primary")}>
-            {t("startProject")}
-          </Link>
         </nav>
 
-        {/* mobile toggle */}
         <button
           type="button"
           onClick={() => setOpen((v) => !v)}
@@ -80,12 +74,8 @@ export default function SiteHeader() {
         </button>
       </div>
 
-      {/* mobile menu */}
       {open && (
-        <nav
-          id="mobile-menu"
-          className="border-t border-line bg-bg md:hidden"
-        >
+        <nav id="mobile-menu" className="border-t border-line bg-bg md:hidden">
           <div className="mx-auto flex max-w-[1280px] flex-col gap-6 px-6 py-8">
             {LINKS.map((l) => (
               <Link
@@ -97,15 +87,8 @@ export default function SiteHeader() {
                 {t(l.key)}
               </Link>
             ))}
-            <div className="mt-2 flex items-center justify-between">
+            <div className="mt-2">
               <LocaleSwitch />
-              <Link
-                href="/contato"
-                onClick={() => setOpen(false)}
-                className={btn("primary")}
-              >
-                {t("startProject")}
-              </Link>
             </div>
           </div>
         </nav>
