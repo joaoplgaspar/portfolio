@@ -7,7 +7,9 @@ import { siteConfig } from "@/lib/site";
 import JsonLd from "@/components/seo/JsonLd";
 import Container from "@/components/layout/Container";
 import IndexList from "@/components/work/IndexList";
-import { getProjects } from "@/data/projects";
+import { fetchPublishedProjects } from "@/data/projects";
+
+export const revalidate = 60; // ISR: novos projetos aparecem sem redeploy
 
 export async function generateMetadata({
   params,
@@ -35,7 +37,7 @@ export default async function HomePage({
 
   const th = await getTranslations("home");
   const tlab = await getTranslations("lab");
-  const projects = getProjects();
+  const projects = await fetchPublishedProjects();
 
   const person = {
     "@context": "https://schema.org",
@@ -64,6 +66,7 @@ export default async function HomePage({
             title: p.title,
             type: p.type,
             year: p.year,
+            cover: p.cover,
           }))}
         />
       </div>

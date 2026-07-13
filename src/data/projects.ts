@@ -138,3 +138,36 @@ export function getFeaturedProjects(): Project[] {
 export function getProject(slug: string): Project | undefined {
   return projects.find((p) => p.slug === slug && p.published);
 }
+
+/**
+ * Leitura real (Firestore). Lê a coleção `projects` (published:true) quando o
+ * Firebase está configurado; senão (ou vazio/erro) cai nos mocks. Import dinâmico
+ * — o Firestore só entra no bundle quando usado.
+ */
+export async function fetchPublishedProjects(): Promise<Project[]> {
+  try {
+    const { isFirebaseConfigured, getFirebaseApp } = await import("@/lib/firebase");
+    const app = getFirebaseApp();
+    if (!isFirebaseConfigured || !app) return getProjects();
+
+    const { getFirestore, collection, getDocs, query, where } = await import(
+      "firebase/firestore"
+    );
+    const db = getFirestore(app);
+    const snap = await getDocs(
+      query(collection(db, "projects"), where("published", "==", true)),
+    );
+    if (snap.empty) return getProjects();
+
+    return snap.docs
+      .map((d) => d.data() as Project)
+      .sort((a, b) => a.order - b.order);
+  } catch {
+    return getProjects();
+  }
+}
+
+export async function fetchProject(slug: string): Promise<Project | undefined> {
+  const all = await fetchPublishedProjects();
+  return all.find((p) => p.slug === slug);
+}

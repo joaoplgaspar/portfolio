@@ -1,17 +1,33 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { CldImage } from "next-cloudinary";
 import { Link } from "@/i18n/navigation";
+
+const CLOUD = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
 
 export type IndexItem = {
   slug: string;
   title: string;
   type: string;
   year: number;
+  cover?: string;
 };
 
-/** "Product shot" — placeholder em CSS (troca por <img> do Cloudinary quando plugar). */
+/** Cover do preview: imagem do Cloudinary se houver `cover`; senão placeholder CSS. */
 function Shot({ item }: { item: IndexItem }) {
+  if (CLOUD && item.cover) {
+    return (
+      <CldImage
+        src={item.cover}
+        width={400}
+        height={260}
+        crop="fill"
+        alt={item.title}
+        className="absolute inset-0 h-full w-full object-cover"
+      />
+    );
+  }
   return (
     <div className="idx-shot">
       <span className="idx-shot-title">{item.title}</span>

@@ -10,10 +10,13 @@ import Reveal from "@/components/fx/Reveal";
 import ProjectCover from "@/components/work/ProjectCover";
 import SpecSheet from "@/components/work/SpecSheet";
 import JsonLd from "@/components/seo/JsonLd";
-import { getProjects, getProject } from "@/data/projects";
+import { fetchPublishedProjects, fetchProject } from "@/data/projects";
 
-export function generateStaticParams() {
-  return getProjects().map((p) => ({ slug: p.slug }));
+export const revalidate = 60; // ISR
+export const dynamicParams = true; // slugs novos renderizam sob demanda
+
+export async function generateStaticParams() {
+  return (await fetchPublishedProjects()).map((p) => ({ slug: p.slug }));
 }
 
 export async function generateMetadata({
@@ -22,7 +25,7 @@ export async function generateMetadata({
   params: Promise<{ locale: string; slug: string }>;
 }): Promise<Metadata> {
   const { locale, slug } = await params;
-  const project = getProject(slug);
+  const project = await fetchProject(slug);
   if (!project) return {};
   const l = locale as Locale;
   return pageMeta({
@@ -41,11 +44,11 @@ export default async function ProjectPage({
   const { locale, slug } = await params;
   setRequestLocale(locale);
   const l = locale as Locale;
-  const project = getProject(slug);
+  const project = await fetchProject(slug);
   if (!project) notFound();
 
   const t = await getTranslations("project");
-  const all = getProjects();
+  const all = await fetchPublishedProjects();
   const idx = all.findIndex((p) => p.slug === slug);
   const next = all[(idx + 1) % all.length];
 
