@@ -1,0 +1,102 @@
+{
+  "meta": {
+    "title": "João Pedro Gaspar — Front-end Engineer",
+    "description": "Front-end engineer focused on performance, craft and clean code — e-commerce, headless (Shopify Hydrogen) and 3D experiences."
+  },
+  "nav": {
+    "work": "Work",
+    "about": "About",
+    "lab": "Lab",
+    "contact": "Contact",
+    "startProject": "Get in touch",
+    "menu": "Menu",
+    "close": "Close"
+  },
+  "home": {
+    "eyebrow": "Front-end Engineer",
+    "tagline": "Front-end engineer — I build what the platform says you can't.",
+    "headline": "Craft and performance, from pixel to architecture.",
+    "lede": "I work with e-commerce, headless (Shopify Hydrogen) and 3D experiences — always obsessed with performance and clean code.",
+    "cta": "Get in touch"
+  },
+  "selectedWork": {
+    "eyebrow": "Selected work",
+    "title": "A few cases, up close.",
+    "lede": "The problem, the technical decisions and the result — no fluff.",
+    "viewAll": "View all work"
+  },
+  "capabilities": {
+    "eyebrow": "What I do",
+    "title": "Four fronts, done well."
+  },
+  "experience": {
+    "eyebrow": "Track record",
+    "title": "Where I've been."
+  },
+  "aboutTeaser": {
+    "eyebrow": "Who's behind it",
+    "readMore": "More about me"
+  },
+  "contactCta": {
+    "title": "Want to talk shop?",
+    "cta": "Get in touch",
+    "note": "I usually reply fast."
+  },
+  "work": {
+    "eyebrow": "Work",
+    "title": "Work",
+    "lede": "Cases up close: problem, technical decisions and result."
+  },
+  "project": {
+    "overview": "Overview",
+    "problem": "The problem",
+    "contribution": "What I did",
+    "results": "Results",
+    "gallery": "Gallery",
+    "next": "Next project",
+    "backToWork": "All work",
+    "spec": {
+      "client": "Client",
+      "role": "Role",
+      "stack": "Stack",
+      "year": "Year",
+      "type": "Type"
+    }
+  },
+  "about": {
+    "eyebrow": "About",
+    "title": "A developer obsessed with craft and performance.",
+    "cta": "Get in touch"
+  },
+  "lab": {
+    "eyebrow": "Lab",
+    "title": "Lab",
+    "lede": "Experiments, demos and curiosities — where I test new ideas and techniques."
+  },
+  "contact": {
+    "eyebrow": "Contact",
+    "title": "Let's talk",
+    "lede": "Drop me a message — about work, an idea, or just to talk front-end.",
+    "or": "or find me on",
+    "form": {
+      "name": "Name",
+      "email": "Email",
+      "company": "Company (optional)",
+      "message": "Message",
+      "submit": "Send message",
+      "sending": "Sending…",
+      "success": "Got it. I'll reply soon.",
+      "error": "Please fill in name, email and message."
+    }
+  },
+  "notFound": {
+    "title": "Page not found.",
+    "lede": "The link got lost — but the work is right here.",
+    "home": "Go home",
+    "work": "See the work"
+  },
+  "footer": {
+    "rights": "All rights reserved.",
+    "crafted": "Built with Next.js, TypeScript and care."
+  }
+}

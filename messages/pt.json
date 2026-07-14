@@ -1,0 +1,102 @@
+{
+  "meta": {
+    "title": "João Pedro Gaspar — Front-end Engineer",
+    "description": "Front-end engineer focado em performance, craft e código limpo — e-commerce, headless (Shopify Hydrogen) e experiências em 3D."
+  },
+  "nav": {
+    "work": "Trabalho",
+    "about": "Sobre",
+    "lab": "Lab",
+    "contact": "Contato",
+    "startProject": "Entre em contato",
+    "menu": "Menu",
+    "close": "Fechar"
+  },
+  "home": {
+    "eyebrow": "Front-end Engineer",
+    "tagline": "Front-end engineer — construo o que a plataforma diz que não dá.",
+    "headline": "Craft e performance, do pixel à arquitetura.",
+    "lede": "Trabalho com e-commerce, headless (Shopify Hydrogen) e experiências em 3D — sempre com obsessão por performance e código limpo.",
+    "cta": "Entre em contato"
+  },
+  "selectedWork": {
+    "eyebrow": "Trabalho selecionado",
+    "title": "Alguns casos de perto.",
+    "lede": "O problema, as decisões técnicas e o resultado — sem enrolação.",
+    "viewAll": "Ver todo o trabalho"
+  },
+  "capabilities": {
+    "eyebrow": "O que eu faço",
+    "title": "Quatro frentes, bem feitas."
+  },
+  "experience": {
+    "eyebrow": "Trajetória",
+    "title": "Onde já passei."
+  },
+  "aboutTeaser": {
+    "eyebrow": "Quem faz",
+    "readMore": "Mais sobre mim"
+  },
+  "contactCta": {
+    "title": "Bora trocar uma ideia?",
+    "cta": "Entre em contato",
+    "note": "Costumo responder rápido."
+  },
+  "work": {
+    "eyebrow": "Trabalho",
+    "title": "Trabalho",
+    "lede": "Casos de perto: problema, decisões técnicas e resultado."
+  },
+  "project": {
+    "overview": "Visão geral",
+    "problem": "O problema",
+    "contribution": "O que eu fiz",
+    "results": "Resultado",
+    "gallery": "Galeria",
+    "next": "Próximo projeto",
+    "backToWork": "Todo o trabalho",
+    "spec": {
+      "client": "Cliente",
+      "role": "Papel",
+      "stack": "Stack",
+      "year": "Ano",
+      "type": "Tipo"
+    }
+  },
+  "about": {
+    "eyebrow": "Sobre",
+    "title": "Desenvolvedor obcecado por craft e performance.",
+    "cta": "Entre em contato"
+  },
+  "lab": {
+    "eyebrow": "Lab",
+    "title": "Lab",
+    "lede": "Experimentos, demos e curiosidades — onde testo ideias e técnicas novas."
+  },
+  "contact": {
+    "eyebrow": "Contato",
+    "title": "Vamos conversar",
+    "lede": "Manda uma mensagem — sobre trabalho, uma ideia ou só pra trocar uma ideia sobre front-end.",
+    "or": "ou me acha em",
+    "form": {
+      "name": "Nome",
+      "email": "E-mail",
+      "company": "Empresa (opcional)",
+      "message": "Mensagem",
+      "submit": "Enviar mensagem",
+      "sending": "Enviando…",
+      "success": "Recebido. Respondo logo.",
+      "error": "Preenche nome, e-mail e mensagem."
+    }
+  },
+  "notFound": {
+    "title": "Página não encontrada.",
+    "lede": "O link se perdeu — mas o trabalho está aqui.",
+    "home": "Ir para o início",
+    "work": "Ver o trabalho"
+  },
+  "footer": {
+    "rights": "Todos os direitos reservados.",
+    "crafted": "Feito com Next.js, TypeScript e cuidado."
+  }
+}
