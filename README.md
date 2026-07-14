@@ -1,58 +1,68 @@
-# Portfólio — João Pedro Gaspar (JPG)
+# Portfólio — João Pedro Gaspar
 
-Portfólio interativo reconstruído do zero: uma **jornada em scroll cinematográfica**
-com mundos temáticos, 3D e muitas animações.
+Portfólio pessoal de um **engenheiro front-end** (e-commerce, headless/Shopify
+Hydrogen, interação). Não é um site de venda de freelas: é uma vitrine de
+qualidade técnica — o trabalho fala, e quem se interessa entra em contato.
 
-> **Conceito:** cada interesse vira a função de portfólio que ele faz melhor.
->
-> | Seção | Mundo | Tema |
-> | --- | --- | --- |
-> | Início / Contato | Gotham / Bat-Signal | 🦇 Batman |
-> | Sobre / Jornada | O Mergulho | 🌊 Subnautica |
-> | Skills | Ultimate Team | ⚽ FIFA (cartas FUT) |
-> | Projetos | Build Mode | 🧱 LEGO |
+**Design system "Pressroom":** editorial-commerce premium, grafite quente
+(`#1B1A17`) + acento oxblood (`#7C2D2D`), tipografia Clash Display + Satoshi,
+mono JetBrains. **Layout v2 "Index":** a home é um índice tipográfico de casos
+com preview seguindo o cursor (a lista _é_ o hero).
 
 ## Stack
 
-- **Next.js 16** (App Router) + **React 19** + **TypeScript**
-- **Tailwind CSS v4** (design tokens por mundo)
-- **Lenis** (smooth scroll) + **GSAP / ScrollTrigger** (animações scroll-driven)
-- **Motion** (micro-interações de UI)
-- **React Three Fiber** + drei (3D — entra a partir da Fase 2)
-- **Firebase** (Firestore + Auth + Storage — projetos dinâmicos e `/admin`)
-- Deploy na **Vercel**
+- **Next.js 16** (App Router, Turbopack) + **React 19** + **TypeScript strict**
+- **Tailwind CSS v4** (`@theme inline`, tokens semânticos para tema runtime)
+- **next-intl** — PT no `/` (default), EN em `/en` (`localePrefix: "as-needed"`)
+- **GSAP** — `quickTo` para o cursor-follow do índice (sem re-render por mousemove)
+- **Firebase** (Firestore + Auth) — casos dinâmicos e painel `/admin`
+- **Cloudinary** (`next-cloudinary`) — imagens de capa/galeria
+- Deploy na **Vercel** · orçamento de performance **Lighthouse ≥ 90 mobile**
 
 ## Rodando localmente
 
 ```bash
 npm install
-cp .env.local.example .env.local   # preencha quando tiver o Firebase
+cp .env.local.example .env.local   # preencha quando tiver Firebase/Cloudinary
 npm run dev                         # http://localhost:3000
 ```
 
-O site roda **sem** Firebase configurado (o backend "liga" sozinho quando você
-preenche o `.env.local`).
+O site roda **sem** Firebase/Cloudinary configurados: o backend "liga" sozinho
+quando você preenche o `.env.local`; sem ele, cai nos mocks de `src/data`.
 
-## Roadmap
+## Conteúdo (casos)
 
-- [x] **Fase 0 — Fundação:** Next.js + Tailwind + Lenis/GSAP + design tokens + esqueleto das 5 seções + deploy.
-- [ ] **Fase 1 — Jornada:** transições entre mundos e navegação refinada.
-- [ ] **Fase 2 — Hero Batman + Mergulho Subnautica** (3D / R3F).
-- [ ] **Fase 3 — Skills FIFA** (cartas FUT + abertura de pacote).
-- [ ] **Fase 4 — Projetos LEGO + Firebase + `/admin`.**
-- [ ] **Fase 5 — Contato bat-signal + som + easter eggs + SEO/perf.**
-- [ ] **Fase 6 — Projetos da SHAKERS.**
+- Fonte da verdade: `src/data/projects.ts` (mocks) → sobrescrito pelo Firestore
+  quando configurado (coleção `projects`, `published: true`).
+- **Produção renderiza apenas `published: true`.** Placeholders `EM BREVE`
+  (`slug: placeholder-*`) aparecem **só em dev**, para testar a densidade do
+  índice — nunca em produção nem no sitemap.
+- Casos com corpo rico usam `body: { pt, en }` (blocos heading/text/list, com
+  `inline code` em crases). Hoje: **LIVRA** publicado; DUX e Vivo aguardando
+  autorização (`published: false`).
+
+## Definition of Done
+
+- [ ] **≥ 3 cases publicados** para ir a produção. Com menos, o índice
+      tipográfico fica magro e o formato não se sustenta. Ordem-alvo do índice:
+      loja-demo (flagship) → LIVRA → demais.
+- [ ] Copy PT e EN em paridade (hero, `/sobre`, cases).
+- [ ] Lighthouse ≥ 90 mobile (LCP transform-only, zero CLS nas capas).
+- [ ] `/admin` com CRUD funcional (Auth + Firestore + upload Cloudinary).
+- [ ] SEO: metadata por página, `sitemap.xml` só com publicados, JSON-LD.
 
 ## Estrutura
 
 ```
 src/
-├── app/                 # App Router (layout, page, globals.css)
+├── app/[locale]/        # App Router i18n (home índice, trabalho/[slug], sobre, lab, admin)
 ├── components/
-│   ├── providers/       # SmoothScroll (Lenis + GSAP)
-│   ├── layout/          # Nav, Footer
-│   ├── sections/        # os 5 mundos
-│   └── ui/              # Reveal, ScrollProgress
-├── data/                # JSON (projetos, habilidades, social)
-└── lib/                 # site config, firebase
+│   ├── layout/          # Header, Footer, Container
+│   ├── work/            # IndexList (assinatura v2), SpecSheet, ProjectCover, CaseBody
+│   ├── fx/              # Reveal (IntersectionObserver)
+│   └── seo/             # JsonLd
+├── data/                # projects, about (mocks + fallback)
+├── i18n/                # routing, navigation, request (next-intl)
+├── lib/                 # site config, firebase, metadata
+└── fonts/               # Clash Display + Satoshi (woff2)
 ```

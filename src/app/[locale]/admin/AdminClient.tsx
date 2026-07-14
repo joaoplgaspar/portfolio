@@ -34,10 +34,13 @@ type Draft = {
   id?: string;
   slug: string;
   title: string;
-  client: string;
-  role: string;
+  clientPt: string;
+  clientEn: string;
+  rolePt: string;
+  roleEn: string;
   year: string;
-  type: string;
+  typePt: string;
+  typeEn: string;
   order: string;
   stack: string;
   summaryPt: string;
@@ -54,7 +57,8 @@ type Draft = {
 };
 
 const empty: Draft = {
-  slug: "", title: "", client: "", role: "", year: "2025", type: "", order: "1",
+  slug: "", title: "", clientPt: "", clientEn: "", rolePt: "", roleEn: "", year: "2025",
+  typePt: "", typeEn: "", order: "1",
   stack: "", summaryPt: "", summaryEn: "", problemPt: "", problemEn: "",
   contributionPt: "", contributionEn: "", results: "", cover: "", gallery: "",
   featured: false, published: true,
@@ -66,10 +70,10 @@ function draftToDoc(d: Draft) {
   return {
     slug: d.slug.trim(),
     title: d.title.trim(),
-    client: d.client.trim(),
-    role: d.role.trim(),
+    client: { pt: d.clientPt.trim(), en: d.clientEn.trim() },
+    role: { pt: d.rolePt.trim(), en: d.roleEn.trim() },
     year: Number(d.year) || new Date().getFullYear(),
-    type: d.type.trim(),
+    type: { pt: d.typePt.trim(), en: d.typeEn.trim() },
     order: Number(d.order) || 0,
     stack: list(d.stack),
     summary: { pt: d.summaryPt.trim(), en: d.summaryEn.trim() },
@@ -93,8 +97,11 @@ function draftToDoc(d: Draft) {
 function projectToDraft(p: Project & { id?: string }): Draft {
   return {
     id: p.id,
-    slug: p.slug, title: p.title, client: p.client, role: p.role,
-    year: String(p.year), type: p.type, order: String(p.order),
+    slug: p.slug, title: p.title,
+    clientPt: p.client.pt, clientEn: p.client.en,
+    rolePt: p.role.pt, roleEn: p.role.en,
+    year: String(p.year), typePt: p.type.pt, typeEn: p.type.en,
+    order: String(p.order),
     stack: p.stack.join(", "),
     summaryPt: p.summary.pt, summaryEn: p.summary.en,
     problemPt: p.problem.pt, problemEn: p.problem.en,
@@ -288,11 +295,14 @@ export default function AdminClient() {
         <p className="text-label text-accent-lift">{draft.id ? "Editando" : "Novo projeto"}</p>
 
         <div className="grid gap-3 sm:grid-cols-3">
-          <L t="Slug*"><input className={field} value={draft.slug} onChange={set("slug")} placeholder="dux" /></L>
+          <L t="Slug*"><input className={field} value={draft.slug} onChange={set("slug")} placeholder="livra" /></L>
           <L t="Título*"><input className={field} value={draft.title} onChange={set("title")} /></L>
-          <L t="Cliente"><input className={field} value={draft.client} onChange={set("client")} /></L>
-          <L t="Papel"><input className={field} value={draft.role} onChange={set("role")} placeholder="Front-end · Motion" /></L>
-          <L t="Tipo"><input className={field} value={draft.type} onChange={set("type")} placeholder="E-commerce" /></L>
+          <L t="Cliente (PT)"><input className={field} value={draft.clientPt} onChange={set("clientPt")} placeholder="Projeto próprio" /></L>
+          <L t="Client (EN)"><input className={field} value={draft.clientEn} onChange={set("clientEn")} placeholder="Own product" /></L>
+          <L t="Papel (PT)"><input className={field} value={draft.rolePt} onChange={set("rolePt")} placeholder="Front-end · Motion" /></L>
+          <L t="Role (EN)"><input className={field} value={draft.roleEn} onChange={set("roleEn")} placeholder="Front-end · Motion" /></L>
+          <L t="Tipo (PT)"><input className={field} value={draft.typePt} onChange={set("typePt")} placeholder="Product · Full-stack" /></L>
+          <L t="Type (EN)"><input className={field} value={draft.typeEn} onChange={set("typeEn")} placeholder="Product · Full-stack" /></L>
           <div className="grid grid-cols-2 gap-3">
             <L t="Ano"><input className={field} value={draft.year} onChange={set("year")} /></L>
             <L t="Ordem"><input className={field} value={draft.order} onChange={set("order")} /></L>
@@ -377,7 +387,7 @@ export default function AdminClient() {
             <div className="min-w-0">
               <p className="truncate font-medium">
                 {p.featured && <span className="mr-1 text-accent-lift">★</span>}
-                {p.title} <span className="text-xs text-muted/60">· {p.type} · {p.year}</span>
+                {p.title} <span className="text-xs text-muted/60">· {p.type?.pt} · {p.year}</span>
                 {!p.published && <span className="ml-2 text-xs text-muted/60">(rascunho)</span>}
               </p>
               <p className="truncate text-sm text-muted/70">{p.summary?.pt}</p>

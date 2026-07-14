@@ -46,16 +46,16 @@ export default async function AboutPage({
       <div className="mt-14 grid gap-12 md:grid-cols-[0.8fr_1.2fr]">
         <Reveal>
           <div className="aspect-[4/5] w-full rounded-[4px] border border-line bg-raised" />
-          <dl className="mt-6 overflow-hidden rounded-[4px] border border-line bg-raised">
-            {about.facts.map((fct, i) => (
+          <dl className="mt-8 flex flex-col">
+            {about.trajectory.map((entry, i) => (
               <div
                 key={i}
-                className={`flex items-baseline justify-between gap-6 px-5 py-3 ${
-                  i > 0 ? "border-t border-line" : ""
-                }`}
+                className={`py-4 ${i > 0 ? "border-t border-line" : ""}`}
               >
-                <dt className="text-label text-muted">{fct.label[l]}</dt>
-                <dd className="font-mono text-sm text-fg">{fct.value}</dd>
+                <dt className="text-label text-accent-lift">{entry.period[l]}</dt>
+                <dd className="mt-2 font-mono text-[13px] leading-relaxed text-muted">
+                  {entry.body[l]}
+                </dd>
               </div>
             ))}
           </dl>

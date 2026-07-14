@@ -10,25 +10,33 @@ export interface ProjectResult {
   value: string;
 }
 
+/** Bloco de corpo de case (para PDPs ricas). Texto suporta `inline code` com crases. */
+export type CaseBlock =
+  | { kind: "heading"; text: string }
+  | { kind: "text"; text: string }
+  | { kind: "list"; items: { label?: string; text: string }[] };
+
 /**
- * Case study tratada como página de produto (PDP).
- * Espelha a coleção `projects` do Firestore (Seção 8 do brief).
+ * Case study tratada como página editorial de engenharia.
+ * Espelha a coleção `projects` do Firestore.
  */
 export interface Project {
   slug: string; // único, canonical
   title: string;
-  client: string;
-  role: string; // "Front-end · Motion"
+  client: Localized; // "Projeto próprio" / "Own product"
+  role: Localized; // "Design, front-end e back-end serverless"
   year: number;
-  type: string; // "E-commerce" | "Landing" | "App" | ...
+  type: Localized; // "Product · Full-stack"
   stack: string[];
   summary: Localized;
   problem: Localized;
   contribution: Localized;
   results: ProjectResult[];
+  /** Corpo rico opcional. Quando presente, a PDP o renderiza no lugar de problema/contribuição. */
+  body?: { pt: CaseBlock[]; en: CaseBlock[] };
   cover: string; // Cloudinary public_id
   gallery: string[]; // Cloudinary public_ids
-  featured: boolean; // aparece na home
+  featured: boolean;
   published: boolean;
   order: number;
 }

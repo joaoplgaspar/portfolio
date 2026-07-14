@@ -34,6 +34,7 @@ export default async function HomePage({
 }) {
   const { locale } = await params;
   setRequestLocale(locale);
+  const l = locale as Locale;
 
   const th = await getTranslations("home");
   const tlab = await getTranslations("lab");
@@ -64,7 +65,7 @@ export default async function HomePage({
           items={projects.map((p) => ({
             slug: p.slug,
             title: p.title,
-            type: p.type,
+            type: p.type[l],
             year: p.year,
             cover: p.cover,
           }))}

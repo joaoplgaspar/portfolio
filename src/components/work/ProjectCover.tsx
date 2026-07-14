@@ -1,4 +1,5 @@
 import { CldImage } from "next-cloudinary";
+import type { Locale } from "@/i18n/routing";
 import type { Project } from "@/types/project";
 
 const CLOUD = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
@@ -9,9 +10,11 @@ const CLOUD = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
  */
 export default function ProjectCover({
   project,
+  locale,
   className = "",
 }: {
   project: Project;
+  locale: Locale;
   className?: string;
 }) {
   return (
@@ -37,11 +40,11 @@ export default function ProjectCover({
                 "radial-gradient(120% 120% at 82% 0%, color-mix(in srgb, var(--accent) 26%, transparent), transparent 58%)",
             }}
           />
-          <span className="absolute left-5 top-5 text-label text-muted">{project.type}</span>
+          <span className="absolute left-5 top-5 text-label text-muted">{project.type[locale]}</span>
           <span className="absolute right-5 top-5 text-label text-muted">{project.year}</span>
           <div className="absolute inset-0 flex items-center justify-center px-6 text-center">
             <span className="font-display text-4xl font-semibold tracking-tight text-fg/90 sm:text-5xl">
-              {project.client}
+              {project.client[locale]}
             </span>
           </div>
         </>

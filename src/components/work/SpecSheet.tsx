@@ -1,13 +1,20 @@
 import { getTranslations } from "next-intl/server";
+import type { Locale } from "@/i18n/routing";
 import type { Project } from "@/types/project";
 
 /** Ficha técnica em mono (etiqueta analógica) — Seção 5.2. */
-export default async function SpecSheet({ project }: { project: Project }) {
+export default async function SpecSheet({
+  project,
+  locale,
+}: {
+  project: Project;
+  locale: Locale;
+}) {
   const t = await getTranslations("project.spec");
   const rows = [
-    { label: t("client"), value: project.client },
-    { label: t("role"), value: project.role },
-    { label: t("type"), value: project.type },
+    { label: t("client"), value: project.client[locale] },
+    { label: t("role"), value: project.role[locale] },
+    { label: t("type"), value: project.type[locale] },
     { label: t("year"), value: String(project.year) },
     { label: t("stack"), value: project.stack.join(" · ") },
   ];

@@ -9,6 +9,7 @@ import Container from "@/components/layout/Container";
 import Reveal from "@/components/fx/Reveal";
 import ProjectCover from "@/components/work/ProjectCover";
 import SpecSheet from "@/components/work/SpecSheet";
+import CaseBody from "@/components/work/CaseBody";
 import JsonLd from "@/components/seo/JsonLd";
 import { fetchPublishedProjects, fetchProject } from "@/data/projects";
 
@@ -51,6 +52,7 @@ export default async function ProjectPage({
   const all = await fetchPublishedProjects();
   const idx = all.findIndex((p) => p.slug === slug);
   const next = all[(idx + 1) % all.length];
+  const hasNext = next && next.slug !== slug; // esconde auto-referência (1 case publicado)
 
   const creativeWork = {
     "@context": "https://schema.org",
@@ -85,7 +87,7 @@ export default async function ProjectPage({
         </Reveal>
         <Reveal delay={180}>
           <div className="mt-12">
-            <ProjectCover project={project} />
+            <ProjectCover project={project} locale={l} />
           </div>
         </Reveal>
       </Container>
@@ -93,22 +95,30 @@ export default async function ProjectPage({
       {/* Corpo + ficha técnica */}
       <Container className="grid gap-12 py-20 md:grid-cols-[1.5fr_1fr] md:gap-16 md:py-28">
         <div className="order-2 flex flex-col gap-12 md:order-1">
-          <Reveal>
-            <section>
-              <h2 className="text-label text-accent-lift">{t("problem")}</h2>
-              <p className="mt-4 text-balance text-xl leading-relaxed">
-                {project.problem[l]}
-              </p>
-            </section>
-          </Reveal>
-          <Reveal>
-            <section>
-              <h2 className="text-label text-accent-lift">{t("contribution")}</h2>
-              <p className="mt-4 text-lg leading-relaxed text-muted">
-                {project.contribution[l]}
-              </p>
-            </section>
-          </Reveal>
+          {project.body ? (
+            <Reveal>
+              <CaseBody blocks={project.body[l]} />
+            </Reveal>
+          ) : (
+            <>
+              <Reveal>
+                <section>
+                  <h2 className="text-label text-accent-lift">{t("problem")}</h2>
+                  <p className="mt-4 text-balance text-xl leading-relaxed">
+                    {project.problem[l]}
+                  </p>
+                </section>
+              </Reveal>
+              <Reveal>
+                <section>
+                  <h2 className="text-label text-accent-lift">{t("contribution")}</h2>
+                  <p className="mt-4 text-lg leading-relaxed text-muted">
+                    {project.contribution[l]}
+                  </p>
+                </section>
+              </Reveal>
+            </>
+          )}
           {project.results.length > 0 && (
             <Reveal>
               <section>
@@ -128,26 +138,28 @@ export default async function ProjectPage({
 
         <aside className="order-1 md:order-2">
           <div className="md:sticky md:top-24">
-            <SpecSheet project={project} />
+            <SpecSheet project={project} locale={l} />
           </div>
         </aside>
       </Container>
 
-      {/* Próximo projeto (navegação encadeada) */}
-      <Container className="border-t border-line py-16">
-        <Link
-          href={`/trabalho/${next.slug}`}
-          className="group flex items-center justify-between gap-6"
-        >
-          <div>
-            <span className="text-label text-muted">{t("next")}</span>
-            <p className="text-h2 mt-2 transition-colors group-hover:text-accent-lift">
-              {next.title}
-            </p>
-          </div>
-          <span className="text-h2 text-muted">↗</span>
-        </Link>
-      </Container>
+      {/* Próximo projeto (navegação encadeada) — oculto se só há 1 case publicado */}
+      {hasNext && (
+        <Container className="border-t border-line py-16">
+          <Link
+            href={`/trabalho/${next.slug}`}
+            className="group flex items-center justify-between gap-6"
+          >
+            <div>
+              <span className="text-label text-muted">{t("next")}</span>
+              <p className="text-h2 mt-2 transition-colors group-hover:text-accent-lift">
+                {next.title}
+              </p>
+            </div>
+            <span className="text-h2 text-muted">↗</span>
+          </Link>
+        </Container>
+      )}
     </article>
   );
 }
