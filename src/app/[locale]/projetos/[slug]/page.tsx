@@ -115,6 +115,34 @@ export default async function ProjectPage({ params }: { params: Promise<{ locale
         </div>
       </figure>
 
+      {s.media && (
+        <figure className="mt-6 border border-fg">
+          <div className="relative aspect-[16/10] overflow-hidden">
+            {s.media.kind === "video" ? (
+              <video
+                src={s.media.src}
+                poster={s.media.poster}
+                muted
+                loop
+                playsInline
+                controls
+                preload="metadata"
+                className="absolute inset-0 h-full w-full object-cover object-top"
+              />
+            ) : (
+              <Image
+                src={s.media.src}
+                alt=""
+                fill
+                sizes="(min-width: 1280px) 1200px, 100vw"
+                unoptimized={s.media.src.endsWith(".gif")}
+                className="object-cover object-top"
+              />
+            )}
+          </div>
+        </figure>
+      )}
+
       {s.work && (
         <section className="mt-[clamp(48px,7vw,104px)] grid gap-4 border-t border-fg pt-5 lg:grid-cols-[minmax(0,4fr)_minmax(0,8fr)] lg:gap-[var(--gut)]">
           <h2 className="t-title text-[clamp(1.5rem,2.4vw,2.2rem)]">{tp("work")}</h2>

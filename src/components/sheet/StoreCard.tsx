@@ -1,4 +1,4 @@
-import Image from "next/image";
+import CardFaces from "./CardFaces";
 import { Link } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
 import { LAB, fmtLab, type Store } from "@/data/stores";
@@ -28,24 +28,14 @@ export default function StoreCard({
         <span className="t-fig shrink-0">{store.mark}</span>
       </div>
       <div className="relative aspect-[16/10] overflow-hidden">
-        {store.cover ? (
-          <Image
-            src={store.cover}
-            alt=""
-            fill
-            sizes={size === "large" ? "(min-width: 1024px) 45vw, 100vw" : "(min-width: 1024px) 30vw, 50vw"}
-            className="object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.015]"
-          />
-        ) : (
-          <div
-            className="absolute inset-0 grid place-items-center"
-            style={{
-              backgroundImage: "repeating-linear-gradient(45deg, var(--line) 0 1px, transparent 1px 7px)",
-            }}
-          >
-            <span className="t-small bg-[var(--bg)] px-2 text-faint">{t.pending}</span>
-          </div>
-        )}
+        <CardFaces
+          cover={store.cover}
+          logo={store.logo}
+          logoDark={store.logoDark}
+          media={store.media}
+          sizes={size === "large" ? "(min-width: 1024px) 45vw, 100vw" : "(min-width: 1024px) 30vw, 50vw"}
+          pending={t.pending}
+        />
       </div>
     </div>
   );

@@ -89,6 +89,36 @@ o slug em `components/figures/registry.ts`. Sem figura, o case não entra no
   com agilidade ou ajustar os existentes. **Nunca** citar o nome da empresa
   nem de projetos de cliente nesse case: é propriedade deles. Só o método.
 
+## v5 (home e cursor)
+
+- **Índice com print**: cada linha tem a miniatura do projeto (site, app em
+  dois telefones, terminal no Starter Pack) e o índice inteiro cabe na
+  primeira tela — hover troca a figura sem rolar. A legenda do palco não
+  aparece na home (fica nos cases).
+- **Trabalho selecionado**: grade de ponta a ponta (uma capa grande + duas
+  pequenas, alternando o lado), legenda fora da capa. Hover: marcas de corte
+  e selo "Expandir". Clique: o cartão se expande (FLIP) num painel com a
+  figura narrada (case) ou a print (projeto), resumo e ficha. O cartão segue
+  sendo link (`data-no-sweep`); o painel vai para o `<body>` por portal
+  (o transform do `.page-enter` prenderia o painel sob o cabeçalho).
+- **Cursor**: retícula de desenhista com a zona da prancha (C·4); vira
+  círculo com rótulo sobre clicáveis (`data-cursor`). Só com mouse; some em
+  campo de texto.
+- **Tema**: interruptor sol · trilho · lua, visível também no celular.
+- Grafia: **Integralmédica** (junto).
+
+## v6 (modal e faces)
+
+- **Painel expandido**: abre por `clip-path` a partir do retângulo do cartão
+  (Web Animations API), com um fantasma da capa se dissolvendo no lugar do
+  cartão. Nada escala. Fechar reverte a animação de onde ela estiver. O
+  scroll trava com `scrollbar-gutter: stable` (a página não pula) e o efeito
+  de trava roda uma vez só.
+- **Faces do cartão em /projetos**: `logo` (1ª face) → hover → `media`
+  (imagem, GIF ou vídeo) ou a `cover`. Vídeo toca só no hover. Campos e
+  formatos documentados em `src/data/stores.ts`; arquivos em `public/logos/`
+  e `public/media/`.
+
 ## Mais projetos: como escala
 
 - **Figura** (poucos, profundos): case com mecanismo próprio. Entra no índice

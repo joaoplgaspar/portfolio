@@ -389,7 +389,7 @@ body {
    lista pula quando a figura troca. */
 .idx-list .idx-title {
   white-space: nowrap;
-  font-size: min(clamp(1.7rem, 3vw, 2.9rem), calc(100cqi / (var(--len, 12) * 0.6)));
+  font-size: min(clamp(1.5rem, 2.5vw, 2.5rem), calc(100cqi / (var(--len, 12) * 0.6)));
 }
 .idx-title {
   font-stretch: 100%;

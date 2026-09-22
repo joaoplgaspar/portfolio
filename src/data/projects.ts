@@ -237,8 +237,8 @@ const projects: Project[] = [
     // Ângulo: profundidade de plataforma — o carrinho compartilhado é nota de rodapé
     // aqui, senão repete o case Roland/Boss.
     slug: "integral-medica-darkness",
-    title: "Integral Médica / Darkness",
-    client: { pt: "Integral Médica · Darkness", en: "Integral Médica · Darkness" },
+    title: "Integralmédica / Darkness",
+    client: { pt: "Integralmédica · Darkness", en: "Integralmédica · Darkness" },
     role: {
       pt: "Liderança técnica · Front-end · Apps Shopify",
       en: "Tech lead · Front-end · Shopify apps",
@@ -265,7 +265,7 @@ const projects: Project[] = [
         { kind: "heading", text: "Contexto" },
         {
           kind: "text",
-          text: "Integral Médica e Darkness são marcas de suplementação que dividem o mesmo admin Shopify e o mesmo repositório: duas storefronts headless com carrinho compartilhado entre elas. Entrei na metade do desenvolvimento e assumi a liderança técnica — daí em diante, toda funcionalidade e toda decisão passaram por mim, e a maior parte foi construída por mim também.",
+          text: "Integralmédica e Darkness são marcas de suplementação que dividem o mesmo admin Shopify e o mesmo repositório: duas storefronts headless com carrinho compartilhado entre elas. Entrei na metade do desenvolvimento e assumi a liderança técnica — daí em diante, toda funcionalidade e toda decisão passaram por mim, e a maior parte foi construída por mim também.",
         },
         { kind: "heading", text: "O problema técnico central" },
         {
@@ -289,7 +289,7 @@ const projects: Project[] = [
         {
           kind: "list",
           items: [
-            { label: "A conta nativa não sobrevive a duas marcas:", text: "a account do Shopify é uma só por admin — e aqui um admin serve duas marcas. Na prática, isso é a mesma estilização para Integral Médica e Darkness, sem nem poder trocar o logo por marca: metade dos clientes entraria na conta e veria a identidade da outra. Junte a isso não controlar como um pedido é exibido ou filtrado, nem poder abrir uma aba nova — e a gente precisava de “Meus benefícios”, integrada ao programa de fidelidade. Reconstruir a conta inteira saiu mais barato que brigar com os três limites ao mesmo tempo." },
+            { label: "A conta nativa não sobrevive a duas marcas:", text: "a account do Shopify é uma só por admin — e aqui um admin serve duas marcas. Na prática, isso é a mesma estilização para Integralmédica e Darkness, sem nem poder trocar o logo por marca: metade dos clientes entraria na conta e veria a identidade da outra. Junte a isso não controlar como um pedido é exibido ou filtrado, nem poder abrir uma aba nova — e a gente precisava de “Meus benefícios”, integrada ao programa de fidelidade. Reconstruir a conta inteira saiu mais barato que brigar com os três limites ao mesmo tempo." },
             { label: "Custom app em vez de assinatura de marketplace:", text: "a promoção que o cliente queria não existe nativamente. O caminho óbvio era assinar um app da App Store e seguir a vida — com uma mensalidade permanente no orçamento dele. Construí um custom app no lugar: instalado uma vez e com os produtos de brinde configurados, ele não pede manutenção recorrente nem cobra assinatura. Troquei um custo mensal perpétuo por um custo de construção único — e essa decisão só se defende porque a regra é estável. Se a mecânica mudasse a cada campanha, o app de prateleira ganharia." },
             { label: "Regra de promoção no Shopify, não no front:", text: "as mecânicas promocionais foram implementadas como Shopify Functions, do lado da plataforma. Desconto que só existe no front-end é desconto que some no checkout — e o checkout é onde o cliente decide se confia na loja." },
           ],
@@ -297,14 +297,14 @@ const projects: Project[] = [
         { kind: "heading", text: "Status" },
         {
           kind: "text",
-          text: "Integral Médica e Darkness em produção. Detalhes de operação e números sob acordo de confidencialidade.",
+          text: "Integralmédica e Darkness em produção. Detalhes de operação e números sob acordo de confidencialidade.",
         },
       ],
       en: [
         { kind: "heading", text: "Context" },
         {
           kind: "text",
-          text: "Integral Médica and Darkness are supplement brands sharing one Shopify admin and one repository: two headless storefronts with a cart shared between them. I joined halfway through development and took over as tech lead — from that point on, every feature and every decision went through me, and I built most of them myself.",
+          text: "Integralmédica and Darkness are supplement brands sharing one Shopify admin and one repository: two headless storefronts with a cart shared between them. I joined halfway through development and took over as tech lead — from that point on, every feature and every decision went through me, and I built most of them myself.",
         },
         { kind: "heading", text: "The core technical problem" },
         {
@@ -328,7 +328,7 @@ const projects: Project[] = [
         {
           kind: "list",
           items: [
-            { label: "The native account doesn't survive two brands:", text: "Shopify gives you one account area per admin — and here one admin serves two brands. In practice that means identical styling for Integral Médica and Darkness, with no way to even swap the logo per brand: half the customers would log in and find the other brand's identity. Add to that no control over how an order is displayed or filtered, and no way to open a new tab — and we needed “My benefits”, wired into the loyalty program. Rebuilding the whole account came out cheaper than fighting all three limits at once." },
+            { label: "The native account doesn't survive two brands:", text: "Shopify gives you one account area per admin — and here one admin serves two brands. In practice that means identical styling for Integralmédica and Darkness, with no way to even swap the logo per brand: half the customers would log in and find the other brand's identity. Add to that no control over how an order is displayed or filtered, and no way to open a new tab — and we needed “My benefits”, wired into the loyalty program. Rebuilding the whole account came out cheaper than fighting all three limits at once." },
             { label: "A custom app instead of a marketplace subscription:", text: "the promotion the client wanted doesn't exist natively. The obvious path was subscribing to an App Store app and moving on — with a permanent monthly line in their budget. I built a custom app instead: installed once, with the gift products configured, it asks for no recurring maintenance and charges no subscription. I traded a perpetual monthly cost for a one-off build cost — and that decision only holds because the rule is stable. If the mechanic changed every campaign, the off-the-shelf app would win." },
             { label: "Promotion rules on Shopify, not in the front-end:", text: "the promotional mechanics were implemented as Shopify Functions, on the platform side. A discount that only exists in the front-end is a discount that vanishes at checkout — and checkout is where the customer decides whether they trust the store." },
           ],
@@ -336,7 +336,7 @@ const projects: Project[] = [
         { kind: "heading", text: "Status" },
         {
           kind: "text",
-          text: "Integral Médica and Darkness in production. Operational details and figures under NDA.",
+          text: "Integralmédica and Darkness in production. Operational details and figures under NDA.",
         },
       ],
     },

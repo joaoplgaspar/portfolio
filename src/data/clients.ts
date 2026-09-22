@@ -12,7 +12,7 @@ export const clients: string[] = [
   "Boss",
   "Natura",
   "Fuji Film",
-  "Integral Médica",
+  "Integralmédica",
   "Darkness",
   "Qix",
   "Montecristo",

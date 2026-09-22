@@ -5,9 +5,9 @@ import { AXIS, Fig, Hatch, Leader, Part, useSafeId, type FigProps } from "./part
 import { Note, Travel, useSeq, type Step } from "./sequence";
 
 /**
- * FIG — Integral Médica / Darkness. Vista explodida da plataforma.
+ * FIG — Integralmédica / Darkness. Vista explodida da plataforma.
  *
- * 10 vitrine Integral Médica · 12 vitrine Darkness · 14 "Minha conta" refeita
+ * 10 vitrine Integralmédica · 12 vitrine Darkness · 14 "Minha conta" refeita
  * 16 extensões de checkout · 18 Shopify Functions (promoções)
  * 20 custom apps · 22 um admin Shopify para as duas marcas
  *

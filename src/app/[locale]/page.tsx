@@ -11,10 +11,18 @@ import { legends } from "@/data/figures";
 import { fetchPublishedProjects } from "@/data/projects";
 import { sheetPlan } from "@/lib/sheets";
 import { visibleStores } from "@/data/stores";
-import StoreCard from "@/components/sheet/StoreCard";
+import WorkGrid, { type WorkItem } from "@/components/sheet/WorkGrid";
+import type { Print } from "@/components/sheet/ProjectThumb";
 import { Link } from "@/i18n/navigation";
 
 export const revalidate = 60; // ISR: novos projetos aparecem sem redeploy
+
+/** O que identifica cada case de relance no índice: a print do site, o app ou o terminal. */
+function printOf(slug: string, cover: string): Print | undefined {
+  if (slug === "livra") return { kind: "app", srcs: ["/livra/app-inicio.webp", "/livra/app-liga.webp"] };
+  if (slug === "starter-pack") return { kind: "cli", lines: ["$ pack add section/hero", "✓ hero@1.4 · sha256 ok", "$ pack diff", "2 units drifted", "$ pack upstream"] };
+  return cover ? { kind: "site", src: cover } : undefined;
+}
 
 export async function generateMetadata({
   params,
@@ -49,7 +57,57 @@ export default async function HomePage({
 
   const plan = sheetPlan(figured.length);
   const ts = await getTranslations("stores");
+  const tp = await getTranslations("project");
+  const tpp = await getTranslations("projectPage");
   const stores = visibleStores();
+  const fig = t("fig");
+
+  // Cases com figura primeiro, depois os projetos com capa. Cada um vira um
+  // cartão que se expande: o case mostra a figura narrada; o projeto, a print.
+  const work: WorkItem[] = [
+    ...figured.map((p, i): WorkItem => ({
+      key: p.slug,
+      mark: `${fig} ${i + 1}`,
+      title: p.title,
+      meta: `${p.type[l]} · ${p.year}`,
+      href: `/trabalho/${p.slug}`,
+      cover:
+        p.slug === "livra"
+          ? { kind: "app", srcs: ["/livra/app-liga.webp", "/livra/app-inicio.webp", "/livra/app-lura.webp"] }
+          : p.cover
+            ? { kind: "site", src: p.cover }
+            : { kind: "drawing", slug: p.slug },
+      summary: p.summary[l],
+      facts: [
+        { k: tp("client"), v: p.client[l] },
+        { k: tp("role"), v: p.role[l] },
+        { k: tp("year"), v: String(p.year) },
+      ],
+      stack: p.stack,
+      live: p.live,
+      figure: { slug: p.slug, caption: p.caption?.[l] ?? p.summary[l] },
+    })),
+    ...stores
+      .filter((s) => s.cover && !s.caseSlug)
+      .map(
+        (s): WorkItem => ({
+          key: s.slug,
+          mark: s.mark,
+          title: s.name,
+          meta: `${s.platform} · ${s.year}`,
+          href: `/projetos/${s.slug}`,
+          cover: { kind: "site", src: s.cover! },
+          summary: s.scope[l],
+          facts: [
+            { k: tpp("platform"), v: s.platform },
+            { k: tpp("year"), v: String(s.year) },
+            ...(s.role ? [{ k: tpp("role"), v: s.role[l] }] : []),
+          ],
+          live: s.domain ? [s.domain] : undefined,
+          work: s.work?.map((w) => w[l]),
+        }),
+      ),
+  ];
 
   const person = {
     "@context": "https://schema.org",
@@ -78,6 +136,7 @@ export default async function HomePage({
           type: p.type[l],
           year: p.year,
           live: p.live,
+          print: printOf(p.slug, p.cover),
         }))}
         t={{
           index: t("index"),
@@ -101,30 +160,31 @@ export default async function HomePage({
           </div>
         }
       />
-      {/* Projetos: as capas chamam o olho; o quadro completo fica em /projetos. */}
-      <section className="mt-[clamp(56px,8vw,128px)] border-t border-fg pt-5" aria-labelledby="stores-h">
+      {/* Trabalho selecionado: grade de ponta a ponta; cada capa se expande num painel. */}
+      <section className="mt-[clamp(56px,8vw,128px)] border-t border-fg pt-5" aria-labelledby="work-h">
         <div className="mb-6 flex flex-wrap items-baseline justify-between gap-4">
-          <h2 id="stores-h" className="t-title">
-            {ts("title")}
+          <h2 id="work-h" className="t-title">
+            {t("selected")}
           </h2>
           <Link href="/projetos" className="t-small tb-link">
             {ts("all", { n: stores.length })} →
           </Link>
         </div>
-        <div className="grid grid-cols-2 gap-x-[var(--gut)] gap-y-8 lg:grid-cols-4">
-          {stores
-            .filter((s) => s.cover)
-            .slice(0, 4)
-            .map((s) => (
-              <StoreCard
-                key={s.mark}
-                store={s}
-                locale={l}
-                size="compact"
-                t={{ pending: ts("pending"), score: ts("score"), measured: ts("measured") }}
-              />
-            ))}
-        </div>
+        <WorkGrid
+          items={work}
+          locale={l}
+          t={{
+            expand: t("expand"),
+            open: t("openFull"),
+            close: t("close"),
+            live: t("live"),
+            stack: tp("stack"),
+            play: t("play"),
+            pause: t("pause"),
+            prev: t("prev"),
+            next: t("next"),
+          }}
+        />
       </section>
 
       <TitleBlock sheet={1} of={plan.total} title={t("sheetTitle")} />

@@ -11,9 +11,9 @@
     "close": "Close",
     "aria": "Main",
     "language": "Language",
-    "light": "Paper",
-    "dark": "Graphite",
-    "theme": "Theme",
+    "light": "Light",
+    "dark": "Dark",
+    "theme": "Dark mode",
     "contact": "Contact",
     "projects": "Projects"
   },
@@ -30,7 +30,11 @@
     "play": "Play",
     "pause": "Pause",
     "prev": "Previous step",
-    "next": "Next step"
+    "next": "Next step",
+    "selected": "Selected work",
+    "expand": "Expand",
+    "openFull": "Open the full page",
+    "close": "Close"
   },
   "project": {
     "overview": "Overview",

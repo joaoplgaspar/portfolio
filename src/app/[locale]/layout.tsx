@@ -8,6 +8,7 @@ import { siteConfig } from "@/lib/site";
 import Sweep from "@/components/fx/Sweep";
 import SheetFrame from "@/components/sheet/SheetFrame";
 import SheetHead from "@/components/sheet/SheetHead";
+import SheetCursor from "@/components/sheet/SheetCursor";
 import { THEME_SCRIPT } from "@/components/sheet/ThemeSwitch";
 import "../globals.css";
 
@@ -79,6 +80,7 @@ export default async function LocaleLayout({
           <Sweep />
           <SheetFrame />
           <SheetHead />
+          <SheetCursor />
           <main className="sheet">{children}</main>
         </NextIntlClientProvider>
       </body>

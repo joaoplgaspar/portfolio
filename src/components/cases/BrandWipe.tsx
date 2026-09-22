@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useId, useState } from "react";
 
 /**
- * Integral Médica × Darkness: a mesma vitrine, duas marcas. As duas capturas
+ * Integralmédica × Darkness: a mesma vitrine, duas marcas. As duas capturas
  * são do mesmo template — header, busca, menu, banner e faixa de benefícios
  * caem no mesmo lugar. A cortina arrastável deixa isso evidente em um gesto,
  * e é um `<input type="range">` por baixo: teclado e leitor de tela incluídos.

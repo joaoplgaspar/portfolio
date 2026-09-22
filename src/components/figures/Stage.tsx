@@ -26,6 +26,7 @@ export default function Stage({
   corner,
   legendColumns = 2,
   layout = "stack",
+  showLegend = true,
 }: {
   seq: Sequence;
   slug: string;
@@ -37,6 +38,7 @@ export default function Stage({
   corner?: ReactNode;
   legendColumns?: 1 | 2;
   layout?: "stack" | "side";
+  showLegend?: boolean;
 }) {
   const [hover, setHover] = useState<number | null>(null);
   // Desestruturado de uma vez: `observe` vai para um `ref`, e o lint passa a
@@ -82,7 +84,7 @@ export default function Stage({
     <div>
       {plate}
       <div className="mt-4">{narration}</div>
-      <div className="mt-4 hidden sm:block">
+      <div className={showLegend ? "mt-4 hidden sm:block" : "hidden"}>
         <LegendList legend={legend} locale={locale} active={hover} onActive={setHover} columns={legendColumns} />
       </div>
     </div>

@@ -20,7 +20,7 @@ export const legends: Record<string, Legend> = {
     { n: 26, label: { en: "optimistic line — dashed until the server confirms", pt: "linha otimista — tracejada até o servidor confirmar" } },
   ],
   "integral-medica-darkness": [
-    { n: 10, label: { en: "Integral Médica storefront", pt: "vitrine Integral Médica" } },
+    { n: 10, label: { en: "Integralmédica storefront", pt: "vitrine Integralmédica" } },
     { n: 12, label: { en: "Darkness storefront", pt: "vitrine Darkness" } },
     { n: 14, label: { en: "account area, rebuilt per brand", pt: "“Minha conta” refeita por marca" } },
     { n: 16, label: { en: "checkout extensions", pt: "extensões de checkout" } },

@@ -11,9 +11,9 @@
     "close": "Fechar",
     "aria": "Principal",
     "language": "Idioma",
-    "light": "Papel",
-    "dark": "Grafite",
-    "theme": "Tema",
+    "light": "Claro",
+    "dark": "Escuro",
+    "theme": "Modo escuro",
     "contact": "Contato",
     "projects": "Projetos"
   },
@@ -30,7 +30,11 @@
     "play": "Tocar",
     "pause": "Pausar",
     "prev": "Passo anterior",
-    "next": "Próximo passo"
+    "next": "Próximo passo",
+    "selected": "Trabalho selecionado",
+    "expand": "Expandir",
+    "openFull": "Abrir a página completa",
+    "close": "Fechar"
   },
   "project": {
     "overview": "Visão geral",

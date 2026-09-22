@@ -7,6 +7,7 @@ import type { Legend } from "@/data/figures";
 import Stage, { type StageLabels } from "@/components/figures/Stage";
 import { stepsOf } from "@/components/figures/Figure";
 import { useSequence } from "@/components/figures/sequence";
+import ProjectThumb, { type Print } from "./ProjectThumb";
 
 export type HomeItem = {
   slug: string;
@@ -15,6 +16,7 @@ export type HomeItem = {
   type: string;
   year: number;
   live?: string[];
+  print?: Print;
 };
 
 /**
@@ -48,7 +50,7 @@ export default function HomeSheet({
     <div className="home-grid">
       <div className="[grid-area:intro]">{intro}</div>
 
-      <section aria-labelledby="idx-h" className="[grid-area:idx] lg:self-end">
+      <section aria-labelledby="idx-h" className="[grid-area:idx] lg:self-start">
         <h2 id="idx-h" className="t-fig mb-3 uppercase text-faint">
           {t.index}
         </h2>
@@ -57,32 +59,35 @@ export default function HomeSheet({
             <li key={p.slug}>
               <Link
                 href={`/trabalho/${p.slug}`}
-                className="idx-row block border-b border-line pt-4 pb-0"
+                className="idx-row flex items-center gap-4 border-b border-line py-2.5"
                 data-on={i === on}
                 onMouseEnter={() => setOn(i)}
                 onFocus={() => setOn(i)}
               >
-                <span className="flex items-baseline justify-between gap-4">
-                  <span className="t-fig text-faint">
-                    {t.fig} {i + 1}
+                <ProjectThumb print={p.print} on={i === on} />
+                <span className="min-w-0 flex-1 @container">
+                  <span className="flex items-baseline justify-between gap-4">
+                    <span className="t-fig text-faint">
+                      {t.fig} {i + 1}
+                    </span>
+                    <span className="t-small truncate text-faint">
+                      {p.type} · {p.year}
+                    </span>
                   </span>
-                  <span className="t-small text-faint">
-                    {p.type} · {p.year}
+                  <span
+                    className="idx-title t-title mt-0.5 block"
+                    style={{ "--len": p.title.length } as React.CSSProperties}
+                  >
+                    {p.title}
                   </span>
+                  <span
+                    className="idx-clock mt-1.5 block"
+                    aria-hidden
+                    ref={(el) => {
+                      clocks.current[i] = el;
+                    }}
+                  />
                 </span>
-                <span
-                  className="idx-title t-title mt-1 mb-4 block"
-                  style={{ "--len": p.title.length } as React.CSSProperties}
-                >
-                  {p.title}
-                </span>
-                <span
-                  className="idx-clock block"
-                  aria-hidden
-                  ref={(el) => {
-                    clocks.current[i] = el;
-                  }}
-                />
               </Link>
             </li>
           ))}
@@ -152,6 +157,7 @@ function HomeStage({
         locale={locale}
         labels={t}
         corner={item.live && <span className="t-code text-muted">{t.live}: {item.live.join(" · ")}</span>}
+        showLegend={false}
       />
       <div className="mt-4 flex justify-end">
         <Link href={`/trabalho/${item.slug}`} className="t-small tb-link">

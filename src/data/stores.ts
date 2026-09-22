@@ -13,7 +13,22 @@ import type { Localized } from "@/types/project";
  *   o projeto só aparece em dev, como moldura vazia.
  * - `psi` vem do print do PageSpeed Insights, celular, com a data do print.
  *   Número sem data não entra.
+ *
+ * Faces do cartão em /projetos (hover troca da 1ª para a 2ª):
+ * - `logo`  → 1ª face: logo centralizado (SVG ou PNG transparente, em
+ *   public/logos/). Sem logo, a 1ª face é a `cover`. `logoDark` é a versão
+ *   para o tema Grafite (logo escuro some no fundo escuro).
+ * - `cover` → a print da primeira dobra. Vira a 2ª face quando há logo.
+ * - `media` → 2ª face explícita: imagem, GIF ou vídeo da navegação.
+ *   Preferir vídeo a GIF: MP4/WebM 16:10, mudo, 5–10 s, até ~2 MB, com
+ *   `poster` (primeiro quadro). Arquivos em public/media/.
+ *
+ * Exemplo:
+ *   logo: "/logos/uv-line.svg",
+ *   media: { kind: "video", src: "/media/uv-line.mp4", poster: "/media/uv-line.jpg" },
  */
+
+export type Media = { kind: "image"; src: string } | { kind: "video"; src: string; poster?: string };
 
 export type Psi = {
   /** AAAA-MM-DD do print. */
@@ -39,6 +54,12 @@ export type Store = {
   /** O que eu fiz, em frases curtas. Só o que dá para afirmar. */
   work?: Localized[];
   cover?: string;
+  /** 1ª face do cartão, quando existe. */
+  logo?: string;
+  /** Versão do logo para o tema escuro. */
+  logoDark?: string;
+  /** 2ª face do cartão (hover): imagem, GIF ou vídeo. */
+  media?: Media;
   featured?: boolean;
   /** Case com figura, quando existe. */
   caseSlug?: string;
@@ -62,7 +83,7 @@ export const stores: Store[] = [
   {
     slug: "integral-medica-darkness",
     mark: "P-02",
-    name: "Integral Médica / Darkness",
+    name: "Integralmédica / Darkness",
     domain: "integralmedica.com.br",
     platform: "Hydrogen",
     year: 2025,
@@ -127,9 +148,9 @@ export const stores: Store[] = [
 
 const isProd = process.env.NODE_ENV === "production";
 
-/** Projetos visíveis: com capa sempre; sem capa só em dev. */
+/** Projetos visíveis: com capa ou logo sempre; sem nenhum dos dois só em dev. */
 export function visibleStores() {
-  return stores.filter((s) => s.cover || !isProd);
+  return stores.filter((s) => s.cover || s.logo || !isProd);
 }
 
 export function getStore(slug: string) {
