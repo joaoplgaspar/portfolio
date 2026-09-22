@@ -1,33 +1,21 @@
-import localFont from "next/font/local";
-import { JetBrains_Mono } from "next/font/google";
+import { Archivo, IBM_Plex_Mono } from "next/font/google";
 
 /**
- * Fontes da marca (Seção 4 do brief) — self-hosted.
- *   - display: Clash Display (Fontshare)  → 500 Medium, 600 Semibold
- *   - corpo:   Satoshi (Fontshare)        → 400 Regular, 500 Medium, 700 Bold
- *   - mono:    JetBrains Mono (Google)    → 400, 500
- * Os .woff2 de Clash/Satoshi vivem em src/fonts/.
+ * Uma família só, variável em peso E largura. O contraste do sistema vem daí:
+ * nome e títulos grandes em peso fino e largura normal, texto pequeno pesado,
+ * e a largura (wdth 62–125) como eixo de interação — não um segundo tipo.
+ *
+ * Mono só onde o texto É código ou identificador (domínio, chave, id de
+ * registro) — nunca como rótulo decorativo em caixa alta.
  */
-export const display = localFont({
-  src: [
-    { path: "../fonts/ClashDisplay-Medium.woff2", weight: "500", style: "normal" },
-    { path: "../fonts/ClashDisplay-Semibold.woff2", weight: "600", style: "normal" },
-  ],
-  variable: "--ff-display",
-  display: "swap",
-});
-
-export const sans = localFont({
-  src: [
-    { path: "../fonts/Satoshi-Regular.woff2", weight: "400", style: "normal" },
-    { path: "../fonts/Satoshi-Medium.woff2", weight: "500", style: "normal" },
-    { path: "../fonts/Satoshi-Bold.woff2", weight: "700", style: "normal" },
-  ],
+export const sans = Archivo({
+  subsets: ["latin"],
+  axes: ["wdth"],
   variable: "--ff-sans",
   display: "swap",
 });
 
-export const mono = JetBrains_Mono({
+export const mono = IBM_Plex_Mono({
   subsets: ["latin"],
   weight: ["400", "500"],
   variable: "--ff-mono",

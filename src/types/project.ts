@@ -34,6 +34,12 @@ export interface Project {
   results: ProjectResult[];
   /** Corpo rico opcional. Quando presente, a PDP o renderiza no lugar de problema/contribuição. */
   body?: { pt: CaseBlock[]; en: CaseBlock[] };
+  /** Domínios em produção que o leitor pode abrir e medir por conta própria. */
+  live?: string[];
+  /** Números de escala do case (usuários, plataformas…). Só entra número medido. */
+  stats?: { value: string; label: Localized }[];
+  /** Legenda da figura (FIG. n) — uma frase, o mecanismo do case. */
+  caption?: Localized;
   cover: string; // Cloudinary public_id
   gallery: string[]; // Cloudinary public_ids
   featured: boolean;

@@ -1,18 +1,35 @@
 rules_version = '2';
 
 // Regras do Firestore para o portfólio.
-// Troque ADMIN_EMAIL pelo MESMO valor de NEXT_PUBLIC_ADMIN_EMAIL no .env.local.
-// Aplicar em: Firebase Console → Firestore Database → Rules.
+//
+// ⚠️ ANTES DE PUBLICAR: troque TODAS as ocorrências de "SEU-EMAIL-AQUI" pelo
+// MESMO e-mail de NEXT_PUBLIC_ADMIN_EMAIL no .env.local. Se você publicar com
+// o placeholder, o /admin loga mas NÃO consegue salvar nada.
+//
+// Aplicar em: Firebase Console → Firestore Database → Rules → Publish.
+//
+// Nota de segurança: NEXT_PUBLIC_ADMIN_EMAIL é só o gate de UI (client-side,
+// visível no bundle). Quem realmente protege a escrita é este arquivo.
 
 service cloud.firestore {
   match /databases/{database}/documents {
 
+    // Sem checar email_verified: usuário criado à mão no Console nasce
+    // não-verificado, e isso travaria o próprio admin.
+    function isAdmin() {
+      return request.auth != null
+        && request.auth.token.email == "jpgaspar.dev@gmail.com";
+    }
+
     // Projetos: leitura pública apenas dos publicados; escrita só do admin.
     match /projects/{id} {
-      allow read: if resource.data.published == true
-        || (request.auth != null && request.auth.token.email == "ADMIN_EMAIL");
-      allow write: if request.auth != null
-        && request.auth.token.email == "ADMIN_EMAIL";
+      allow read: if resource.data.published == true || isAdmin();
+      allow write: if isAdmin();
+    }
+
+    // Qualquer outra coleção fica fechada até ganhar regra própria.
+    match /{document=**} {
+      allow read, write: if false;
     }
   }
 }

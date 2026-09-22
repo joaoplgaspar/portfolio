@@ -21,17 +21,40 @@ export default function Reveal({
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    const obs = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setShown(true);
-          obs.disconnect();
-        }
+
+    const supported = typeof IntersectionObserver !== "undefined";
+
+    const obs = supported
+      ? new IntersectionObserver(
+          ([entry]) => {
+            if (entry.isIntersecting) {
+              setShown(true);
+              obs?.disconnect();
+            }
+          },
+          { rootMargin: "0px 0px -10% 0px" },
+        )
+      : null;
+    obs?.observe(el);
+
+    // Rede de segurança: o observer depende de o navegador estar pintando.
+    // Numa aba que não pinta (janela oculta, alguns headless, bots que
+    // renderizam sem rolar) ele nunca dispara e o conteúdo ficaria em
+    // `opacity: 0` para sempre — invisível para o leitor e para o Google.
+    // Conteúdo escondido por um efeito decorativo é um defeito, não um efeito.
+    // Sem suporte a IntersectionObserver não há entrada a animar — mostra já.
+    const failsafe = window.setTimeout(
+      () => {
+        setShown(true);
+        obs?.disconnect();
       },
-      { rootMargin: "0px 0px -10% 0px" },
+      supported ? 2500 : 0,
     );
-    obs.observe(el);
-    return () => obs.disconnect();
+
+    return () => {
+      window.clearTimeout(failsafe);
+      obs?.disconnect();
+    };
   }, []);
 
   return (

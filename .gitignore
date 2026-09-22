@@ -37,3 +37,6 @@ yarn-error.log*
 # windows junk
 desktop.ini
 Thumbs.db
+
+# QA visual (frames de transição, screenshots)
+.qa/

@@ -3,13 +3,12 @@ import { notFound } from "next/navigation";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
 import { routing } from "@/i18n/routing";
-import { display, sans, mono } from "@/lib/fonts";
+import { sans, mono } from "@/lib/fonts";
 import { siteConfig } from "@/lib/site";
-import SmoothScroll from "@/components/providers/SmoothScroll";
-import Grain from "@/components/fx/Grain";
-import Cursor from "@/components/fx/Cursor";
-import SiteHeader from "@/components/layout/SiteHeader";
-import SiteFooter from "@/components/layout/SiteFooter";
+import Sweep from "@/components/fx/Sweep";
+import SheetFrame from "@/components/sheet/SheetFrame";
+import SheetHead from "@/components/sheet/SheetHead";
+import { THEME_SCRIPT } from "@/components/sheet/ThemeSwitch";
 import "../globals.css";
 
 export function generateStaticParams() {
@@ -37,17 +36,16 @@ export async function generateMetadata({
       "headless",
       "React",
       "Next.js",
-      "3D",
-      "GSAP",
+      "Shopify Hydrogen",
       "performance",
-      "portfólio",
+      "portfolio",
     ],
     icons: { icon: "/favicon-32x32.png" },
     robots: { index: true, follow: true },
     openGraph: {
       type: "website",
       siteName: siteConfig.name,
-      locale: locale === "en" ? "en_US" : "pt_BR",
+      locale: locale === "pt" ? "pt_BR" : "en_US",
       title: t("title"),
       description: t("description"),
     },
@@ -70,18 +68,18 @@ export default async function LocaleLayout({
   return (
     <html
       lang={locale}
-      data-theme="dark"
-      className={`${display.variable} ${sans.variable} ${mono.variable}`}
+            className={`${sans.variable} ${mono.variable}`}
       suppressHydrationWarning
     >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
+      </head>
       <body className="min-h-screen bg-bg font-sans text-fg antialiased">
         <NextIntlClientProvider messages={messages}>
-          <SmoothScroll />
-          <Grain />
-          <Cursor />
-          <SiteHeader />
-          <main>{children}</main>
-          <SiteFooter />
+          <Sweep />
+          <SheetFrame />
+          <SheetHead />
+          <main className="sheet">{children}</main>
         </NextIntlClientProvider>
       </body>
     </html>

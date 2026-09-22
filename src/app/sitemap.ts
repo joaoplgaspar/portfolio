@@ -1,20 +1,30 @@
 import type { MetadataRoute } from "next";
-import { getProjects } from "@/data/projects";
+import { fetchPublishedProjects } from "@/data/projects";
 import { siteConfig } from "@/lib/site";
+import { visibleStores } from "@/data/stores";
 
-const PATHS = ["/", "/sobre", "/lab"];
+// /lab fica fora até ter experimento rodando de verdade.
+const PATHS = ["/", "/sobre", "/contato"];
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  const projectPaths = getProjects().map((p) => `/trabalho/${p.slug}`);
-  const all = [...PATHS, ...projectPaths];
+// Acompanha o ISR das páginas: projeto novo no /admin entra no sitemap sem redeploy.
+export const revalidate = 60;
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const projects = await fetchPublishedProjects();
+  const all = [
+    ...PATHS,
+    "/projetos",
+    ...visibleStores().map((s) => `/projetos/${s.slug}`),
+    ...projects.map((p) => `/trabalho/${p.slug}`),
+  ];
 
   return all.map((path) => {
     const suffix = path === "/" ? "" : path;
-    const ptUrl = `${siteConfig.url}${suffix}`;
-    const enUrl = `${siteConfig.url}/en${suffix}`;
+    const enUrl = `${siteConfig.url}${suffix}`;
+    const ptUrl = `${siteConfig.url}/pt${suffix}`;
     return {
-      url: ptUrl,
-      alternates: { languages: { pt: ptUrl, en: enUrl } },
+      url: enUrl,
+      alternates: { languages: { en: enUrl, pt: ptUrl } },
     };
   });
 }

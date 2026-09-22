@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import Lenis from "lenis";
+import { setLenis } from "@/lib/lenis";
 
 /** Scroll suave (Lenis, lerp ~0.09). Desliga em prefers-reduced-motion. */
 export default function SmoothScroll() {
@@ -9,6 +10,7 @@ export default function SmoothScroll() {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     const lenis = new Lenis({ lerp: 0.09, smoothWheel: true });
+    setLenis(lenis);
     let raf = 0;
     const loop = (time: number) => {
       lenis.raf(time);
@@ -18,6 +20,7 @@ export default function SmoothScroll() {
 
     return () => {
       cancelAnimationFrame(raf);
+      setLenis(null);
       lenis.destroy();
     };
   }, []);

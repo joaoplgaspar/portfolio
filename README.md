@@ -15,6 +15,8 @@ com preview seguindo o cursor (a lista _é_ o hero).
 - **Tailwind CSS v4** (`@theme inline`, tokens semânticos para tema runtime)
 - **next-intl** — PT no `/` (default), EN em `/en` (`localePrefix: "as-needed"`)
 - **GSAP** — `quickTo` para o cursor-follow do índice (sem re-render por mousemove)
+- **WebGL cru** — faixa iridescente oxblood na troca de rota (`src/lib/sweep.ts`),
+  um quad + shader; a rota troca com a tela coberta pelo véu
 - **Firebase** (Firestore + Auth) — casos dinâmicos e painel `/admin`
 - **Cloudinary** (`next-cloudinary`) — imagens de capa/galeria
 - Deploy na **Vercel** · orçamento de performance **Lighthouse ≥ 90 mobile**
@@ -40,6 +42,80 @@ quando você preenche o `.env.local`; sem ele, cai nos mocks de `src/data`.
 - Casos com corpo rico usam `body: { pt, en }` (blocos heading/text/list, com
   `inline code` em crases). Hoje: **LIVRA** publicado; DUX e Vivo aguardando
   autorização (`published: false`).
+
+## Documentação de design
+
+| Documento | Para quê |
+|---|---|
+| [docs/briefing-layout.md](docs/briefing-layout.md) | **Ponto de entrada para quem vai desenhar layout.** Autossuficiente: paleta, tipografia, as três referências medidas, decisões inegociáveis e o que já está construído. |
+| [docs/teardown-xiangyidesign.md](docs/teardown-xiangyidesign.md) | Destrinchamento da referência principal (4 páginas, bundle, shaders) + anexo com p5aholic e itssharl.ee medidos. |
+| [docs/composicao.md](docs/composicao.md) | Inventário do que existe, comparativo das referências, direção escolhida (B) e diagnóstico da página de case. |
+| [docs/spec-v3-motion.md](docs/spec-v3-motion.md) | Movimento e camada 3D: sequência de entrada, objeto-assinatura, transições, tiers de qualidade. |
+
+## Minimap do case
+
+Coluna fixa à direita em `/trabalho/[slug]` com corpo rico: um traço por bloco,
+**posicionado na posição real do bloco no documento**. Headings são botões
+navegáveis. Some abaixo de 1280px.
+
+Ele é montado via portal no `document.body`: `template.tsx` envolve a página num
+`.page-enter` cuja animação deixa um `transform` de matriz identidade, e matriz
+identidade cria bloco de contenção — qualquer `position: fixed` dentro dela
+ancora na página, não na viewport.
+
+```bash
+node scripts/minimap-check.mjs http://localhost:3005/trabalho/livra
+```
+
+> **Nota de ambiente:** mudanças em `src/app/globals.css` só chegam ao dev
+> server depois de `rm -rf .next` e reinício. Reiniciar sozinho não basta.
+
+## Bloco AGORA
+
+`src/data/now.ts` é a fonte única do que é verdade sobre o trabalho neste
+momento. Carrega `updatedAt` e **a data aparece na home**: se o bloco
+envelhecer, o site denuncia sozinho. `scripts/now-check.mjs` falha quando
+passa de 120 dias — um bloco chamado "agora" que envelhece em silêncio é pior
+que não existir.
+
+Entrada sem verdade sai da lista; com `entries` vazio o bloco não renderiza.
+
+```bash
+node scripts/now-check.mjs http://localhost:3005/
+```
+
+## Telemetria
+
+Barra mono no rodapé com o que o site sabe sobre si mesmo: hora de São Paulo
+ao vivo, hash e data do build, FPS medido, LCP deste visitante, WebGL/DPR
+detectados, disponibilidade. **Campo sem medição não aparece** — nada ali é
+estimado.
+
+O hash vem de `NEXT_PUBLIC_BUILD_SHA`, injetado em `next.config.mjs` a partir
+do ambiente da Vercel ou do git local.
+
+```bash
+node scripts/telemetry-check.mjs http://localhost:3005/
+```
+
+## Transição de rota (faixa iridescente)
+
+A troca de rota é coberta por uma faixa oxblood renderizada em WebGL
+(`src/lib/sweep.ts`): um quad fullscreen e um fragment shader, sem three.js. O
+véu que viaja com a faixa chega a ~0.97 de alpha no meio do percurso — é nesse
+instante que a navegação dispara e o scroll é zerado, então a página nova nunca
+aparece "chegando".
+
+Não é interceptada (navegação nativa) quando: `prefers-reduced-motion`, sem
+WebGL, clique com modificador, `target` externo, `download`, âncora na mesma
+página, ou `data-no-sweep` no link.
+
+```bash
+node scripts/sweep-check.mjs http://localhost:3000/ /sobre
+```
+
+`sweep-check` valida os caminhos de degradação; `sweep-frames.mjs` fotografa a
+transição quadro a quadro em `.qa/sweep/` para conferir o ritmo.
 
 ## Definition of Done
 

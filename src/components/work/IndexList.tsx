@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
+import Image from "next/image";
 import { CldImage } from "next-cloudinary";
 import { Link } from "@/i18n/navigation";
 
@@ -14,8 +15,22 @@ export type IndexItem = {
   cover?: string;
 };
 
-/** Cover do preview: imagem do Cloudinary se houver `cover`; senão placeholder CSS. */
+/**
+ * Cover do preview. Ordem: capa local (`/covers/x.jpg`) → Cloudinary → placeholder CSS.
+ * A capa local existe para o índice não depender de conta no Cloudinary.
+ */
 function Shot({ item }: { item: IndexItem }) {
+  if (item.cover?.startsWith("/")) {
+    return (
+      <Image
+        src={item.cover}
+        width={400}
+        height={260}
+        alt={item.title}
+        className="absolute inset-0 h-full w-full object-cover"
+      />
+    );
+  }
   if (CLOUD && item.cover) {
     return (
       <CldImage
@@ -111,7 +126,12 @@ export default function IndexList({ items }: { items: IndexItem[] }) {
               <span className="idx-inline">
                 <Shot item={it} />
               </span>
-              <span className="idx-title">{it.title}</span>
+              <span
+                className="idx-title"
+                style={{ "--len": it.title.length } as CSSProperties}
+              >
+                {it.title}
+              </span>
               <span className="idx-meta">
                 <span className="idx-type">{it.type}</span>
                 <span className="idx-year">{it.year}</span>

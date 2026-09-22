@@ -1,5 +1,6 @@
 import Container from "@/components/layout/Container";
 import { siteConfig } from "@/lib/site";
+import Telemetry from "@/components/ui/Telemetry";
 
 /** Footer rico — substitui a página de contato. E-mail grande é o CTA da casa. */
 export default async function SiteFooter() {
@@ -47,8 +48,12 @@ export default async function SiteFooter() {
           <p className="font-mono text-sm text-stone-400">{siteConfig.stack}</p>
         </div>
 
-        <div className="mt-12 flex flex-col gap-2 border-t border-line pt-6 text-label text-muted sm:flex-row sm:items-center sm:justify-between">
-          <span>{siteConfig.location}</span>
+        {/* Telemetria substitui a linha de local: ela já diz a cidade, e com
+            a hora andando. Repetir "São Paulo · GMT-3" logo acima seria dizer
+            duas vezes a mesma coisa, uma delas morta. */}
+        <Telemetry className="mt-12 border-t border-line pt-6" />
+
+        <div className="mt-6 text-label text-muted">
           <span>
             © {year} {siteConfig.name}
           </span>

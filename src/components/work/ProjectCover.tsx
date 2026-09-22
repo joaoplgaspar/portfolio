@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { CldImage } from "next-cloudinary";
 import type { Locale } from "@/i18n/routing";
 import type { Project } from "@/types/project";
@@ -5,8 +6,8 @@ import type { Project } from "@/types/project";
 const CLOUD = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
 
 /**
- * Cover do projeto. Se houver `cover` (Cloudinary public_id) e cloud configurado,
- * renderiza a imagem; senão, placeholder tipográfico (dimensões fixas = zero CLS).
+ * Cover do projeto. Ordem: capa local (`/covers/x.jpg`) → Cloudinary public_id →
+ * placeholder tipográfico. Dimensões fixas em todos os caminhos = zero CLS.
  */
 export default function ProjectCover({
   project,
@@ -21,7 +22,16 @@ export default function ProjectCover({
     <div
       className={`relative aspect-[4/3] w-full overflow-hidden rounded-[4px] border border-line bg-raised ${className}`}
     >
-      {CLOUD && project.cover ? (
+      {project.cover?.startsWith("/") ? (
+        <Image
+          src={project.cover}
+          width={1280}
+          height={960}
+          priority
+          alt={project.title}
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+      ) : CLOUD && project.cover ? (
         <CldImage
           src={project.cover}
           width={1280}

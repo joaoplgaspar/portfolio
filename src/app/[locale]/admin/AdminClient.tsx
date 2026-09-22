@@ -20,7 +20,7 @@ import {
 } from "firebase/firestore";
 import { CldUploadWidget } from "next-cloudinary";
 import { isFirebaseConfigured, getFirebaseApp } from "@/lib/firebase";
-import { getProjects } from "@/data/projects";
+import { getSeedProjects } from "@/data/projects";
 import type { Project } from "@/types/project";
 
 const ADMIN_EMAIL = process.env.NEXT_PUBLIC_ADMIN_EMAIL || "";
@@ -54,6 +54,8 @@ type Draft = {
   gallery: string;
   featured: boolean;
   published: boolean;
+  /** Corpo rico — não é editável no form, mas trafega para não ser apagado ao salvar. */
+  body?: Project["body"];
 };
 
 const empty: Draft = {
@@ -90,6 +92,8 @@ function draftToDoc(d: Draft) {
     gallery: list(d.gallery),
     featured: d.featured,
     published: d.published,
+    // Firestore rejeita `undefined` — só inclui a chave quando o case tem corpo.
+    ...(d.body ? { body: d.body } : {}),
     updatedAt: serverTimestamp(),
   };
 }
@@ -109,6 +113,7 @@ function projectToDraft(p: Project & { id?: string }): Draft {
     results: p.results.map((r) => `${r.label}|${r.value}`).join("\n"),
     cover: p.cover || "", gallery: (p.gallery || []).join(", "),
     featured: !!p.featured, published: !!p.published,
+    body: p.body,
   };
 }
 
@@ -210,10 +215,13 @@ export default function AdminClient() {
     setBusy(true);
     const db = getFirestore(app);
     try {
-      for (const p of getProjects()) {
+      // Grava o Project inteiro — passar por draftToDoc perderia o `body`
+      // (corpo rico do case), e a PDP do LIVRA ficaria vazia.
+      for (const p of getSeedProjects()) {
         await addDoc(collection(db, "projects"), {
-          ...draftToDoc(projectToDraft(p)),
+          ...p,
           createdAt: serverTimestamp(),
+          updatedAt: serverTimestamp(),
         });
       }
       await reload();

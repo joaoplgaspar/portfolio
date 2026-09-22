@@ -2,78 +2,64 @@ import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import type { Locale } from "@/i18n/routing";
 import { pageMeta } from "@/lib/metadata";
-import Container from "@/components/layout/Container";
-import Reveal from "@/components/fx/Reveal";
+import { sheetPlan } from "@/lib/sheets";
+import TitleBlock from "@/components/sheet/TitleBlock";
+import Stair from "@/components/sheet/Stair";
+import { isShown } from "@/components/figures/registry";
+import { fetchPublishedProjects } from "@/data/projects";
 import { about } from "@/data/about";
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ locale: string }>;
-}): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;
   const l = locale as Locale;
   const t = await getTranslations({ locale, namespace: "about" });
-  return pageMeta({
-    locale: l,
-    path: "/sobre",
-    title: t("eyebrow"),
-    description: about.paragraphs[l][0],
-  });
+  return pageMeta({ locale: l, path: "/sobre", title: t("eyebrow"), description: about.paragraphs[l][0] });
 }
 
-export default async function AboutPage({
-  params,
-}: {
-  params: Promise<{ locale: string }>;
-}) {
+export default async function AboutPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   setRequestLocale(locale);
   const l = locale as Locale;
   const t = await getTranslations("about");
+  const th = await getTranslations("home");
+  const projects = (await fetchPublishedProjects()).filter(isShown);
+  const plan = sheetPlan(projects.length);
 
   return (
-    <Container className="pb-24 pt-32 md:pb-40 md:pt-40">
-      <Reveal>
-        <p className="text-label text-accent-lift">{t("eyebrow")}</p>
-      </Reveal>
-      <Reveal delay={80}>
-        <h1 className="mt-4 max-w-[18ch] font-display text-[clamp(2.5rem,6vw,4.8rem)] font-semibold leading-[0.95] tracking-tight text-balance">
-          {t("title")}
-        </h1>
-      </Reveal>
+    <>
+      <p className="t-fig uppercase text-faint">{t("eyebrow")}</p>
+      <h1 className="t-hero mt-6 max-w-[16ch] text-[clamp(2.6rem,6.4vw,7rem)]">{t("title")}</h1>
 
-      <div className="mt-14 grid gap-12 md:grid-cols-[0.8fr_1.2fr]">
-        <Reveal>
-          <div className="aspect-[4/5] w-full rounded-[4px] border border-line bg-raised" />
-          <dl className="mt-8 flex flex-col">
-            {about.trajectory.map((entry, i) => (
-              <div
-                key={i}
-                className={`py-4 ${i > 0 ? "border-t border-line" : ""}`}
-              >
-                <dt className="text-label text-accent-lift">{entry.period[l]}</dt>
-                <dd className="mt-2 font-mono text-[13px] leading-relaxed text-muted">
-                  {entry.body[l]}
-                </dd>
-              </div>
+      <div className="mt-[clamp(48px,7vw,112px)] grid gap-10 border-t border-fg pt-5 lg:grid-cols-[minmax(0,4fr)_minmax(0,8fr)] lg:gap-[var(--gut)]">
+        <div>
+          <h2 className="tb-key">{t("does")}</h2>
+          <ul className="mt-2">
+            {about.capabilities.map((c) => (
+              <li key={c.en} className="t-small border-b border-line py-2">
+                {c[l]}
+              </li>
             ))}
-          </dl>
-        </Reveal>
-
-        <div className="flex flex-col gap-6">
+          </ul>
+          <p className="t-small mt-4 text-muted">{about.interests[l]}</p>
+        </div>
+        <div className="max-w-[62ch] space-y-5 text-[1.125rem] leading-[1.6]">
           {about.paragraphs[l].map((p, i) => (
-            <Reveal key={i} delay={i * 60}>
-              <p className="text-lg leading-relaxed text-muted">{p}</p>
-            </Reveal>
+            <p key={i}>{p}</p>
           ))}
-          <Reveal delay={200}>
-            <p className="mt-2 font-mono text-sm text-stone-400">
-              {about.interests[l]}
-            </p>
-          </Reveal>
         </div>
       </div>
-    </Container>
+
+      <div className="mt-[clamp(56px,8vw,128px)]">
+        <Stair
+          stages={about.stages}
+          locale={l}
+          fig={`${th("fig")} ${projects.length + 1}`}
+          caption={t("stairCaption")}
+          labels={{ play: th("play"), pause: th("pause"), prev: th("prev"), next: th("next") }}
+        />
+      </div>
+
+      <TitleBlock sheet={plan.about} of={plan.total} title={t("eyebrow")} />
+    </>
   );
 }

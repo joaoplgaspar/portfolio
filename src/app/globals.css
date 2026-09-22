@@ -1,44 +1,57 @@
 @import "tailwindcss";
 
 /* ─────────────────────────────────────────────────────────────
-   Design system "Pressroom" — editorial-commerce premium (Seção 4).
-   Um único set de tokens SEMÂNTICOS (--bg/--fg/--accent/--muted/--line);
-   a variante light é só uma troca de valores.
+   "Folha" — o site é um jogo de pranchas de desenho técnico.
+
+   Papel e tinta. Um vermelho só (o oxblood da transição), usado como
+   sinal: a peça em destaque num desenho, nada mais. Tudo o que o sistema
+   precisa cabe nestas variáveis — se um componente novo pede outra, a
+   pergunta é por que ele não cabe no desenho.
    ───────────────────────────────────────────────────────────── */
 :root {
-  /* superfícies + papel (dark-dominant, grafite quente) */
+  --bg: #ecebe6; /* papel */
+  --raised: #f5f4f0; /* papel sob luz — área de interação */
+  --shade: #dcd9d1; /* face lateral de peça, 1º tom */
+  --shade-2: #cdc9bf; /* face lateral de peça, 2º tom */
+  --line: #c9c5bb; /* filete de apoio */
+  --fg: #151412; /* tinta */
+  --muted: #56534c; /* tinta diluída */
+  --faint: #8d897f; /* marcação de margem, cotas */
+  --accent: #7c2d2d; /* sinal */
+  --accent-lift: #9a3838;
+  /* Brilho da faixa de transição: com fundo claro, a tinta não serve. */
+  --sweep-spec: #fff6ee;
+
+  --pad: clamp(8px, 1.1vw, 16px); /* margem externa da folha */
+  --gut: clamp(16px, 2.6vw, 40px); /* respiro interno */
+
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-sym: cubic-bezier(0.65, 0, 0.35, 1);
+
+  --plate: var(--raised); /* fundo das pranchas de figura */
+  --grid: transparent;
+
+  color-scheme: light;
+}
+
+/* Grafite: a mesma prancha desenhada em giz sobre fundo grafite quente.
+   O sinal continua sendo o vermelho, só mais aceso para ler no escuro. */
+:root[data-theme="dark"] {
   --bg: #1b1a17;
   --raised: #232019;
+  --shade: #2c2923;
+  --shade-2: #37332b;
   --line: #3a362d;
   --fg: #ede8de;
   --muted: #b7b1a4;
-  --stone-400: #a69f91;
-
-  /* acento premium (oxblood/bordô — NÃO terracota) */
-  --accent: #7c2d2d;
-  --accent-lift: #a84343;
-
-  /* movimento (Seção 4.5) — sem bounce/back */
-  --ease-premium: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-sym: cubic-bezier(0.65, 0, 0.35, 1);
-  --dur-micro: 240ms;
-  --dur-reveal: 760ms;
-  --dur-page: 900ms;
+  --faint: #8a8477;
+  --accent: #c4524a;
+  --accent-lift: #dc6b61;
+  --sweep-spec: #fff1e6;
+  --plate: #201e1a;
+  --grid: rgba(237, 232, 222, 0.03);
 
   color-scheme: dark;
-}
-
-/* Variante "gallery" clara — troca só os valores, sem refatorar. */
-:root[data-theme="light"] {
-  --bg: #f2efe9;
-  --raised: #ffffff;
-  --line: #dad4c8;
-  --fg: #1b1a17;
-  --muted: #6e685c;
-  --accent: #7c2d2d;
-  --accent-lift: #9a3838;
-
-  color-scheme: light;
 }
 
 @theme inline {
@@ -47,412 +60,451 @@
   --color-line: var(--line);
   --color-fg: var(--fg);
   --color-muted: var(--muted);
+  --color-faint: var(--faint);
   --color-accent: var(--accent);
   --color-accent-lift: var(--accent-lift);
+  --color-stone-400: var(--faint);
+  --color-stone-600: var(--faint);
 
-  --color-stone-200: #d8d2c6;
-  --color-stone-400: #a69f91;
-  --color-stone-600: #6e685c;
-
-  --font-display: var(--ff-display), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--ff-sans), ui-sans-serif, system-ui, sans-serif;
   --font-sans: var(--ff-sans), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--ff-mono), ui-monospace, SFMono-Regular, monospace;
 
-  --radius-xs: 2px;
-  --radius-sm: 3px;
-  --radius-md: 4px;
-
   --ease-premium: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-sym: cubic-bezier(0.65, 0, 0.35, 1);
 }
 
 /* ── Base ───────────────────────────────────────────────────── */
 html {
   -webkit-text-size-adjust: 100%;
 }
-
 body {
   background-color: var(--bg);
+  /* Quadrícula: 24px fina, 120px marcada. Transparente no papel claro. */
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px),
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size:
+    24px 24px,
+    24px 24px,
+    120px 120px,
+    120px 120px;
   color: var(--fg);
   font-family: var(--ff-sans), ui-sans-serif, system-ui, sans-serif;
+  font-weight: 450;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
 }
-
 ::selection {
-  background: var(--accent);
+  background: var(--fg);
+  color: var(--bg);
+}
+:focus-visible {
+  outline: 1.5px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* ── Tipo ───────────────────────────────────────────────────────
+   Contraste por peso, não por tamanho: grande é fino, pequeno é pesado.
+   A largura (font-stretch) fica reservada para estado — é o que muda
+   quando uma coisa está ativa. */
+@layer components {
+.t-hero {
+  font-weight: 200;
+  font-size: clamp(2.9rem, 8.4vw, 9.6rem);
+  line-height: 0.86;
+  letter-spacing: -0.045em;
+}
+.t-name {
+  font-weight: 200;
+  font-size: clamp(2.4rem, 4.6vw, 4.6rem);
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+}
+.t-title {
+  font-weight: 250;
+  font-size: clamp(1.7rem, 3vw, 2.9rem);
+  line-height: 0.98;
+  letter-spacing: -0.03em;
+}
+.t-small {
+  font-size: 0.8125rem;
+  line-height: 1.45;
+  font-weight: 600;
+  letter-spacing: -0.003em;
+}
+.t-fig {
+  font-size: 0.75rem;
+  font-weight: 650;
+  letter-spacing: 0.04em;
+  font-variant-numeric: tabular-nums;
+}
+.t-code {
+  font-family: var(--ff-mono), ui-monospace, monospace;
+  font-size: 0.78rem;
+  letter-spacing: 0;
+}
+}
+
+/* Compatibilidade com páginas que ainda usam o rótulo antigo. */
+.text-label {
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+/* ── A folha ────────────────────────────────────────────────────
+   Moldura fixa com zonas marcadas nas bordas, como uma prancha técnica.
+   A sombra de 100vmax pinta de papel tudo o que fica fora da moldura: o
+   conteúdo rola por baixo e some na borda em vez de vazar pela margem. */
+.sheet-frame {
+  position: fixed;
+  inset: var(--pad);
+  z-index: 60;
+  pointer-events: none;
+  border: 1px solid var(--fg);
+  box-shadow: 0 0 0 100vmax var(--bg);
+}
+.zone {
+  position: absolute;
+  font-size: 9px;
+  line-height: 1;
+  font-weight: 600;
+  color: var(--faint);
+  font-variant-numeric: tabular-nums;
+}
+.zone-top {
+  top: calc(var(--pad) * -1);
+  height: var(--pad);
+  display: grid;
+  place-items: center;
+  transform: translateX(-50%);
+}
+.zone-left {
+  left: calc(var(--pad) * -1);
+  width: var(--pad);
+  display: grid;
+  place-items: center;
+  transform: translateY(-50%);
+}
+.zone-tick-top {
+  position: absolute;
+  top: calc(var(--pad) * -1);
+  width: 1px;
+  height: var(--pad);
+  background: var(--fg);
+  opacity: 0.35;
+}
+.zone-tick-left {
+  position: absolute;
+  left: calc(var(--pad) * -1);
+  height: 1px;
+  width: var(--pad);
+  background: var(--fg);
+  opacity: 0.35;
+}
+@media (max-width: 640px) {
+  .zone,
+  .zone-tick-top,
+  .zone-tick-left {
+    display: none;
+  }
+}
+
+.sheet-head {
+  position: fixed;
+  z-index: 61;
+  top: var(--pad);
+  left: var(--pad);
+  right: var(--pad);
+  height: 52px;
+  padding: 0 var(--gut);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--bg);
+  border-bottom: 1px solid var(--fg);
+}
+.sheet {
+  padding: calc(var(--pad) + 52px + var(--gut)) calc(var(--pad) + var(--gut))
+    calc(var(--pad) + var(--gut));
+}
+.nav-link {
+  position: relative;
+  color: var(--muted);
+  transition: color 200ms var(--ease);
+}
+.nav-link:hover {
   color: var(--fg);
 }
-
-/* Foco de teclado visível (a11y — quality floor). */
-:focus-visible {
-  outline: 2px solid var(--accent-lift);
-  outline-offset: 3px;
-  border-radius: 2px;
+/* Item atual: um traço de sinal embaixo, como a cota da peça em foco. */
+.nav-link[aria-current="page"] {
+  color: var(--fg);
+}
+.nav-link[aria-current="page"]::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -5px;
+  height: 1.5px;
+  background: var(--accent);
 }
 
-/* ── Escala tipográfica (ratio ~1.25) ───────────────────────── */
-.text-display-xl {
-  font-family: var(--ff-display), sans-serif;
-  font-weight: 600;
-  font-size: clamp(3.5rem, 8vw, 8rem);
-  line-height: 0.95;
-  letter-spacing: -0.02em;
+/* ── Carimbo (title block) ──────────────────────────────────────
+   Rodapé de toda folha: quem desenhou, qual prancha, contato. */
+.title-block {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  /* Células fecham à direita e embaixo; o bloco só fecha topo e esquerda. */
+  border-top: 1px solid var(--fg);
+  border-left: 1px solid var(--fg);
 }
-.text-display {
-  font-family: var(--ff-display), sans-serif;
-  font-weight: 600;
-  font-size: clamp(2.5rem, 5vw, 4rem);
-  line-height: 1.02;
-  letter-spacing: -0.02em;
+.tb-cell {
+  padding: 9px 12px 11px;
+  border-right: 1px solid var(--fg);
+  border-bottom: 1px solid var(--fg);
+  min-width: 0;
 }
-.text-h2 {
-  font-family: var(--ff-display), sans-serif;
-  font-weight: 600;
-  font-size: clamp(1.75rem, 3vw, 2.5rem);
-  line-height: 1.1;
-  letter-spacing: -0.01em;
-}
-.text-h3 {
-  font-family: var(--ff-display), sans-serif;
-  font-weight: 500;
-  font-size: 1.5rem;
-  line-height: 1.2;
-}
-.text-label {
-  font-family: var(--ff-mono), monospace;
-  font-size: 0.8125rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-/* ── Lenis (smooth scroll) ──────────────────────────────────── */
-html.lenis,
-html.lenis body {
-  height: auto;
-}
-.lenis.lenis-smooth {
-  scroll-behavior: auto !important;
-}
-.lenis.lenis-smooth [data-lenis-prevent] {
-  overscroll-behavior: contain;
-}
-.lenis.lenis-stopped {
-  overflow: clip;
-}
-
-/* Cursor custom: esconde o nativo só quando ligado por JS (fine pointer). */
-html.has-cursor,
-html.has-cursor * {
-  cursor: none;
-}
-html.has-cursor .cursor-layer {
+.tb-key {
   display: block;
+  font-size: 9.5px;
+  font-weight: 650;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--faint);
+  margin-bottom: 4px;
+}
+.tb-val {
+  font-size: 0.875rem;
+  font-weight: 560;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+}
+.tb-link {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--line);
+  transition: text-decoration-color 200ms var(--ease);
+}
+.tb-link:hover {
+  text-decoration-color: var(--accent);
 }
 
-/* Marquee (faixa de clientes/capabilities) */
-@keyframes marquee {
+/* Prancha de figura: papel sob luz no claro, quadrícula no escuro. */
+.plate {
+  background: var(--plate);
+}
+
+/* ── Figura ─────────────────────────────────────────────────────
+   Todo traço de figura nasce desenhado: pathLength=1 + dashoffset. Linha
+   tracejada (oculta/eixo) não pode usar o truque — entra por opacidade. */
+.fig {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  color: var(--fg);
+}
+.fig text {
+  font-family: var(--ff-sans), sans-serif;
+  fill: var(--fg);
+}
+.fig .num {
+  font-size: 15px;
+  font-weight: 500;
+  font-style: italic;
+}
+.fig .code {
+  font-family: var(--ff-mono), monospace;
+  font-size: 10.5px;
+  fill: var(--muted);
+}
+.fig .part {
+  transition:
+    stroke 650ms var(--ease),
+    fill 650ms var(--ease);
+}
+.fig .part.is-on :not(text) {
+  stroke: var(--accent);
+}
+.fig text {
+  stroke: none;
+}
+.fig .num.is-on {
+  fill: var(--accent);
+  font-weight: 700;
+}
+.fig .leader.is-on {
+  stroke: var(--accent);
+}
+.seq-show {
+  opacity: 0;
+  transition: opacity 420ms var(--ease);
+}
+.seq-show.is-on {
+  opacity: 1;
+}
+.fig text.note {
+  stroke: var(--bg);
+  fill: var(--muted);
+}
+.fig text.note-signal {
+  fill: var(--accent);
+}
+.fig .slide {
+  transition: transform 900ms var(--ease-sym);
+}
+.fig-draw .draw {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: draw 1100ms var(--ease-sym) forwards;
+}
+.fig-draw .late {
+  opacity: 0;
+  animation: fadeIn 500ms var(--ease) 700ms forwards;
+}
+@keyframes draw {
   to {
-    transform: translateX(-50%);
+    stroke-dashoffset: 0;
   }
 }
-
-/* Entrada above-the-fold — transform-only (não segura o LCP) */
-@keyframes rise {
-  from {
-    transform: translateY(16px);
-  }
+@keyframes fadeIn {
   to {
-    transform: none;
+    opacity: 1;
   }
 }
-.rise {
-  animation: rise var(--dur-reveal) var(--ease-premium) both;
+
+/* ── Índice da home ─────────────────────────────────────────────
+   A linha ativa alarga (font-stretch) em vez de mudar de cor. A barra
+   embaixo é o relógio da troca automática — pausa sob o ponteiro. */
+.idx-list {
+  container-type: inline-size;
 }
-.rise-1 {
-  animation-delay: 70ms;
+/* O título ativo alarga até 116%: o tamanho é o menor entre a escala e o que
+   cabe na coluna nessa largura (--len = nº de caracteres; 0.6em é a largura
+   média da Archivo 300 a 116%). Sem isso o título mais longo quebra e a
+   lista pula quando a figura troca. */
+.idx-list .idx-title {
+  white-space: nowrap;
+  font-size: min(clamp(1.7rem, 3vw, 2.9rem), calc(100cqi / (var(--len, 12) * 0.6)));
 }
-.rise-2 {
-  animation-delay: 150ms;
+.idx-title {
+  font-stretch: 100%;
+  transition:
+    font-stretch 520ms var(--ease),
+    font-weight 520ms var(--ease),
+    color 300ms var(--ease);
 }
-.rise-3 {
-  animation-delay: 230ms;
+.idx-row[data-on="true"] .idx-title {
+  font-stretch: 116%;
+  font-weight: 300;
+}
+.idx-row[data-on="false"] .idx-title {
+  color: var(--muted);
+}
+.idx-clock {
+  height: 1.5px;
+  background: var(--accent);
+  transform-origin: left;
+  transform: scaleX(0);
 }
 
-/* Transição de página (transform-only) */
+/* Home: intro e índice à esquerda, prancha à direita. No celular a
+   prancha sobe para logo depois da intro — é o que prende o olho. */
+.home-grid {
+  display: grid;
+  row-gap: 40px;
+  grid-template-areas: "intro" "fig" "idx";
+}
+@media (min-width: 1024px) {
+  .home-grid {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    grid-template-rows: auto 1fr;
+    column-gap: calc(var(--gut) * 1.5);
+    row-gap: 48px;
+    grid-template-areas: "intro fig" "idx fig";
+    min-height: calc(100svh - 2 * var(--pad) - 52px - 2 * var(--gut));
+  }
+}
+
+/* ── Texto de case ──────────────────────────────────────────── */
+.case-code {
+  font-family: var(--ff-mono), monospace;
+  font-size: 0.86em;
+  padding: 0.05em 0.3em;
+  background: var(--raised);
+  border: 1px solid var(--line);
+  white-space: nowrap;
+}
+
+/* ── Controles (botão, segmentado) ──────────────────────────── */
+.ctl {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 34px;
+  padding: 0 14px;
+  border: 1px solid var(--fg);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  background: var(--bg);
+  transition:
+    background 160ms var(--ease),
+    color 160ms var(--ease);
+}
+.ctl:hover {
+  background: var(--fg);
+  color: var(--bg);
+}
+.ctl[aria-pressed="true"] {
+  background: var(--fg);
+  color: var(--bg);
+}
+.ctl:disabled {
+  opacity: 0.4;
+  pointer-events: none;
+}
+.seg {
+  display: inline-flex;
+}
+.seg > .ctl + .ctl {
+  border-left: 0;
+}
+.field {
+  height: 34px;
+  width: 100%;
+  padding: 0 10px;
+  border: 1px solid var(--fg);
+  background: var(--raised);
+  font-variant-numeric: tabular-nums;
+  font-weight: 560;
+}
+
+/* ── Transição de rota ──────────────────────────────────────────
+   Enquanto a faixa cobre a tela (lib/sweep.ts) o conteúdo é apagado e a
+   rota troca escondida. `opacity`, não `visibility`: o foco sobrevive. */
+:root[data-theme-switching] * {
+  transition: none !important;
+}
+:root[data-sweeping] main {
+  opacity: 0;
+}
 @keyframes pageEnter {
   from {
-    transform: translateY(10px);
+    transform: translateY(8px);
   }
   to {
     transform: none;
   }
 }
 .page-enter {
-  animation: pageEnter var(--dur-page) var(--ease-premium) both;
+  animation: pageEnter 900ms var(--ease) both;
 }
 
-/* Linhas do SplitText */
-.split-line {
-  will-change: transform;
-}
-
-/* Cursor: cresce sobre elementos interativos */
-.cursor-ring {
-  transition:
-    width 0.22s var(--ease-premium),
-    height 0.22s var(--ease-premium),
-    margin 0.22s var(--ease-premium),
-    border-color 0.22s var(--ease-premium);
-}
-html.cursor-hover .cursor-ring {
-  width: 3rem;
-  height: 3rem;
-  margin-left: -24px;
-  margin-top: -24px;
-  border-color: var(--accent-lift);
-}
-
-/* ── Index list (home v2) — assinatura: preview seguindo o cursor ── */
-.idx-list {
-  list-style: none;
-  margin: clamp(22px, 3vw, 40px) 0 0;
-  padding: 0;
-  border-top: 1px solid var(--line);
-}
-.idx-row {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 24px;
-  padding: clamp(18px, 2.4vw, 30px) 0;
-  border-bottom: 1px solid var(--line);
-  color: var(--fg);
-  text-decoration: none;
-  opacity: 1;
-  transition: opacity var(--dur-micro) var(--ease-premium);
-  outline: none;
-}
-.idx-list:hover .idx-row,
-.idx-list:focus-within .idx-row {
-  opacity: 0.3;
-}
-.idx-list .idx-row:hover,
-.idx-list .idx-row:focus-visible {
-  opacity: 1;
-}
-.idx-row:focus-visible {
-  outline: 2px solid var(--accent-lift);
-  outline-offset: 6px;
-}
-.idx-title {
-  font-family: var(--ff-display), sans-serif;
-  font-weight: 600;
-  white-space: nowrap;
-  font-size: clamp(1.9rem, 8.8vw, 5.5rem);
-  line-height: 0.92;
-  letter-spacing: -0.028em;
-  transition:
-    color 0.3s var(--ease-premium),
-    transform 0.4s var(--ease-premium);
-}
-.idx-row:hover .idx-title,
-.idx-row:focus-visible .idx-title {
-  color: var(--accent-lift);
-  transform: translateX(12px);
-}
-.idx-meta {
-  display: flex;
-  align-items: baseline;
-  flex-shrink: 0;
-  font-family: var(--ff-mono), monospace;
-  font-size: 12px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--stone-400);
-}
-.idx-type {
-  width: 180px;
-  text-align: right;
-  white-space: nowrap;
-}
-.idx-year {
-  width: 58px;
-  text-align: right;
-  font-variant-numeric: tabular-nums;
-}
-.idx-inline {
-  display: none;
-}
-
-.idx-preview {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 45;
-  width: 360px;
-  height: 238px;
-  pointer-events: none;
-  opacity: 0;
-  transform: translate(-999px, -999px);
-  transition: opacity 0.3s var(--ease-premium);
-  border: 1px solid var(--line);
-  border-radius: 4px;
-  overflow: hidden;
-  box-shadow: 0 30px 80px -22px rgba(0, 0, 0, 0.75);
-  will-change: transform;
-}
-.idx-preview[data-on="true"] {
-  opacity: 1;
-}
-.idx-preview.anchored {
-  left: auto;
-  right: 5vw;
-  top: 50vh;
-  transform: translateY(-50%) !important;
-}
-
-.idx-shot {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 20px;
-  background: linear-gradient(150deg, #28221b, #1b1a17 62%);
-  animation: shotIn 0.28s var(--ease-premium) both;
-}
-.idx-shot::before {
-  content: "";
-  position: absolute;
-  right: -40px;
-  top: -40px;
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  background: radial-gradient(circle, color-mix(in srgb, var(--accent) 58%, transparent), transparent 66%);
-}
-.idx-shot-title {
-  position: relative;
-  font-family: var(--ff-display), sans-serif;
-  font-weight: 600;
-  font-size: 28px;
-  line-height: 0.98;
-  letter-spacing: -0.02em;
-  color: var(--fg);
-}
-.idx-shot-meta {
-  position: relative;
-  font-family: var(--ff-mono), monospace;
-  font-size: 11px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--stone-400);
-}
-.idx-shot-bar {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  height: 4px;
-  width: 100%;
-  background: var(--accent);
-}
-@keyframes shotIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@media (hover: none), (pointer: coarse), (max-width: 760px) {
-  .idx-preview {
-    display: none;
-  }
-  .idx-list:hover .idx-row,
-  .idx-list:focus-within .idx-row {
-    opacity: 1;
-  }
-  .idx-row {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
-  }
-  .idx-row:hover .idx-title {
-    transform: none;
-  }
-  .idx-title {
-    white-space: normal;
-    font-size: clamp(2rem, 9vw, 3rem);
-  }
-  .idx-inline {
-    display: block;
-    position: relative;
-    width: 100%;
-    height: 190px;
-    border: 1px solid var(--line);
-    border-radius: 4px;
-    overflow: hidden;
-  }
-}
-
-/* ── Case body (PDP rica: headings/parágrafos/listas + inline-code) ── */
-.case-body > * + * {
-  margin-top: 1.5rem;
-}
-.case-body .case-heading {
-  margin-top: 3.25rem;
-}
-.case-body > .case-heading:first-child {
-  margin-top: 0;
-}
-.case-body p,
-.case-body li {
-  max-width: 64ch;
-  font-size: 1.0625rem;
-  line-height: 1.75;
-  color: var(--muted);
-}
-.case-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-.case-list li {
-  position: relative;
-  padding-left: 1.25rem;
-}
-.case-list li::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0.7em;
-  width: 6px;
-  height: 6px;
-  border-radius: 1px;
-  background: var(--accent-lift);
-}
-.case-lead {
-  color: var(--fg);
-  font-weight: 500;
-}
-.case-code {
-  font-family: var(--ff-mono), monospace;
-  font-size: 0.85em;
-  padding: 0.1em 0.4em;
-  border-radius: 3px;
-  background: color-mix(in srgb, var(--accent) 15%, var(--raised));
-  border: 1px solid var(--line);
-  color: var(--fg);
-  white-space: nowrap;
-}
-
-/* ── Reduced motion: fallback completo ──────────────────────── */
+/* ── Movimento reduzido ─────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -461,9 +513,5 @@ html.cursor-hover .cursor-ring {
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
-  }
-  html.has-cursor,
-  html.has-cursor * {
-    cursor: auto;
   }
 }

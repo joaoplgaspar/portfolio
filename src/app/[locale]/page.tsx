@@ -1,13 +1,18 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { Link } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
 import { pageMeta } from "@/lib/metadata";
 import { siteConfig } from "@/lib/site";
 import JsonLd from "@/components/seo/JsonLd";
-import Container from "@/components/layout/Container";
-import IndexList from "@/components/work/IndexList";
+import HomeSheet from "@/components/sheet/HomeSheet";
+import TitleBlock from "@/components/sheet/TitleBlock";
+import { isShown } from "@/components/figures/registry";
+import { legends } from "@/data/figures";
 import { fetchPublishedProjects } from "@/data/projects";
+import { sheetPlan } from "@/lib/sheets";
+import { visibleStores } from "@/data/stores";
+import StoreCard from "@/components/sheet/StoreCard";
+import { Link } from "@/i18n/navigation";
 
 export const revalidate = 60; // ISR: novos projetos aparecem sem redeploy
 
@@ -35,10 +40,16 @@ export default async function HomePage({
   const { locale } = await params;
   setRequestLocale(locale);
   const l = locale as Locale;
+  const t = await getTranslations("home");
 
-  const th = await getTranslations("home");
-  const tlab = await getTranslations("lab");
+  // Rascunho aparece no dev pela URL direta, nunca no índice: um índice com
+  // "EM BREVE" é pior que um índice curto.
   const projects = await fetchPublishedProjects();
+  const figured = projects.filter(isShown);
+
+  const plan = sheetPlan(figured.length);
+  const ts = await getTranslations("stores");
+  const stores = visibleStores();
 
   const person = {
     "@context": "https://schema.org",
@@ -49,47 +60,74 @@ export default async function HomePage({
     sameAs: [siteConfig.social.linkedin, siteConfig.social.github].filter(Boolean),
   };
 
+  const [first, last] = [
+    siteConfig.name.split(" ").slice(0, -1).join(" "),
+    siteConfig.name.split(" ").slice(-1)[0],
+  ];
+
   return (
-    <Container className="pt-28 md:pt-32">
+    <>
       <JsonLd data={person} />
-
-      {/* posicionamento factual (mono) */}
-      <div className="rise">
-        <p className="text-label text-muted">{th("tagline")}</p>
-        <p className="mt-1 text-label text-stone-400">{siteConfig.location}</p>
-      </div>
-
-      {/* Índice interativo — a lista É o hero */}
-      <div id="work">
-        <IndexList
-          items={projects.map((p) => ({
-            slug: p.slug,
-            title: p.title,
-            type: p.type[l],
-            year: p.year,
-            cover: p.cover,
-          }))}
-        />
-      </div>
-
-      {/* Faixa Lab */}
-      <Link
-        href="/lab"
-        className="group mt-16 flex items-center justify-between gap-6 border-t border-line pt-8 md:mt-24"
-      >
-        <div>
-          <span className="text-label text-accent-lift">LAB ↗</span>
-          <p className="mt-2 max-w-md text-muted">{tlab("lede")}</p>
+      <HomeSheet
+        locale={l}
+        legends={legends}
+        items={figured.map((p) => ({
+          slug: p.slug,
+          title: p.title,
+          caption: p.caption?.[l] ?? p.summary[l],
+          type: p.type[l],
+          year: p.year,
+          live: p.live,
+        }))}
+        t={{
+          index: t("index"),
+          open: t("open"),
+          fig: t("fig"),
+          live: t("live"),
+          play: t("play"),
+          pause: t("pause"),
+          prev: t("prev"),
+          next: t("next"),
+        }}
+        intro={
+          <div>
+            <h1 className="t-name">
+              {first}
+              <br />
+              {last}
+            </h1>
+            <p className="t-small mt-6 max-w-[38ch] text-[0.9375rem]">{t("lede")}</p>
+            <p className="t-small mt-3 max-w-[38ch] text-muted">{t("status")}</p>
+          </div>
+        }
+      />
+      {/* Projetos: as capas chamam o olho; o quadro completo fica em /projetos. */}
+      <section className="mt-[clamp(56px,8vw,128px)] border-t border-fg pt-5" aria-labelledby="stores-h">
+        <div className="mb-6 flex flex-wrap items-baseline justify-between gap-4">
+          <h2 id="stores-h" className="t-title">
+            {ts("title")}
+          </h2>
+          <Link href="/projetos" className="t-small tb-link">
+            {ts("all", { n: stores.length })} →
+          </Link>
         </div>
-        <div className="hidden shrink-0 gap-2 sm:flex">
-          {[0, 1, 2].map((i) => (
-            <div
-              key={i}
-              className="h-16 w-24 rounded-[3px] border border-line bg-raised transition-colors group-hover:border-fg/25"
-            />
-          ))}
+        <div className="grid grid-cols-2 gap-x-[var(--gut)] gap-y-8 lg:grid-cols-4">
+          {stores
+            .filter((s) => s.cover)
+            .slice(0, 4)
+            .map((s) => (
+              <StoreCard
+                key={s.mark}
+                store={s}
+                locale={l}
+                size="compact"
+                t={{ pending: ts("pending"), score: ts("score"), measured: ts("measured") }}
+              />
+            ))}
         </div>
-      </Link>
-    </Container>
+      </section>
+
+      <TitleBlock sheet={1} of={plan.total} title={t("sheetTitle")} />
+    </>
   );
 }

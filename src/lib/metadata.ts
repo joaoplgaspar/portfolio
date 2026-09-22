@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 type Locale = "pt" | "en";
 
-/** Metadata consistente por página: título, descrição, canonical, hreflang, OG, Twitter. */
+/** Metadata consistente por página: título, descrição, canonical, hreflang. EN é o locale sem prefixo. */
 export function pageMeta({
   locale,
   path,
@@ -10,23 +10,22 @@ export function pageMeta({
   description,
 }: {
   locale: Locale;
-  path: string; // "/", "/trabalho", "/trabalho/dux"...
+  path: string; // "/", "/sobre", "/trabalho/livra"...
   title: string;
   description: string;
 }): Metadata {
   const suffix = path === "/" ? "" : path;
-  const ptUrl = suffix || "/";
-  const enUrl = `/en${suffix}`;
-  const canonical = locale === "en" ? enUrl : ptUrl;
+  const enUrl = suffix || "/";
+  const ptUrl = `/pt${suffix}`;
+  const canonical = locale === "pt" ? ptUrl : enUrl;
 
-  // openGraph/twitter (com a imagem do opengraph-image) ficam no layout, herdados
-  // por todas as rotas do segmento [locale] — evita perder o og:image nas sub-rotas.
+  // openGraph/twitter ficam no layout, herdados por todas as rotas do segmento [locale].
   return {
     title,
     description,
     alternates: {
       canonical,
-      languages: { pt: ptUrl, en: enUrl, "x-default": ptUrl },
+      languages: { en: enUrl, pt: ptUrl, "x-default": enUrl },
     },
   };
 }

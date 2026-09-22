@@ -19,8 +19,8 @@ const projects: Project[] = [
     type: { pt: "Product · Full-stack", en: "Product · Full-stack" },
     stack: ["React 19", "Vite PWA", "Firebase", "Cloud Functions", "Capacitor", "Stripe", "Gemini"],
     summary: {
-      pt: "Rastreador de leitura gamificado para o BookTok brasileiro — 6 APIs de catálogo orquestradas numa identidade canônica de livro.",
-      en: "A gamified reading tracker for Brazilian BookTok — 6 catalog APIs orchestrated into one canonical book identity.",
+      pt: "Um app de leitura inteiro, feito sozinho: iOS, Android e web, 300 usuários cadastrados no primeiro mês. Por baixo, 6 APIs de catálogo convergindo numa identidade canônica de livro.",
+      en: "A whole reading app, built alone: iOS, Android and web, 300 registered users in its first month. Underneath, 6 catalog APIs converging into one canonical book identity.",
     },
     problem: { pt: "", en: "" },
     contribution: { pt: "", en: "" },
@@ -59,7 +59,7 @@ const projects: Project[] = [
         { kind: "heading", text: "Status" },
         {
           kind: "text",
-          text: "Em beta fechado, pré-lançamento. As métricas que importam agora são de engenharia: custo por busca, convergência de identidade, integridade da economia.",
+          text: "No ar na App Store, no Google Play e na web (versão 1.10 nas lojas). 300 usuários cadastrados no primeiro mês, com um app construído e operado por uma pessoa. As métricas que eu acompanho são de engenharia: custo por busca, convergência de identidade, integridade da economia.",
         },
       ],
       en: [
@@ -95,7 +95,351 @@ const projects: Project[] = [
         { kind: "heading", text: "Status" },
         {
           kind: "text",
-          text: "Closed beta, pre-launch. The metrics that matter right now are engineering metrics: cost per search, identity convergence, economy integrity.",
+          text: "Live on the App Store, Google Play and the web (version 1.10 in the stores). 300 registered users in the first month, on an app built and run by one person. The metrics I watch are engineering metrics: cost per search, identity convergence, economy integrity.",
+        },
+      ],
+    },
+    live: ["uselivra.com"],
+    // Fonte: o João (300 no 1º mês) e lura/docs/STATUS.md, medido em 21/09/2026.
+    stats: [
+      { value: "300", label: { pt: "usuários cadastrados no primeiro mês", en: "registered users in the first month" } },
+      { value: "3", label: { pt: "plataformas: iOS, Android e web", en: "platforms: iOS, Android and web" } },
+      { value: "203", label: { pt: "Cloud Functions no repositório", en: "Cloud Functions in the repo" } },
+      { value: "1", label: { pt: "pessoa: design, front, back e nativo", en: "person: design, front, back and native" } },
+    ],
+    caption: {
+      pt: "Quatro das seis fontes de catálogo convergindo numa obra canônica.",
+      en: "Four of six catalog sources converging into one canonical work.",
+    },
+    cover: "",
+    gallery: [],
+    featured: true,
+    published: true,
+    order: 3,
+  },
+
+  // ── estrutura, não publicado (aguardando autorização/produção) ──
+  {
+    // Operação e métricas sob NDA: o case fica em nível de arquitetura e decisão.
+    slug: "roland-boss",
+    title: "Roland / Boss",
+    client: { pt: "Roland Brasil", en: "Roland Brazil" },
+    role: {
+      pt: "Liderança técnica de squad · Front-end",
+      en: "Squad tech lead · Front-end",
+    },
+    year: 2025,
+    type: { pt: "E-commerce headless", en: "Headless e-commerce" },
+    stack: ["Shopify Hydrogen", "Remix", "Oxygen", "Weaverse", "TypeScript"],
+    summary: {
+      pt: "Duas marcas, dois domínios, um checkout só — o primeiro carrinho compartilhado entregue pela agência.",
+      en: "Two brands, two domains, one checkout — the agency's first shared cart.",
+    },
+    problem: { pt: "", en: "" },
+    contribution: { pt: "", en: "" },
+    results: [],
+    body: {
+      pt: [
+        { kind: "heading", text: "Contexto" },
+        {
+          kind: "text",
+          text: "Roland e Boss são marcas irmãs de equipamento musical, e operam lojas separadas no Brasil: `store.roland.com.br` e `store.bossmusic.com.br`. Duas storefronts headless em Shopify Hydrogen, servidas por uma única loja Shopify por baixo. O projeto chegou à minha squad como ongoing — manutenção e evolução contínua —, o que significa entregar features novas sem poder parar a loja para reescrever nada.",
+        },
+        { kind: "heading", text: "O problema técnico central" },
+        {
+          kind: "text",
+          text: "Duas marcas, dois domínios, um catálogo. Quem entra pela Roland atrás de um sintetizador e também quer um pedal Boss não deveria comprar duas vezes. E o Shopify por baixo é o mesmo — o carrinho *poderia* ser o mesmo. Quem diz que não é o navegador: a sessão que identifica o carrinho em `store.roland.com.br` simplesmente não existe em `store.bossmusic.com.br`. A fronteira não é de plataforma, é de domínio.",
+        },
+        {
+          kind: "text",
+          text: "Era o primeiro carrinho compartilhado que a agência entregava. Não havia referência interna, nenhum “já fizemos assim da outra vez” — a arquitetura precisava ser investigada e defendida antes de virar código.",
+        },
+        { kind: "heading", text: "O que a squad construiu" },
+        {
+          kind: "list",
+          items: [
+            { label: "Carrinho compartilhado com checkout único:", text: "em vez de manter dois carrinhos tentando se sincronizar, as duas storefronts conversam com um ponto de conexão comum, responsável por construir e manter um carrinho só. Adicionar item por qualquer uma das marcas alimenta o mesmo checkout." },
+            { label: "Busca cruzada com PDP canônica:", text: "buscar na Roland retorna o catálogo inteiro, das duas marcas. Clicar num resultado Boss leva direto à PDP no domínio da Boss — e vice-versa. O catálogo é um só; cada produto continua sendo mostrado na casa da sua marca." },
+            { label: "Agendamento de campanha configurável:", text: "banners e seções com janela de entrada e saída, construídos por nós e expostos como configuração no Weaverse. O time do cliente define quando a Black Friday sobe e quando ela cai, sem depender de deploy nosso." },
+            { label: "Ongoing de verdade:", text: "refação do header, evolução do sistema de banners e trabalho contínuo de performance, sempre sobre uma loja que não pode sair do ar." },
+          ],
+        },
+        { kind: "heading", text: "Decisões de engenharia que eu defenderia numa entrevista" },
+        {
+          kind: "list",
+          items: [
+            { label: "Um carrinho, não dois sincronizados:", text: "a tentação era espelhar estado entre as duas storefronts. Sincronização entre réplicas é onde moram os bugs de corrida — item somem, quantidade diverge, e o erro só aparece em produção com dois dispositivos. Centralizar a construção do carrinho num ponto comum troca um problema distribuído por um problema de integração, que é muito mais fácil de testar e de explicar." },
+            { label: "Catálogo único, navegação por marca:", text: "duplicar produto por marca resolveria a busca em cinco minutos e criaria conteúdo duplicado, SEO canibalizado e dois lugares para atualizar preço. Cada produto tem um dono; a busca cruza a fronteira, a PDP canoniza no domínio certo." },
+            { label: "Data de campanha é configuração, não deploy:", text: "campanha muda de data na véspera — sempre. Toda feature sazonal nasceu com janela editável pelo cliente no Weaverse. Isso tira a agência do caminho crítico da operação e elimina uma classe inteira de emergência de véspera de feriado." },
+            { label: "Liderar rendeu mais que codar:", text: "por ser o primeiro do tipo na casa, meu trabalho de maior alavancagem foi investigar as soluções, validar a arquitetura e conduzir o time até ela — não escrever as linhas. Passei mais tempo destravando decisão do que digitando, e a entrega foi melhor por isso." },
+          ],
+        },
+        { kind: "heading", text: "Status" },
+        {
+          kind: "text",
+          text: "Em produção, em ongoing. Números de performance e detalhes da operação estão sob acordo de confidencialidade — o que dá para mostrar aqui é a arquitetura e o raciocínio por trás dela.",
+        },
+      ],
+      en: [
+        { kind: "heading", text: "Context" },
+        {
+          kind: "text",
+          text: "Roland and Boss are sibling music-equipment brands running separate stores in Brazil: `store.roland.com.br` and `store.bossmusic.com.br`. Two headless Shopify Hydrogen storefronts, served by a single Shopify store underneath. The project came to my squad as an ongoing engagement — continuous maintenance and evolution — which means shipping new features without ever taking the store down to rewrite anything.",
+        },
+        { kind: "heading", text: "The core technical problem" },
+        {
+          kind: "text",
+          text: "Two brands, two domains, one catalog. Someone who lands on Roland for a synth and also wants a Boss pedal shouldn't have to check out twice. And the Shopify underneath is the same — the cart *could* be the same. It's the browser that says no: the session identifying the cart on `store.roland.com.br` simply doesn't exist on `store.bossmusic.com.br`. The boundary isn't the platform, it's the domain.",
+        },
+        {
+          kind: "text",
+          text: "It was the first shared cart the agency had ever delivered. There was no internal reference, no “we did it this way last time” — the architecture had to be investigated and defended before it became code.",
+        },
+        { kind: "heading", text: "What the squad built" },
+        {
+          kind: "list",
+          items: [
+            { label: "Shared cart with a single checkout:", text: "instead of two carts trying to stay in sync, both storefronts talk to a shared connection point that builds and owns a single cart. Adding an item from either brand feeds the same checkout." },
+            { label: "Cross-brand search with canonical PDPs:", text: "searching on Roland returns the full catalog, both brands. Clicking a Boss result lands straight on the PDP under the Boss domain — and vice versa. One catalog; each product still shown in its own brand's house." },
+            { label: "Configurable campaign scheduling:", text: "banners and sections with start and end windows, built by us and exposed as configuration inside Weaverse. The client's team decides when Black Friday goes up and when it comes down, with no deploy from us." },
+            { label: "Real ongoing work:", text: "header rebuild, banner system evolution and continuous performance work — always on a store that can't go offline." },
+          ],
+        },
+        { kind: "heading", text: "Engineering decisions I'd defend in an interview" },
+        {
+          kind: "list",
+          items: [
+            { label: "One cart, not two in sync:", text: "the tempting path was mirroring state across both storefronts. Replica sync is where race conditions live — items vanish, quantities drift, and the bug only shows up in production with two devices. Centralizing cart construction in a shared point trades a distributed problem for an integration problem, which is far easier to test and to explain." },
+            { label: "One catalog, brand-aware navigation:", text: "duplicating products per brand would have solved search in five minutes and created duplicate content, cannibalized SEO and two places to update a price. Each product has one owner; search crosses the boundary, the PDP canonicalizes on the right domain." },
+            { label: "Campaign dates are config, not deploys:", text: "campaign dates change at the last minute — always. Every seasonal feature shipped with a window the client edits in Weaverse. That takes the agency off the operation's critical path and kills an entire class of night-before-the-holiday emergency." },
+            { label: "Leading paid more than coding:", text: "being the first of its kind in-house, my highest-leverage work was investigating options, validating the architecture and guiding the team to it — not writing the lines. I spent more time unblocking decisions than typing, and the delivery was better for it." },
+          ],
+        },
+        { kind: "heading", text: "Status" },
+        {
+          kind: "text",
+          text: "In production, ongoing. Performance figures and operational details are under NDA — what I can show here is the architecture and the reasoning behind it.",
+        },
+      ],
+    },
+    live: ["store.roland.com.br", "store.bossmusic.com.br"],
+    caption: {
+      pt: "Duas vitrines em dois domínios, um carrinho só.",
+      en: "Two storefronts on two domains, one cart.",
+    },
+    cover: "/covers/roland.jpg",
+    gallery: ["/covers/boss.jpg"],
+    featured: true,
+    published: true,
+    order: 1,
+  },
+  {
+    // Ângulo: profundidade de plataforma — o carrinho compartilhado é nota de rodapé
+    // aqui, senão repete o case Roland/Boss.
+    slug: "integral-medica-darkness",
+    title: "Integral Médica / Darkness",
+    client: { pt: "Integral Médica · Darkness", en: "Integral Médica · Darkness" },
+    role: {
+      pt: "Liderança técnica · Front-end · Apps Shopify",
+      en: "Tech lead · Front-end · Shopify apps",
+    },
+    year: 2025,
+    type: { pt: "Headless · Apps", en: "Headless · Apps" },
+    stack: [
+      "Shopify Hydrogen",
+      "Remix",
+      "Oxygen",
+      "Shopify Functions",
+      "Custom apps",
+      "TypeScript",
+    ],
+    summary: {
+      pt: "Duas marcas de suplementação num só admin — e um monte de regra de negócio que o Shopify não tem. Quando não tinha, eu construí o app.",
+      en: "Two supplement brands under one admin — and a pile of business rules Shopify doesn't ship. When it didn't exist, I built the app.",
+    },
+    problem: { pt: "", en: "" },
+    contribution: { pt: "", en: "" },
+    results: [],
+    body: {
+      pt: [
+        { kind: "heading", text: "Contexto" },
+        {
+          kind: "text",
+          text: "Integral Médica e Darkness são marcas de suplementação que dividem o mesmo admin Shopify e o mesmo repositório: duas storefronts headless com carrinho compartilhado entre elas. Entrei na metade do desenvolvimento e assumi a liderança técnica — daí em diante, toda funcionalidade e toda decisão passaram por mim, e a maior parte foi construída por mim também.",
+        },
+        { kind: "heading", text: "O problema técnico central" },
+        {
+          kind: "text",
+          text: "O carrinho compartilhado era a parte conhecida. O que fazia esse projeto ser difícil era outra coisa: o volume de regra de negócio que simplesmente não existe no Shopify de prateleira. Suplementação é uma categoria de mecânica promocional pesada, e as exigências do cliente batiam de frente com os limites do checkout e da área de conta nativos. A pergunta recorrente não era “como configuro isso”, era “isso não existe — construímos o quê?”.",
+        },
+        { kind: "heading", text: "O que eu construí" },
+        {
+          kind: "list",
+          items: [
+            { label: "Mecânicas promocionais em Shopify Functions:", text: "as regras de desconto e promoção que a plataforma não entrega nativamente foram implementadas como Functions, rodando no lado do Shopify em vez de virar gambiarra no front." },
+            { label: "Custom apps sob medida:", text: "vários apps próprios, com interface, para cobrir o que nenhum app de marketplace resolvia." },
+            { label: "Desconto de funcionário com cálculo invertido:", text: "um app com interface própria onde o desconto não sai do preço de venda: o cálculo parte do preço comparado e aplica 50% sobre ele. Uma regra pequena de enunciar e impossível de configurar num app pronto." },
+            { label: "Área “Minha conta” do zero:", text: "a conta nativa do Shopify foi descartada e reconstruída inteira — identidade própria por marca, controle sobre como um pedido é exibido e filtrado, e abas que a nativa não comporta, como “Meus benefícios”, integrada ao programa de fidelidade." },
+            { label: "Blocos de checkout:", text: "extensões no checkout para levar informação e função para a etapa mais sensível da compra." },
+            { label: "Relatórios e integrações de dados:", text: "diversos relatórios, integrações com CRM e com scripts de terceiros — um volume relevante de dados saindo da loja para fora." },
+            { label: "Seções institucionais e landing pages:", text: "construção de seções e páginas com customização profunda, para o time de conteúdo operar sem depender de deploy." },
+          ],
+        },
+        { kind: "heading", text: "Decisões de engenharia que eu defenderia numa entrevista" },
+        {
+          kind: "list",
+          items: [
+            { label: "A conta nativa não sobrevive a duas marcas:", text: "a account do Shopify é uma só por admin — e aqui um admin serve duas marcas. Na prática, isso é a mesma estilização para Integral Médica e Darkness, sem nem poder trocar o logo por marca: metade dos clientes entraria na conta e veria a identidade da outra. Junte a isso não controlar como um pedido é exibido ou filtrado, nem poder abrir uma aba nova — e a gente precisava de “Meus benefícios”, integrada ao programa de fidelidade. Reconstruir a conta inteira saiu mais barato que brigar com os três limites ao mesmo tempo." },
+            { label: "Custom app em vez de assinatura de marketplace:", text: "a promoção que o cliente queria não existe nativamente. O caminho óbvio era assinar um app da App Store e seguir a vida — com uma mensalidade permanente no orçamento dele. Construí um custom app no lugar: instalado uma vez e com os produtos de brinde configurados, ele não pede manutenção recorrente nem cobra assinatura. Troquei um custo mensal perpétuo por um custo de construção único — e essa decisão só se defende porque a regra é estável. Se a mecânica mudasse a cada campanha, o app de prateleira ganharia." },
+            { label: "Regra de promoção no Shopify, não no front:", text: "as mecânicas promocionais foram implementadas como Shopify Functions, do lado da plataforma. Desconto que só existe no front-end é desconto que some no checkout — e o checkout é onde o cliente decide se confia na loja." },
+          ],
+        },
+        { kind: "heading", text: "Status" },
+        {
+          kind: "text",
+          text: "Integral Médica e Darkness em produção. Detalhes de operação e números sob acordo de confidencialidade.",
+        },
+      ],
+      en: [
+        { kind: "heading", text: "Context" },
+        {
+          kind: "text",
+          text: "Integral Médica and Darkness are supplement brands sharing one Shopify admin and one repository: two headless storefronts with a cart shared between them. I joined halfway through development and took over as tech lead — from that point on, every feature and every decision went through me, and I built most of them myself.",
+        },
+        { kind: "heading", text: "The core technical problem" },
+        {
+          kind: "text",
+          text: "The shared cart was the known part. What made this project hard was something else: the sheer volume of business rules that simply don't exist in off-the-shelf Shopify. Supplements are a category with heavy promotional mechanics, and the client's requirements ran straight into the limits of the native checkout and account area. The recurring question wasn't “how do I configure this”, it was “this doesn't exist — what do we build?”.",
+        },
+        { kind: "heading", text: "What I built" },
+        {
+          kind: "list",
+          items: [
+            { label: "Promotional mechanics as Shopify Functions:", text: "discount and promotion rules the platform doesn't ship natively, implemented as Functions running on Shopify's side instead of becoming a hack in the front-end." },
+            { label: "Purpose-built custom apps:", text: "several in-house apps, with their own interfaces, covering what no marketplace app solved." },
+            { label: "Employee discount with an inverted calculation:", text: "an app with its own interface where the discount doesn't come off the selling price: the math starts from the compare-at price and applies 50% on top of that. A rule that's small to state and impossible to configure in an off-the-shelf app." },
+            { label: "Account area rebuilt from scratch:", text: "Shopify's native account was dropped and rebuilt end to end — per-brand identity, control over how an order is displayed and filtered, and tabs the native one can't hold, like “My benefits”, wired into the loyalty program." },
+            { label: "Checkout blocks:", text: "checkout extensions bringing information and function into the most sensitive step of the purchase." },
+            { label: "Reporting and data integrations:", text: "a range of reports, CRM integrations and third-party script integrations — a meaningful volume of data leaving the store." },
+            { label: "Institutional sections and landing pages:", text: "deeply customizable sections and pages, so the content team can operate without waiting on a deploy." },
+          ],
+        },
+        { kind: "heading", text: "Engineering decisions I'd defend in an interview" },
+        {
+          kind: "list",
+          items: [
+            { label: "The native account doesn't survive two brands:", text: "Shopify gives you one account area per admin — and here one admin serves two brands. In practice that means identical styling for Integral Médica and Darkness, with no way to even swap the logo per brand: half the customers would log in and find the other brand's identity. Add to that no control over how an order is displayed or filtered, and no way to open a new tab — and we needed “My benefits”, wired into the loyalty program. Rebuilding the whole account came out cheaper than fighting all three limits at once." },
+            { label: "A custom app instead of a marketplace subscription:", text: "the promotion the client wanted doesn't exist natively. The obvious path was subscribing to an App Store app and moving on — with a permanent monthly line in their budget. I built a custom app instead: installed once, with the gift products configured, it asks for no recurring maintenance and charges no subscription. I traded a perpetual monthly cost for a one-off build cost — and that decision only holds because the rule is stable. If the mechanic changed every campaign, the off-the-shelf app would win." },
+            { label: "Promotion rules on Shopify, not in the front-end:", text: "the promotional mechanics were implemented as Shopify Functions, on the platform side. A discount that only exists in the front-end is a discount that vanishes at checkout — and checkout is where the customer decides whether they trust the store." },
+          ],
+        },
+        { kind: "heading", text: "Status" },
+        {
+          kind: "text",
+          text: "Integral Médica and Darkness in production. Operational details and figures under NDA.",
+        },
+      ],
+    },
+    live: ["integralmedica.com.br", "darkness.com.br"],
+    caption: {
+      pt: "Um admin, duas marcas — e as camadas que o Shopify não tinha.",
+      en: "One admin, two brands — and the layers Shopify didn't ship.",
+    },
+    cover: "/covers/integralmedica.jpg",
+    gallery: ["/covers/darkness.jpg"],
+    featured: true,
+    published: true,
+    order: 2,
+  },
+  {
+    slug: "starter-pack",
+    title: "Starter Pack",
+    client: { pt: "Ferramenta própria", en: "Own tooling" },
+    role: {
+      pt: "Desenho e construção · fluxo com agentes de IA",
+      en: "Design and build · AI-agent workflow",
+    },
+    year: 2026,
+    type: { pt: "Ferramenta · IA", en: "Tooling · AI" },
+    stack: ["Liquid", "Tailwind v4", "Vite", "TypeScript", "CLI", "Playwright"],
+    summary: {
+      pt: "A base que eu uso para construir projetos Shopify com agilidade ou ajustar os que já existem. Cada projeto devolve o que aprendeu.",
+      en: "The base I use to build Shopify projects fast or to fix the ones that already exist. Every project gives back what it learned.",
+    },
+    caption: {
+      pt: "Uma base que aprende com cada projeto.",
+      en: "A base that learns from every project.",
+    },
+    problem: { pt: "", en: "" },
+    contribution: { pt: "", en: "" },
+    results: [],
+    body: {
+      pt: [
+        { kind: "heading", text: "O que é" },
+        {
+          kind: "text",
+          text: "Todo projeto Shopify que eu pego começa de um starter pack que eu desenhei: seções, blocos, snippets, o pipeline de tokens de design e os checks que mantêm tudo isso honesto. Agentes de IA constroem por cima dele, e é assim que uma loja inteira cabe em dias ou semanas.",
+        },
+        { kind: "heading", text: "O problema que ele resolve" },
+        {
+          kind: "text",
+          text: "O jeito comum é copiar uma base para cada projeto, e isso apodrece: cada cópia corrige os próprios problemas e nada volta. E regra escrita em documento ocupa o lugar de verificação: um agente lê mil linhas de instrução e ainda entrega uma seção que quebra em 1024px.",
+        },
+        { kind: "heading", text: "Como funciona" },
+        {
+          kind: "list",
+          items: [
+            {
+              label: "Dependência, não cópia:",
+              text: "o projeto pega unidades por CLI (`add`, `update`, `diff`) e guarda versão e sha256 de cada arquivo num lock. O CI falha em divergência não declarada.",
+            },
+            {
+              label: "Serve para projeto que já existe:",
+              text: "o diff mostra o que divergiu, e as peças feitas à mão são trocadas por unidades do pack uma a uma, sem reescrever a loja.",
+            },
+            {
+              label: "Correção volta:",
+              text: "o que um projeto corrige sobe para o pack por pull request. Um padrão só entra no pack quando se repete em três projetos.",
+            },
+            {
+              label: "Restrição no lugar de regra:",
+              text: "uma função `fluid()` só, schema gerado, e cada seção medida em seis larguras antes do QA humano. O que não dá para errar não precisa de parágrafo, nem para pessoa nem para agente.",
+            },
+          ],
+        },
+      ],
+      en: [
+        { kind: "heading", text: "What it is" },
+        {
+          kind: "text",
+          text: "Every Shopify project I take on starts from a starter pack I designed: sections, blocks, snippets, the design-token pipeline and the checks that keep all of it honest. AI agents build on top of it, and that's how a whole store fits in days or weeks.",
+        },
+        { kind: "heading", text: "The problem it solves" },
+        {
+          kind: "text",
+          text: "The usual way is to copy a base into each project, and that decays: every copy fixes its own problems and nothing comes back. And written rules stand in for verification: an agent reads a thousand lines of instructions and still ships a section that breaks at 1024px.",
+        },
+        { kind: "heading", text: "How it works" },
+        {
+          kind: "list",
+          items: [
+            {
+              label: "A dependency, not a copy:",
+              text: "a project takes units by CLI (`add`, `update`, `diff`) and pins version and sha256 of each file in a lock. CI fails on undeclared drift.",
+            },
+            {
+              label: "Works on existing projects:",
+              text: "the diff shows what drifted, and hand-rolled pieces are swapped for pack units one at a time, without rewriting the store.",
+            },
+            {
+              label: "Fixes come back:",
+              text: "what a project corrects goes back to the pack as a pull request. A pattern only joins the pack once it repeats in three projects.",
+            },
+            {
+              label: "Constraints instead of rules:",
+              text: "one `fluid()` function, generated schema, and every section measured at six widths before human QA. What can't be gotten wrong doesn't need a paragraph, for a person or an agent.",
+            },
+          ],
         },
       ],
     },
@@ -103,10 +447,8 @@ const projects: Project[] = [
     gallery: [],
     featured: true,
     published: true,
-    order: 1,
+    order: 4,
   },
-
-  // ── estrutura, não publicado (aguardando autorização/produção) ──
   {
     slug: "dux",
     title: "DUX",
@@ -173,15 +515,30 @@ const projects: Project[] = [
 
 const isProd = process.env.NODE_ENV === "production";
 
-/** Acesso síncrono (SSR/fallback): publicados + placeholders só em dev. */
+/**
+ * Acesso síncrono (SSR/fallback).
+ * Produção: só `published: true`. Dev: tudo — inclusive rascunhos e placeholders,
+ * para dar pra revisar um case renderizado antes de publicar.
+ */
 export function getProjects(): Project[] {
   return projects
-    .filter((p) => p.published || (!isProd && p.slug.startsWith("placeholder")))
+    .filter((p) => p.published || !isProd)
     .sort((a, b) => a.order - b.order);
 }
 
 export function getFeaturedProjects(): Project[] {
   return getProjects().filter((p) => p.featured);
+}
+
+/**
+ * Fonte do seed do /admin: cases reais incluindo rascunhos (DUX, Vivo), sem os
+ * placeholders "EM BREVE" — que existem só para testar densidade em dev e não
+ * têm nada que valha a pena gravar no Firestore.
+ */
+export function getSeedProjects(): Project[] {
+  return projects
+    .filter((p) => !p.slug.startsWith("placeholder"))
+    .sort((a, b) => a.order - b.order);
 }
 
 export function getProject(slug: string): Project | undefined {
@@ -207,8 +564,21 @@ export async function fetchPublishedProjects(): Promise<Project[]> {
     );
     if (snap.empty) return getProjects();
 
+    // Campos que nasceram depois do seed (`live`, `caption`) vêm do arquivo
+    // local enquanto o documento não os tiver — o Firestore continua mandando
+    // em tudo que ele já tem.
+    const local = new Map(projects.map((p) => [p.slug, p]));
     return snap.docs
-      .map((d) => d.data() as Project)
+      .map((d) => {
+        const doc = d.data() as Project;
+        const base = local.get(doc.slug);
+        return {
+          ...doc,
+          live: doc.live ?? base?.live,
+          caption: doc.caption ?? base?.caption,
+          stats: doc.stats ?? base?.stats,
+        };
+      })
       .sort((a, b) => a.order - b.order);
   } catch {
     return getProjects();
