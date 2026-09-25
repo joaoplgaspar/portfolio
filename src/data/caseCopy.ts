@@ -2,6 +2,7 @@ import type { Locale } from "@/i18n/routing";
 import type { CartLabText } from "@/components/cases/CartLab";
 import type { DiscountText } from "@/components/cases/DiscountCalc";
 import type { ReconcileText } from "@/components/cases/Reconcile";
+import type { TaxLabText } from "@/components/cases/TaxLab";
 
 /**
  * Textos das peças interativas dos cases. Ficam fora de messages/*.json
@@ -154,5 +155,56 @@ export const livraCopy: L<{
     themesTitle: "Um layout, quatro paletas",
     themesLede: "Temas são vendidos no app. Toda tela troca de pele, do perfil à liga.",
     themesCaption: "O mesmo perfil em Linho, Café, Alcova e Aurora.",
+  },
+};
+
+export const taxLab: L<{ title: string; lede: string; ui: TaxLabText }> = {
+  en: {
+    title: "Try it as a company",
+    lede: "When a company buys, federal taxes are withheld at source: it pays the order minus the withholding. Shopify's tax settings can only add tax. Type a CPF, a valid CNPJ or a broken one, and move the order value across the tiers.",
+    ui: {
+      doc: "CPF / CNPJ",
+      person: "Person (CPF)",
+      company: "Company (CNPJ)",
+      malformed: "Broken CNPJ",
+      simples: "Company opted into Simples Nacional",
+      value: "Order value",
+      subtotal: "Subtotal",
+      withholding: "Withholding at source",
+      total: "Total",
+      states: {
+        empty: "No tax ID yet: nothing to decide.",
+        person: "A person (CPF): nothing is withheld.",
+        invalid: "Check digits don't match. The validation Function blocks the checkout.",
+        below: "Company, but below the first tier: nothing is withheld.",
+        applied: "Company above the first tier: the discount Function returns the withholding as a fixed amount.",
+        simples: "Simples Nacional: part of the taxes aren't withheld, so the rate drops.",
+      },
+      tiers: "Illustrative tiers: below R$ 250 → 0 · up to R$ 5,000 → 5% · above → 6.5%",
+    },
+  },
+  pt: {
+    title: "Compre como empresa",
+    lede: "Quando uma empresa compra, os tributos federais são retidos na fonte: ela paga o pedido menos a retenção. As configurações de imposto do Shopify só sabem somar. Digite um CPF, um CNPJ válido ou um quebrado, e mova o valor do pedido entre as faixas.",
+    ui: {
+      doc: "CPF / CNPJ",
+      person: "Pessoa (CPF)",
+      company: "Empresa (CNPJ)",
+      malformed: "CNPJ quebrado",
+      simples: "Empresa optante do Simples Nacional",
+      value: "Valor do pedido",
+      subtotal: "Subtotal",
+      withholding: "Retenção na fonte",
+      total: "Total",
+      states: {
+        empty: "Sem documento ainda: nada a decidir.",
+        person: "Pessoa física (CPF): nada é retido.",
+        invalid: "Os dígitos verificadores não batem. A Function de validação trava o checkout.",
+        below: "Empresa, mas abaixo da primeira faixa: nada é retido.",
+        applied: "Empresa acima da primeira faixa: a Function de desconto devolve a retenção como valor fixo.",
+        simples: "Simples Nacional: parte dos tributos não é retida, e a alíquota cai.",
+      },
+      tiers: "Faixas ilustrativas: abaixo de R$ 250 → 0 · até R$ 5.000 → 5% · acima → 6,5%",
+    },
   },
 };

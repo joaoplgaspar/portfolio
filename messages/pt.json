@@ -21,7 +21,7 @@
     "tagline": "Front-end engineer — construo o que a plataforma diz que não dá.",
     "clients": "Também trabalhei com",
     "lede": "Engenheiro front-end para Shopify. Lojas inteiras, de ponta a ponta, em Liquid ou Hydrogen headless: seções, página de produto, carrinho e checkout, com performance, SEO e dados estruturados de fábrica.",
-    "status": "Solo em várias lojas por mês na SHAKERS, em São Paulo, ainda com atuação de liderança no time. Fundador do LIVRA.",
+    "status": "Em São Paulo. Várias lojas por mês, a maioria sozinho, ainda com atuação de liderança no time. Fundador do LIVRA.",
     "index": "Breve descrição dos desenhos",
     "fig": "FIG.",
     "open": "Abrir prancha",
@@ -114,7 +114,7 @@
   "stores": {
     "eyebrow": "Quadro de projetos",
     "title": "Projetos",
-    "lede": "Projetos Shopify que eu construí ou reconstruí, a maioria sozinho e de ponta a ponta. A capa é o site como está no ar hoje. Quando um projeto tem números, eles vêm do PageSpeed Insights no celular, com a data da medição.",
+    "lede": "Projetos Shopify que eu construí ou reconstruí, a maioria sozinho e de ponta a ponta. Cada cartão é a marca; passe o mouse para ver o site como está no ar hoje. Quando um projeto tem números, eles vêm do PageSpeed Insights no celular, com a data da medição.",
     "count": "projetos",
     "pending": "capa pendente",
     "score": "Nota",
@@ -129,7 +129,8 @@
     },
     "note": "Figuras são para os poucos projetos com um mecanismo que vale desenhar. Todo projeto aqui tem página própria.",
     "all": "Todos os {n} projetos",
-    "more": "Mais projetos"
+    "more": "Mais projetos",
+    "building": "Em desenvolvimento"
   },
   "projectPage": {
     "platform": "Plataforma",
@@ -143,6 +144,7 @@
     "scoreHelp": "nota do PageSpeed, celular",
     "value": "este projeto",
     "perfPending": "Números de performance pendentes. (Visível só em desenvolvimento.)",
-    "next": "Próximo projeto"
+    "next": "Próximo projeto",
+    "status": "Status"
   }
 }

@@ -5,6 +5,7 @@ import { pageMeta } from "@/lib/metadata";
 import { sheetPlan } from "@/lib/sheets";
 import TitleBlock from "@/components/sheet/TitleBlock";
 import Stair from "@/components/sheet/Stair";
+import CaseText from "@/components/cases/CaseText";
 import { isShown } from "@/components/figures/registry";
 import { fetchPublishedProjects } from "@/data/projects";
 import { about } from "@/data/about";
@@ -50,6 +51,10 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
       </div>
 
       <div className="mt-[clamp(56px,8vw,128px)]">
+        <CaseText blocks={about.method[l]} />
+      </div>
+
+      <div className="mt-[clamp(24px,4vw,64px)]">
         <Stair
           stages={about.stages}
           locale={l}

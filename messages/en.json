@@ -21,7 +21,7 @@
     "tagline": "Front-end engineer — I build what the platform says you can't.",
     "clients": "Also worked with",
     "lede": "Front-end engineer for Shopify. Whole stores, end to end, in Liquid or headless Hydrogen: sections, product pages, cart and checkout, with performance, SEO and structured data built in.",
-    "status": "Solo on several storefronts a month at SHAKERS, São Paulo, still with a hand in leading the team. Founder of LIVRA.",
+    "status": "Based in São Paulo. Several storefronts a month, mostly solo, still with a hand in leading the team. Founder of LIVRA.",
     "index": "Brief description of the drawings",
     "fig": "FIG.",
     "open": "Open sheet",
@@ -114,7 +114,7 @@
   "stores": {
     "eyebrow": "Schedule of projects",
     "title": "Projects",
-    "lede": "Shopify projects I built or rebuilt, most of them alone and end to end. The cover is the site as it is live today. When a project has numbers, they come from PageSpeed Insights on mobile, with the date they were measured.",
+    "lede": "Shopify projects I built or rebuilt, most of them alone and end to end. Each card is the brand; hover it to see the site as it is live today. When a project has numbers, they come from PageSpeed Insights on mobile, with the date they were measured.",
     "count": "projects",
     "pending": "cover pending",
     "score": "Score",
@@ -129,7 +129,8 @@
     },
     "note": "Figures are for the few projects with a mechanism worth drawing. Every project here has its own page.",
     "all": "All {n} projects",
-    "more": "More projects"
+    "more": "More projects",
+    "building": "In development"
   },
   "projectPage": {
     "platform": "Platform",
@@ -143,6 +144,7 @@
     "scoreHelp": "PageSpeed score, mobile",
     "value": "this project",
     "perfPending": "Performance numbers pending. (Only visible in development.)",
-    "next": "Next project"
+    "next": "Next project",
+    "status": "Status"
   }
 }

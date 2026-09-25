@@ -10,7 +10,8 @@ import TitleBlock from "@/components/sheet/TitleBlock";
 import ProjectPerf from "@/components/perf/ProjectPerf";
 import { isShown } from "@/components/figures/registry";
 import { fetchPublishedProjects } from "@/data/projects";
-import { getStore, visibleStores } from "@/data/stores";
+import { getStore, logosOf, visibleStores } from "@/data/stores";
+import LogoPlate from "@/components/sheet/LogoPlate";
 
 export function generateStaticParams() {
   return visibleStores().map((s) => ({ slug: s.slug }));
@@ -77,12 +78,14 @@ export default async function ProjectPage({ params }: { params: Promise<{ locale
         </dl>
         <dl>
           {s.role && <Row k={tp("role")}>{s.role[l]}</Row>}
-          {s.domain && (
+          {s.domain ? (
             <Row k={tp("live")}>
               <a href={`https://${s.domain}`} target="_blank" rel="noreferrer" className="tb-link t-code">
                 {s.domain} ↗
               </a>
             </Row>
+          ) : (
+            <Row k={tp("status")}>{t("building")}</Row>
           )}
           {s.caseSlug && (
             <Row k={tp("case")}>
@@ -97,12 +100,14 @@ export default async function ProjectPage({ params }: { params: Promise<{ locale
       <figure className="mt-[clamp(40px,6vw,88px)]">
         <div className="border border-fg bg-[var(--plate)]">
           <div className="flex items-center justify-between gap-3 border-b border-fg px-3 py-2">
-            <span className="t-code truncate text-muted">{s.domain ?? "—"}</span>
+            <span className="t-code truncate text-muted">{s.domain ?? t("building")}</span>
             <span className="t-fig">{s.mark}</span>
           </div>
           <div className="relative aspect-[16/10] overflow-hidden">
             {s.cover ? (
               <Image src={s.cover} alt="" fill sizes="(min-width: 1280px) 1200px, 100vw" className="object-cover object-top" priority />
+            ) : s.logo ? (
+              <LogoPlate logos={logosOf(s)} plate={s.plate} sizes="(min-width: 1280px) 600px, 60vw" />
             ) : (
               <div
                 className="absolute inset-0 grid place-items-center"

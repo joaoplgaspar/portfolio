@@ -1,5 +1,5 @@
 /** Slugs que têm figura. Módulo neutro: server e client importam daqui. */
-export const FIGURED = ["roland-boss", "integral-medica-darkness", "livra", "starter-pack"] as const;
+export const FIGURED = ["roland-boss", "integral-medica-darkness", "hsm-singularity", "livra"] as const;
 
 export function hasFigure(slug: string) {
   return (FIGURED as readonly string[]).includes(slug);

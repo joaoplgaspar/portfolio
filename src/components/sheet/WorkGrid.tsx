@@ -8,6 +8,7 @@ import type { Locale } from "@/i18n/routing";
 import Figure, { stepsOf } from "@/components/figures/Figure";
 import Narration, { type NarrationLabels } from "@/components/figures/Narration";
 import { SeqProvider, useSequence } from "@/components/figures/sequence";
+import LogoPlate from "./LogoPlate";
 
 /**
  * Trabalho selecionado, de ponta a ponta da prancha: grade em faixas (uma
@@ -28,7 +29,13 @@ export type WorkItem = {
   title: string;
   meta: string;
   href: string;
-  cover: { kind: "site"; src: string } | { kind: "app"; srcs: string[] } | { kind: "drawing"; slug: string };
+  cover:
+    | { kind: "site"; src: string }
+    | { kind: "app"; srcs: string[] }
+    | { kind: "drawing"; slug: string }
+    | { kind: "logo"; logos: string[]; plate?: string | string[] };
+  /** Print do site no ar, mostrada no painel quando a capa é o logo. */
+  print?: string;
   summary: string;
   facts: { k: string; v: string }[];
   stack?: string[];
@@ -46,6 +53,7 @@ function Cover({ item, sizes }: { item: WorkItem; sizes: string }) {
   if (c.kind === "site") {
     return <Image src={c.src} alt="" fill sizes={sizes} className="object-cover object-top" />;
   }
+  if (c.kind === "logo") return <LogoPlate logos={c.logos} plate={c.plate} sizes={sizes} />;
   if (c.kind === "app") {
     return (
       <span className="absolute inset-0 flex items-center justify-center gap-[4%] bg-[var(--plate)] px-[8%]">
@@ -125,7 +133,7 @@ export default function WorkGrid({ items, locale, t }: { items: WorkItem[]; loca
                     {item.mark} · {t.expand} ↗
                   </span>
                 </span>
-                <span className="mt-2 flex items-baseline justify-between gap-4 px-[var(--gut)] lg:px-0">
+                <span className="mt-2 flex items-baseline justify-between gap-4 px-[var(--gut)] lg:px-3">
                   <span className="t-small">{item.title}</span>
                   <span className="t-small shrink-0 text-faint">{item.meta}</span>
                 </span>
@@ -272,7 +280,11 @@ function Expanded({
                     <span className="t-code text-muted">{item.live?.[0] ?? "—"}</span>
                   </div>
                   <div className="relative aspect-[16/10] overflow-hidden">
-                    <Cover item={item} sizes="(min-width: 1024px) 60vw, 100vw" />
+                    {item.print ? (
+                      <Image src={item.print} alt="" fill sizes="(min-width: 1024px) 60vw, 100vw" className="object-cover object-top" />
+                    ) : (
+                      <Cover item={item} sizes="(min-width: 1024px) 60vw, 100vw" />
+                    )}
                   </div>
                 </div>
               )}

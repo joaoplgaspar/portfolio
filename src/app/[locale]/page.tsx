@@ -10,18 +10,27 @@ import { isShown } from "@/components/figures/registry";
 import { legends } from "@/data/figures";
 import { fetchPublishedProjects } from "@/data/projects";
 import { sheetPlan } from "@/lib/sheets";
-import { visibleStores } from "@/data/stores";
+import { logosOf, stores, visibleStores } from "@/data/stores";
 import WorkGrid, { type WorkItem } from "@/components/sheet/WorkGrid";
 import type { Print } from "@/components/sheet/ProjectThumb";
 import { Link } from "@/i18n/navigation";
 
 export const revalidate = 60; // ISR: novos projetos aparecem sem redeploy
 
-/** O que identifica cada case de relance no índice: a print do site, o app ou o terminal. */
+/** O que identifica cada case de relance no índice: a marca, sempre. */
 function printOf(slug: string, cover: string): Print | undefined {
-  if (slug === "livra") return { kind: "app", srcs: ["/livra/app-inicio.webp", "/livra/app-liga.webp"] };
-  if (slug === "starter-pack") return { kind: "cli", lines: ["$ pack add section/hero", "✓ hero@1.4 · sha256 ok", "$ pack diff", "2 units drifted", "$ pack upstream"] };
+  // Wordmark do app: "Livra" em Fraunces itálica, papel sobre a terracota do tema Linho.
+  if (slug === "livra") return { kind: "logo", logos: ["/logos/livra.png"], plate: "#BC4B2F" };
+  const brand = brandOf(slug);
+  if (brand) return { kind: "logo", ...brand };
   return cover ? { kind: "site", src: cover } : undefined;
+}
+
+/** Logo e cor da marca de um case, vindos da loja que aponta para ele. */
+function brandOf(caseSlug: string) {
+  const s = stores.find((x) => x.caseSlug === caseSlug);
+  const logos = s ? logosOf(s) : [];
+  return s && logos.length ? { logos, plate: s.plate } : undefined;
 }
 
 export async function generateMetadata({
@@ -59,7 +68,7 @@ export default async function HomePage({
   const ts = await getTranslations("stores");
   const tp = await getTranslations("project");
   const tpp = await getTranslations("projectPage");
-  const stores = visibleStores();
+  const shown = visibleStores();
   const fig = t("fig");
 
   // Cases com figura primeiro, depois os projetos com capa. Cada um vira um
@@ -74,9 +83,11 @@ export default async function HomePage({
       cover:
         p.slug === "livra"
           ? { kind: "app", srcs: ["/livra/app-liga.webp", "/livra/app-inicio.webp", "/livra/app-lura.webp"] }
-          : p.cover
-            ? { kind: "site", src: p.cover }
-            : { kind: "drawing", slug: p.slug },
+          : brandOf(p.slug)
+            ? { kind: "logo", ...brandOf(p.slug)! }
+            : p.cover
+              ? { kind: "site", src: p.cover }
+              : { kind: "drawing", slug: p.slug },
       summary: p.summary[l],
       facts: [
         { k: tp("client"), v: p.client[l] },
@@ -87,8 +98,9 @@ export default async function HomePage({
       live: p.live,
       figure: { slug: p.slug, caption: p.caption?.[l] ?? p.summary[l] },
     })),
-    ...stores
-      .filter((s) => s.cover && !s.caseSlug)
+    ...shown
+      // Só os destaques: o resto mora em /projetos, senão a home vira lista.
+      .filter((s) => s.featured && (s.cover || s.logo) && !s.caseSlug)
       .map(
         (s): WorkItem => ({
           key: s.slug,
@@ -96,12 +108,14 @@ export default async function HomePage({
           title: s.name,
           meta: `${s.platform} · ${s.year}`,
           href: `/projetos/${s.slug}`,
-          cover: { kind: "site", src: s.cover! },
+          cover: s.logo ? { kind: "logo", logos: logosOf(s), plate: s.plate } : { kind: "site", src: s.cover! },
+          print: s.logo ? s.cover : undefined,
           summary: s.scope[l],
           facts: [
             { k: tpp("platform"), v: s.platform },
             { k: tpp("year"), v: String(s.year) },
             ...(s.role ? [{ k: tpp("role"), v: s.role[l] }] : []),
+            ...(s.domain ? [] : [{ k: tpp("status"), v: ts("building") }]),
           ],
           live: s.domain ? [s.domain] : undefined,
           work: s.work?.map((w) => w[l]),
@@ -167,7 +181,7 @@ export default async function HomePage({
             {t("selected")}
           </h2>
           <Link href="/projetos" className="t-small tb-link">
-            {ts("all", { n: stores.length })} →
+            {ts("all", { n: shown.length })} →
           </Link>
         </div>
         <WorkGrid

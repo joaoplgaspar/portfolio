@@ -17,7 +17,8 @@ import DiscountCalc from "@/components/cases/DiscountCalc";
 import Reconcile from "@/components/cases/Reconcile";
 import { hasFigure, isShown } from "@/components/figures/registry";
 import { legends } from "@/data/figures";
-import { brands, cartLab, livraCopy, reconcile } from "@/data/caseCopy";
+import { brands, cartLab, livraCopy, reconcile, taxLab } from "@/data/caseCopy";
+import TaxLab from "@/components/cases/TaxLab";
 import { scanner, screens, themes } from "@/data/livra";
 import AnnotatedScreens from "@/components/cases/livra/AnnotatedScreens";
 import Scanner from "@/components/cases/livra/Scanner";
@@ -130,6 +131,18 @@ export default async function ProjectPage({
         <Lab title={c.discountTitle} lede={c.discountLede} note={note}>
           <div className="max-w-[640px]">
             <DiscountCalc t={c.ui} />
+          </div>
+        </Lab>
+      </>
+    );
+  } else if (slug === "hsm-singularity") {
+    const c = taxLab[l];
+    body = (
+      <>
+        {plate}
+        <Lab title={c.title} lede={c.lede} note={note}>
+          <div className="max-w-[880px]">
+            <TaxLab t={c.ui} />
           </div>
         </Lab>
       </>

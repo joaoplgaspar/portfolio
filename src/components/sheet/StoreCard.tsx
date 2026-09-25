@@ -16,7 +16,7 @@ export default function StoreCard({
 }: {
   store: Store;
   locale: Locale;
-  t: { pending: string; score: string; measured: string };
+  t: { pending: string; score: string; measured: string; building: string };
   /** large: destaque · small: três por linha · compact: faixa da home */
   size?: "large" | "small" | "compact";
 }) {
@@ -24,7 +24,7 @@ export default function StoreCard({
   const frame = (
     <div className="border border-fg bg-[var(--plate)] transition-colors group-hover:border-accent">
       <div className="flex items-center justify-between gap-3 border-b border-fg px-3 py-1.5">
-        <span className="t-code truncate text-muted">{store.domain ?? "—"}</span>
+        <span className="t-code truncate text-muted">{store.domain ?? t.building}</span>
         <span className="t-fig shrink-0">{store.mark}</span>
       </div>
       <div className="relative aspect-[16/10] overflow-hidden">
@@ -32,6 +32,7 @@ export default function StoreCard({
           cover={store.cover}
           logo={store.logo}
           logoDark={store.logoDark}
+          plate={store.plate}
           media={store.media}
           sizes={size === "large" ? "(min-width: 1024px) 45vw, 100vw" : "(min-width: 1024px) 30vw, 50vw"}
           pending={t.pending}

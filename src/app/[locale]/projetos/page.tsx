@@ -37,7 +37,7 @@ export default async function ProjectsPage({ params }: { params: Promise<{ local
     { v: list.filter((s) => s.platform === "Liquid").length, k: "Liquid" },
     { v: list.filter((s) => s.platform === "Hydrogen").length, k: "Hydrogen" },
   ];
-  const cardText = { pending: t("pending"), score: t("score"), measured: t("measured") };
+  const cardText = { pending: t("pending"), score: t("score"), measured: t("measured"), building: t("building") };
 
   // O painel do conjunto só existe com amostra que mereça mediana.
   const panel = measured.length >= 3;

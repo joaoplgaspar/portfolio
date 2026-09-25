@@ -1,4 +1,4 @@
-import type { Localized } from "@/types/project";
+import type { CaseBlock, Localized } from "@/types/project";
 
 /** Estágio da trajetória — vira um degrau (ou a torre, no caso do LIVRA). */
 export interface Stage {
@@ -110,8 +110,41 @@ export const about = {
     { en: "Custom apps for what the platform doesn't do", pt: "Custom apps para o que a plataforma não faz" },
     { en: "Performance (Core Web Vitals)", pt: "Performance (Core Web Vitals)" },
     { en: "SEO and structured data (JSON-LD)", pt: "SEO e dados estruturados (JSON-LD)" },
-    { en: "My own starter pack, built on by AI agents, for new and existing projects", pt: "Starter pack próprio, usado por agentes de IA, para projetos novos e existentes" },
+    { en: "A shared base of sections and checks, for new and existing stores", pt: "Base compartilhada de seções e verificações, para lojas novas e existentes" },
   ] satisfies Localized[],
+
+  /**
+   * Como eu trabalho: o método, sem produto. O código que existe é do
+   * empregador; aqui fica só o conceito, sem nome, comando ou regra interna.
+   */
+  method: {
+    en: [
+      { kind: "heading", text: "How I work" },
+      { kind: "text", text: "Most of my stores start from the same base, and the base gets better with every store." },
+      {
+        kind: "list",
+        items: [
+          { label: "A base every store pulls from:", text: "sections, blocks and snippets live in one place, and each project takes them as a versioned dependency. When a base is copied into every project, each copy fixes its own bugs and the fixes stay there." },
+          { label: "Fixes go back to the base:", text: "what one store corrects returns to the base, so the next store already has it." },
+          { label: "Checked by tools:", text: "anything that can be verified is: breakpoints, schema, spacing. Every section is measured at several widths before anyone reviews it by eye. That works the same for people and for AI agents building on the base." },
+          { label: "Existing stores too:", text: "on a store that already exists, hand-built pieces are swapped for base units one at a time, without a rewrite." },
+        ],
+      },
+    ],
+    pt: [
+      { kind: "heading", text: "Como eu trabalho" },
+      { kind: "text", text: "A maioria das minhas lojas começa da mesma base, e a base melhora a cada loja." },
+      {
+        kind: "list",
+        items: [
+          { label: "Uma base de onde toda loja puxa:", text: "seções, blocos e snippets ficam num lugar só, e cada projeto os usa como dependência versionada. Quando a base é copiada para cada projeto, cada cópia corrige os próprios bugs e a correção fica presa ali." },
+          { label: "A correção volta para a base:", text: "o que uma loja corrige volta para a base, e a próxima já começa com isso." },
+          { label: "Verificado por ferramenta:", text: "o que dá para verificar é verificado: breakpoints, schema, espaçamento. Cada seção é medida em várias larguras antes de alguém revisar no olho. Vale igual para pessoas e para agentes de IA construindo sobre a base." },
+          { label: "Lojas existentes também:", text: "numa loja que já existe, as peças feitas à mão são trocadas por unidades da base uma a uma, sem reescrever tudo." },
+        ],
+      },
+    ],
+  } satisfies Record<"pt" | "en", CaseBlock[]>,
 
   interests: {
     pt: "Fora do código: música, vinil e a cena de eventos de São Paulo.",

@@ -13,6 +13,16 @@ const TARGETS = [
   { slug: "darkness", url: "https://darkness.com.br" },
   { slug: "oficina-de-inverno", url: "https://oficinadeinverno.com.br" },
   { slug: "uv-line", url: "https://www.uvline.com.br" },
+  { slug: "fujifilm", url: "https://loja.fujifilm.com.br" },
+  { slug: "qix", url: "https://qixskateshop.com.br" },
+  { slug: "dux", url: "https://duxhumanhealth.com" },
+  { slug: "ada", url: "https://adanutraceuticos.com.br" },
+  { slug: "iron-studios", url: "https://ironstudios.com.br" },
+  { slug: "yosen", url: "https://www.yosen.com.br" },
+  { slug: "casa-francis", url: "https://francis.com.br" },
+  { slug: "baianao", url: "https://baianao.com.br" },
+  { slug: "montecristo", url: "https://montecristo.com.br" },
+  { slug: "rocinante", url: "https://www.tresselosrocinante.com" },
 ];
 
 // Banners de cookie / pop-up de newsletter atrapalham a capa. Tenta dispensar.

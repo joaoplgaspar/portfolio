@@ -2,7 +2,8 @@
 
 import Image from "next/image";
 import { useRef } from "react";
-import type { Media } from "@/data/stores";
+import { logosOf, type Media } from "@/data/stores";
+import LogoPlate from "./LogoPlate";
 
 /**
  * As duas faces de um cartão de projeto. A primeira é o logo (centralizado
@@ -17,19 +18,22 @@ export default function CardFaces({
   cover,
   logo,
   logoDark,
+  plate,
   media,
   sizes,
   pending,
 }: {
   cover?: string;
-  logo?: string;
+  logo?: string | string[];
   logoDark?: string;
+  plate?: string | string[];
   media?: Media;
   sizes: string;
   pending: string;
 }) {
   const video = useRef<HTMLVideoElement>(null);
-  const second: Media | undefined = media ?? (logo && cover ? { kind: "image", src: cover } : undefined);
+  const logos = logosOf({ logo });
+  const second: Media | undefined = media ?? (logos.length && cover ? { kind: "image", src: cover } : undefined);
 
   const play = () => {
     const v = video.current;
@@ -46,10 +50,12 @@ export default function CardFaces({
   return (
     <span className="absolute inset-0 block" onMouseEnter={play} onMouseLeave={stop} onFocus={play} onBlur={stop}>
       {/* 1ª face */}
-      {logo ? (
+      {logos.length && plate ? (
+        <LogoPlate logos={logos} plate={plate} />
+      ) : logos.length ? (
         <span className="absolute inset-0 flex items-center justify-center bg-[var(--plate)] p-[14%]">
           <span className={`relative block h-full w-full ${logoDark ? "[:root[data-theme=dark]_&]:hidden" : ""}`}>
-            <Image src={logo} alt="" fill sizes="30vw" unoptimized={logo.endsWith(".svg")} className="object-contain" />
+            <Image src={logos[0]} alt="" fill sizes="30vw" unoptimized={logos[0].endsWith(".svg")} className="object-contain" />
           </span>
           {logoDark && (
             <span className="relative hidden h-full w-full [:root[data-theme=dark]_&]:block">

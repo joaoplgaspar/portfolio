@@ -85,14 +85,14 @@ o slug em `components/figures/registry.ts`. Sem figura, o case não entra no
   Substitui `/performance`. Capa da loja no ar
   (`scripts/covers.mjs`), escopo, e PageSpeed com data quando houver print.
   Painel de réguas só com ≥ 3 lojas medidas. Dados em `src/data/stores.ts`.
-- **FIG. 4 Starter Pack**: a base própria do João para construir projetos
-  com agilidade ou ajustar os existentes. **Nunca** citar o nome da empresa
-  nem de projetos de cliente nesse case: é propriedade deles. Só o método.
+- **Método, não produto**: o jeito de trabalhar com uma base compartilhada
+  vive em "How I work", na página Sobre, como conceito. Não é case, não tem
+  figura, nome, comando nem regra interna.
 
 ## v5 (home e cursor)
 
-- **Índice com print**: cada linha tem a miniatura do projeto (site, app em
-  dois telefones, terminal no Starter Pack) e o índice inteiro cabe na
+- **Índice com print**: cada linha tem a miniatura do projeto (cor e logo
+  da marca, ou o app em dois telefones) e o índice inteiro cabe na
   primeira tela — hover troca a figura sem rolar. A legenda do palco não
   aparece na home (fica nos cases).
 - **Trabalho selecionado**: grade de ponta a ponta (uma capa grande + duas
