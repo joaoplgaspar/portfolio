@@ -1,147 +1,510 @@
 @import "tailwindcss";
 
 /* ─────────────────────────────────────────────────────────────
-   Design tokens — um sistema, vários "mundos".
-   Cada universo do portfólio tem sua paleta, mas tudo parte daqui.
-   ───────────────────────────────────────────────────────────── */
-@theme {
-  --font-display: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-jetbrains), ui-monospace, SFMono-Regular, monospace;
+   "Folha" — o site é um jogo de pranchas de desenho técnico.
 
-  /* Base / espaço */
-  --color-void: #04060c;
-  --color-ink: #e8edf6;
-
-  /* 🦇 Gotham (Batman) — intro & contato */
-  --color-gotham: #0a0b10;
-  --color-gotham-steel: #14161f;
-  --color-bat: #ffd23f;
-
-  /* 🌊 Subnautica — sobre / o mergulho */
-  --color-abyss: #02101f;
-  --color-deep: #06304f;
-  --color-biolum: #2ce6c9;
-  --color-aqua: #38d0ff;
-  --color-coral: #ff6b4a;
-
-  /* ⚽ FIFA / FUT — skills */
-  --color-fut-gold: #e9c46a;
-  --color-fut-gold-bright: #f7d774;
-  --color-pitch: #16a34a;
-
-  /* 🧱 LEGO — projetos / build mode */
-  --color-lego-red: #d4131a;
-  --color-lego-yellow: #ffcf00;
-  --color-lego-blue: #0057a8;
-  --color-lego-green: #00852b;
-}
-
-/* ─────────────────────────────────────────────────────────────
-   Base
+   Papel e tinta. Um vermelho só (o oxblood da transição), usado como
+   sinal: a peça em destaque num desenho, nada mais. Tudo o que o sistema
+   precisa cabe nestas variáveis — se um componente novo pede outra, a
+   pergunta é por que ele não cabe no desenho.
    ───────────────────────────────────────────────────────────── */
 :root {
+  --bg: #ecebe6; /* papel */
+  --raised: #f5f4f0; /* papel sob luz — área de interação */
+  --shade: #dcd9d1; /* face lateral de peça, 1º tom */
+  --shade-2: #cdc9bf; /* face lateral de peça, 2º tom */
+  --line: #c9c5bb; /* filete de apoio */
+  --fg: #151412; /* tinta */
+  --muted: #56534c; /* tinta diluída */
+  --faint: #8d897f; /* marcação de margem, cotas */
+  --accent: #7c2d2d; /* sinal */
+  --accent-lift: #9a3838;
+  /* Brilho da faixa de transição: com fundo claro, a tinta não serve. */
+  --sweep-spec: #fff6ee;
+
+  --pad: clamp(8px, 1.1vw, 16px); /* margem externa da folha */
+  --gut: clamp(16px, 2.6vw, 40px); /* respiro interno */
+
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-sym: cubic-bezier(0.65, 0, 0.35, 1);
+
+  --plate: var(--raised); /* fundo das pranchas de figura */
+  --grid: transparent;
+
+  color-scheme: light;
+}
+
+/* Grafite: a mesma prancha desenhada em giz sobre fundo grafite quente.
+   O sinal continua sendo o vermelho, só mais aceso para ler no escuro. */
+:root[data-theme="dark"] {
+  --bg: #1b1a17;
+  --raised: #232019;
+  --shade: #2c2923;
+  --shade-2: #37332b;
+  --line: #3a362d;
+  --fg: #ede8de;
+  --muted: #b7b1a4;
+  --faint: #8a8477;
+  --accent: #c4524a;
+  --accent-lift: #dc6b61;
+  --sweep-spec: #fff1e6;
+  --plate: #201e1a;
+  --grid: rgba(237, 232, 222, 0.03);
+
   color-scheme: dark;
 }
 
+@theme inline {
+  --color-bg: var(--bg);
+  --color-raised: var(--raised);
+  --color-line: var(--line);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-faint: var(--faint);
+  --color-accent: var(--accent);
+  --color-accent-lift: var(--accent-lift);
+  --color-stone-400: var(--faint);
+  --color-stone-600: var(--faint);
+
+  --font-display: var(--ff-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--ff-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--ff-mono), ui-monospace, SFMono-Regular, monospace;
+
+  --ease-premium: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ── Base ───────────────────────────────────────────────────── */
 html {
   -webkit-text-size-adjust: 100%;
 }
-
 body {
-  background-color: var(--color-void);
-  color: var(--color-ink);
-  font-family: var(--font-sans);
-  overflow-x: hidden;
+  background-color: var(--bg);
+  /* Quadrícula: 24px fina, 120px marcada. Transparente no papel claro. */
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px),
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size:
+    24px 24px,
+    24px 24px,
+    120px 120px,
+    120px 120px;
+  color: var(--fg);
+  font-family: var(--ff-sans), ui-sans-serif, system-ui, sans-serif;
+  font-weight: 450;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
-
 ::selection {
-  background: var(--color-biolum);
-  color: var(--color-void);
+  background: var(--fg);
+  color: var(--bg);
+}
+:focus-visible {
+  outline: 1.5px solid var(--accent);
+  outline-offset: 3px;
 }
 
-/* Scrollbar discreta (Lenis cuida da suavidade do scroll) */
-::-webkit-scrollbar {
-  width: 10px;
+/* ── Tipo ───────────────────────────────────────────────────────
+   Contraste por peso, não por tamanho: grande é fino, pequeno é pesado.
+   A largura (font-stretch) fica reservada para estado — é o que muda
+   quando uma coisa está ativa. */
+@layer components {
+.t-hero {
+  font-weight: 200;
+  font-size: clamp(2.9rem, 8.4vw, 9.6rem);
+  line-height: 0.86;
+  letter-spacing: -0.045em;
 }
-::-webkit-scrollbar-track {
-  background: var(--color-void);
+.t-name {
+  font-weight: 200;
+  font-size: clamp(2.4rem, 4.6vw, 4.6rem);
+  line-height: 0.9;
+  letter-spacing: -0.04em;
 }
-::-webkit-scrollbar-thumb {
-  background: #1d2230;
-  border-radius: 99px;
-  border: 2px solid var(--color-void);
+.t-title {
+  font-weight: 250;
+  font-size: clamp(1.7rem, 3vw, 2.9rem);
+  line-height: 0.98;
+  letter-spacing: -0.03em;
 }
-::-webkit-scrollbar-thumb:hover {
-  background: #2a3142;
+.t-small {
+  font-size: 0.8125rem;
+  line-height: 1.45;
+  font-weight: 600;
+  letter-spacing: -0.003em;
+}
+.t-fig {
+  font-size: 0.75rem;
+  font-weight: 650;
+  letter-spacing: 0.04em;
+  font-variant-numeric: tabular-nums;
+}
+.t-code {
+  font-family: var(--ff-mono), ui-monospace, monospace;
+  font-size: 0.78rem;
+  letter-spacing: 0;
+}
 }
 
-/* ─────────────────────────────────────────────────────────────
-   Lenis (smooth scroll) — recomendações oficiais
-   ───────────────────────────────────────────────────────────── */
-html.lenis,
-html.lenis body {
+/* Compatibilidade com páginas que ainda usam o rótulo antigo. */
+.text-label {
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+/* ── A folha ────────────────────────────────────────────────────
+   Moldura fixa com zonas marcadas nas bordas, como uma prancha técnica.
+   A sombra de 100vmax pinta de papel tudo o que fica fora da moldura: o
+   conteúdo rola por baixo e some na borda em vez de vazar pela margem. */
+.sheet-frame {
+  position: fixed;
+  inset: var(--pad);
+  z-index: 60;
+  pointer-events: none;
+  border: 1px solid var(--fg);
+  box-shadow: 0 0 0 100vmax var(--bg);
+}
+.zone {
+  position: absolute;
+  font-size: 9px;
+  line-height: 1;
+  font-weight: 600;
+  color: var(--faint);
+  font-variant-numeric: tabular-nums;
+}
+.zone-top {
+  top: calc(var(--pad) * -1);
+  height: var(--pad);
+  display: grid;
+  place-items: center;
+  transform: translateX(-50%);
+}
+.zone-left {
+  left: calc(var(--pad) * -1);
+  width: var(--pad);
+  display: grid;
+  place-items: center;
+  transform: translateY(-50%);
+}
+.zone-tick-top {
+  position: absolute;
+  top: calc(var(--pad) * -1);
+  width: 1px;
+  height: var(--pad);
+  background: var(--fg);
+  opacity: 0.35;
+}
+.zone-tick-left {
+  position: absolute;
+  left: calc(var(--pad) * -1);
+  height: 1px;
+  width: var(--pad);
+  background: var(--fg);
+  opacity: 0.35;
+}
+@media (max-width: 640px) {
+  .zone,
+  .zone-tick-top,
+  .zone-tick-left {
+    display: none;
+  }
+}
+
+.sheet-head {
+  position: fixed;
+  z-index: 61;
+  top: var(--pad);
+  left: var(--pad);
+  right: var(--pad);
+  height: 52px;
+  padding: 0 var(--gut);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--bg);
+  border-bottom: 1px solid var(--fg);
+}
+.sheet {
+  padding: calc(var(--pad) + 52px + var(--gut)) calc(var(--pad) + var(--gut))
+    calc(var(--pad) + var(--gut));
+}
+.nav-link {
+  position: relative;
+  color: var(--muted);
+  transition: color 200ms var(--ease);
+}
+.nav-link:hover {
+  color: var(--fg);
+}
+/* Item atual: um traço de sinal embaixo, como a cota da peça em foco. */
+.nav-link[aria-current="page"] {
+  color: var(--fg);
+}
+.nav-link[aria-current="page"]::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -5px;
+  height: 1.5px;
+  background: var(--accent);
+}
+
+/* ── Carimbo (title block) ──────────────────────────────────────
+   Rodapé de toda folha: quem desenhou, qual prancha, contato. */
+.title-block {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  /* Células fecham à direita e embaixo; o bloco só fecha topo e esquerda. */
+  border-top: 1px solid var(--fg);
+  border-left: 1px solid var(--fg);
+}
+.tb-cell {
+  padding: 9px 12px 11px;
+  border-right: 1px solid var(--fg);
+  border-bottom: 1px solid var(--fg);
+  min-width: 0;
+}
+.tb-key {
+  display: block;
+  font-size: 9.5px;
+  font-weight: 650;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--faint);
+  margin-bottom: 4px;
+}
+.tb-val {
+  font-size: 0.875rem;
+  font-weight: 560;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+}
+.tb-link {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--line);
+  transition: text-decoration-color 200ms var(--ease);
+}
+.tb-link:hover {
+  text-decoration-color: var(--accent);
+}
+
+/* Prancha de figura: papel sob luz no claro, quadrícula no escuro. */
+.plate {
+  background: var(--plate);
+}
+
+/* ── Figura ─────────────────────────────────────────────────────
+   Todo traço de figura nasce desenhado: pathLength=1 + dashoffset. Linha
+   tracejada (oculta/eixo) não pode usar o truque — entra por opacidade. */
+.fig {
+  display: block;
+  width: 100%;
   height: auto;
+  overflow: visible;
+  color: var(--fg);
 }
-.lenis.lenis-smooth {
-  scroll-behavior: auto !important;
+.fig text {
+  font-family: var(--ff-sans), sans-serif;
+  fill: var(--fg);
 }
-.lenis.lenis-smooth [data-lenis-prevent] {
-  overscroll-behavior: contain;
+.fig .num {
+  font-size: 15px;
+  font-weight: 500;
+  font-style: italic;
 }
-.lenis.lenis-stopped {
-  overflow: clip;
+.fig .code {
+  font-family: var(--ff-mono), monospace;
+  font-size: 10.5px;
+  fill: var(--muted);
+}
+.fig .part {
+  transition:
+    stroke 650ms var(--ease),
+    fill 650ms var(--ease);
+}
+.fig .part.is-on :not(text) {
+  stroke: var(--accent);
+}
+.fig text {
+  stroke: none;
+}
+.fig .num.is-on {
+  fill: var(--accent);
+  font-weight: 700;
+}
+.fig .leader.is-on {
+  stroke: var(--accent);
+}
+.seq-show {
+  opacity: 0;
+  transition: opacity 420ms var(--ease);
+}
+.seq-show.is-on {
+  opacity: 1;
+}
+.fig text.note {
+  stroke: var(--bg);
+  fill: var(--muted);
+}
+.fig text.note-signal {
+  fill: var(--accent);
+}
+.fig .slide {
+  transition: transform 900ms var(--ease-sym);
+}
+.fig-draw .draw {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: draw 1100ms var(--ease-sym) forwards;
+}
+.fig-draw .late {
+  opacity: 0;
+  animation: fadeIn 500ms var(--ease) 700ms forwards;
+}
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
 }
 
-/* ─────────────────────────────────────────────────────────────
-   Utilitários / componentes leves
-   ───────────────────────────────────────────────────────────── */
-.glass {
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(12px);
+/* ── Índice da home ─────────────────────────────────────────────
+   A linha ativa alarga (font-stretch) em vez de mudar de cor. A barra
+   embaixo é o relógio da troca automática — pausa sob o ponteiro. */
+.idx-list {
+  container-type: inline-size;
+}
+/* O título ativo alarga até 116%: o tamanho é o menor entre a escala e o que
+   cabe na coluna nessa largura (--len = nº de caracteres; 0.6em é a largura
+   média da Archivo 300 a 116%). Sem isso o título mais longo quebra e a
+   lista pula quando a figura troca. */
+.idx-list .idx-title {
+  white-space: nowrap;
+  font-size: min(clamp(1.5rem, 2.5vw, 2.5rem), calc(100cqi / (var(--len, 12) * 0.6)));
+}
+.idx-title {
+  font-stretch: 100%;
+  transition:
+    font-stretch 520ms var(--ease),
+    font-weight 520ms var(--ease),
+    color 300ms var(--ease);
+}
+.idx-row[data-on="true"] .idx-title {
+  font-stretch: 116%;
+  font-weight: 300;
+}
+.idx-row[data-on="false"] .idx-title {
+  color: var(--muted);
+}
+.idx-clock {
+  height: 1.5px;
+  background: var(--accent);
+  transform-origin: left;
+  transform: scaleX(0);
 }
 
-.world-tag {
+/* Home: intro e índice à esquerda, prancha à direita. No celular a
+   prancha sobe para logo depois da intro — é o que prende o olho. */
+.home-grid {
+  display: grid;
+  row-gap: 40px;
+  grid-template-areas: "intro" "fig" "idx";
+}
+@media (min-width: 1024px) {
+  .home-grid {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    grid-template-rows: auto 1fr;
+    column-gap: calc(var(--gut) * 1.5);
+    row-gap: 48px;
+    grid-template-areas: "intro fig" "idx fig";
+    min-height: calc(100svh - 2 * var(--pad) - 52px - 2 * var(--gut));
+  }
+}
+
+/* ── Texto de case ──────────────────────────────────────────── */
+.case-code {
+  font-family: var(--ff-mono), monospace;
+  font-size: 0.86em;
+  padding: 0.05em 0.3em;
+  background: var(--raised);
+  border: 1px solid var(--line);
+  white-space: nowrap;
+}
+
+/* ── Controles (botão, segmentado) ──────────────────────────── */
+.ctl {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  padding: 0.35rem 0.85rem;
-  border-radius: 99px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  background: rgba(255, 255, 255, 0.03);
+  gap: 8px;
+  height: 34px;
+  padding: 0 14px;
+  border: 1px solid var(--fg);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  background: var(--bg);
+  transition:
+    background 160ms var(--ease),
+    color 160ms var(--ease);
+}
+.ctl:hover {
+  background: var(--fg);
+  color: var(--bg);
+}
+.ctl[aria-pressed="true"] {
+  background: var(--fg);
+  color: var(--bg);
+}
+.ctl:disabled {
+  opacity: 0.4;
+  pointer-events: none;
+}
+.seg {
+  display: inline-flex;
+}
+.seg > .ctl + .ctl {
+  border-left: 0;
+}
+.field {
+  height: 34px;
+  width: 100%;
+  padding: 0 10px;
+  border: 1px solid var(--fg);
+  background: var(--raised);
+  font-variant-numeric: tabular-nums;
+  font-weight: 560;
 }
 
-/* Animações utilitárias */
-@keyframes floaty {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-12px); }
+/* ── Transição de rota ──────────────────────────────────────────
+   Enquanto a faixa cobre a tela (lib/sweep.ts) o conteúdo é apagado e a
+   rota troca escondida. `opacity`, não `visibility`: o foco sobrevive. */
+:root[data-theme-switching] * {
+  transition: none !important;
 }
-@keyframes signal-pulse {
-  0%, 100% { opacity: 0.55; transform: scale(1); }
-  50% { opacity: 0.9; transform: scale(1.06); }
+:root[data-sweeping] main {
+  opacity: 0;
 }
-@keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
+@keyframes pageEnter {
+  from {
+    transform: translateY(8px);
+  }
+  to {
+    transform: none;
+  }
 }
-@keyframes scroll-cue {
-  0% { transform: translateY(0); opacity: 0; }
-  40% { opacity: 1; }
-  80% { transform: translateY(10px); opacity: 0; }
-  100% { opacity: 0; }
+.page-enter {
+  animation: pageEnter 900ms var(--ease) both;
 }
 
-.anim-floaty { animation: floaty 6s ease-in-out infinite; }
-.anim-signal { animation: signal-pulse 4s ease-in-out infinite; }
-
-/* Respeita quem prefere menos movimento */
+/* ── Movimento reduzido ─────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

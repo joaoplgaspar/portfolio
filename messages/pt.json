@@ -1,0 +1,150 @@
+{
+  "meta": {
+    "title": "João Pedro Gaspar — Engenheiro Front-end",
+    "description": "Engenheiro front-end para Shopify: lojas inteiras de ponta a ponta, em Liquid ou Hydrogen headless, com performance, SEO e dados estruturados de fábrica. Fundador do LIVRA."
+  },
+  "nav": {
+    "work": "Trabalho",
+    "about": "Sobre",
+    "lab": "Lab",
+    "menu": "Menu",
+    "close": "Fechar",
+    "aria": "Principal",
+    "language": "Idioma",
+    "light": "Claro",
+    "dark": "Escuro",
+    "theme": "Modo escuro",
+    "contact": "Contato",
+    "projects": "Projetos"
+  },
+  "home": {
+    "tagline": "Front-end engineer — construo o que a plataforma diz que não dá.",
+    "clients": "Também trabalhei com",
+    "lede": "Engenheiro front-end para Shopify. Lojas inteiras, de ponta a ponta, em Liquid ou Hydrogen headless: seções, página de produto, carrinho e checkout, com performance, SEO e dados estruturados de fábrica.",
+    "status": "Em São Paulo. Várias lojas por mês, a maioria sozinho, ainda com atuação de liderança no time. Fundador do LIVRA.",
+    "index": "Breve descrição dos desenhos",
+    "fig": "FIG.",
+    "open": "Abrir prancha",
+    "live": "no ar",
+    "sheetTitle": "Índice",
+    "play": "Tocar",
+    "pause": "Pausar",
+    "prev": "Passo anterior",
+    "next": "Próximo passo",
+    "selected": "Trabalho selecionado",
+    "expand": "Expandir",
+    "openFull": "Abrir a página completa",
+    "close": "Fechar"
+  },
+  "project": {
+    "overview": "Visão geral",
+    "problem": "O problema",
+    "contribution": "O que eu fiz",
+    "results": "Resultado",
+    "gallery": "Galeria",
+    "next": "Próxima prancha",
+    "backToWork": "Índice",
+    "spec": {
+      "client": "Cliente",
+      "role": "Papel",
+      "stack": "Stack",
+      "year": "Ano",
+      "type": "Tipo"
+    },
+    "client": "Cliente",
+    "role": "Papel",
+    "year": "Ano",
+    "stack": "Stack",
+    "live": "Em produção",
+    "illustrative": "Simulação. Dados ilustrativos, mecanismo real."
+  },
+  "about": {
+    "eyebrow": "Sobre",
+    "title": "Trabalho no limite do que plataformas de e-commerce permitem — e um pouco além.",
+    "does": "O que eu construo",
+    "stairCaption": "Trajetória em corte. A torre à direita é o LIVRA."
+  },
+  "lab": {
+    "eyebrow": "Lab",
+    "title": "Lab",
+    "lede": "Experimentos, demos e curiosidades — onde testo ideias e técnicas novas."
+  },
+  "notFound": {
+    "title": "Página não encontrada.",
+    "lede": "O link se perdeu — mas o trabalho está aqui.",
+    "home": "Ir para o início"
+  },
+  "telemetry": {
+    "aria": "Telemetria do site",
+    "place": "São Paulo",
+    "build": "Build",
+    "fps": "FPS",
+    "lcp": "LCP",
+    "gpu": "GPU",
+    "availability": "Disponível para Q1 2027"
+  },
+  "now": {
+    "title": "Agora",
+    "updated": "atualizado em {date}",
+    "role": "No emprego",
+    "building": "Construindo"
+  },
+  "sheet": {
+    "drawn": "Desenho",
+    "title": "Título",
+    "sheet": "Folha",
+    "location": "Local",
+    "elsewhere": "Em outro lugar",
+    "rev": "Rev.",
+    "contact": "Contato",
+    "form": "Mandar mensagem"
+  },
+  "contact": {
+    "title": "Contato",
+    "name": "Nome",
+    "email": "E-mail",
+    "message": "Mensagem",
+    "send": "Enviar",
+    "sending": "Enviando…",
+    "sent": "Enviado. Respondo por e-mail.",
+    "sentMail": "Seu app de e-mail deve ter aberto com a mensagem pronta.",
+    "error": "Preencha nome, e-mail e mensagem.",
+    "subject": "Portfólio"
+  },
+  "stores": {
+    "eyebrow": "Quadro de projetos",
+    "title": "Projetos",
+    "lede": "Projetos Shopify que eu construí ou reconstruí, a maioria sozinho e de ponta a ponta. Cada cartão é a marca; passe o mouse para ver o site como está no ar hoje. Quando um projeto tem números, eles vêm do PageSpeed Insights no celular, com a data da medição.",
+    "count": "projetos",
+    "pending": "capa pendente",
+    "score": "Nota",
+    "measured": "PageSpeed, celular ·",
+    "median": "mediana",
+    "scoreHelp": "nota mediana do PageSpeed, celular",
+    "howTo": "O PageSpeed Insights carrega a página num celular com rede limitada e dá uma nota de 0 a 100. Abaixo, os três números por trás da nota, cada um numa régua: limpo é bom, hachura leve precisa melhorar, hachura densa é ruim. Cada ponto é uma loja; a agulha vermelha é a mediana.",
+    "metric": {
+      "lcp": "Quando o conteúdo principal aparece",
+      "tbt": "Quanto tempo a página fica ocupada demais para responder",
+      "cls": "Quanto o layout pula enquanto carrega"
+    },
+    "note": "Figuras são para os poucos projetos com um mecanismo que vale desenhar. Todo projeto aqui tem página própria.",
+    "all": "Todos os {n} projetos",
+    "more": "Mais projetos",
+    "building": "Em desenvolvimento"
+  },
+  "projectPage": {
+    "platform": "Plataforma",
+    "year": "Ano",
+    "role": "Papel",
+    "live": "No ar",
+    "case": "Case",
+    "openCase": "Abrir o case completo",
+    "work": "O que eu fiz",
+    "perf": "Performance",
+    "scoreHelp": "nota do PageSpeed, celular",
+    "value": "este projeto",
+    "perfPending": "Números de performance pendentes. (Visível só em desenvolvimento.)",
+    "next": "Próximo projeto",
+    "status": "Status"
+  }
+}

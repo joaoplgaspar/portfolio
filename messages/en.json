@@ -1,0 +1,150 @@
+{
+  "meta": {
+    "title": "João Pedro Gaspar — Front-end Engineer",
+    "description": "Front-end engineer for Shopify: whole stores end to end, in Liquid or headless Hydrogen, with performance, SEO and structured data built in. Founder of LIVRA."
+  },
+  "nav": {
+    "work": "Work",
+    "about": "About",
+    "lab": "Lab",
+    "menu": "Menu",
+    "close": "Close",
+    "aria": "Main",
+    "language": "Language",
+    "light": "Light",
+    "dark": "Dark",
+    "theme": "Dark mode",
+    "contact": "Contact",
+    "projects": "Projects"
+  },
+  "home": {
+    "tagline": "Front-end engineer — I build what the platform says you can't.",
+    "clients": "Also worked with",
+    "lede": "Front-end engineer for Shopify. Whole stores, end to end, in Liquid or headless Hydrogen: sections, product pages, cart and checkout, with performance, SEO and structured data built in.",
+    "status": "Based in São Paulo. Several storefronts a month, mostly solo, still with a hand in leading the team. Founder of LIVRA.",
+    "index": "Brief description of the drawings",
+    "fig": "FIG.",
+    "open": "Open sheet",
+    "live": "live",
+    "sheetTitle": "Index",
+    "play": "Play",
+    "pause": "Pause",
+    "prev": "Previous step",
+    "next": "Next step",
+    "selected": "Selected work",
+    "expand": "Expand",
+    "openFull": "Open the full page",
+    "close": "Close"
+  },
+  "project": {
+    "overview": "Overview",
+    "problem": "The problem",
+    "contribution": "What I did",
+    "results": "Results",
+    "gallery": "Gallery",
+    "next": "Next sheet",
+    "backToWork": "Index",
+    "spec": {
+      "client": "Client",
+      "role": "Role",
+      "stack": "Stack",
+      "year": "Year",
+      "type": "Type"
+    },
+    "client": "Client",
+    "role": "Role",
+    "year": "Year",
+    "stack": "Stack",
+    "live": "In production",
+    "illustrative": "Simulation. Illustrative data, real mechanism."
+  },
+  "about": {
+    "eyebrow": "About",
+    "title": "I work at the edge of what commerce platforms allow — and a little past it.",
+    "does": "What I build",
+    "stairCaption": "Trajectory, in section. The tower on the right is LIVRA."
+  },
+  "lab": {
+    "eyebrow": "Lab",
+    "title": "Lab",
+    "lede": "Experiments, demos and curiosities — where I test new ideas and techniques."
+  },
+  "notFound": {
+    "title": "Page not found.",
+    "lede": "The link got lost — but the work is right here.",
+    "home": "Go home"
+  },
+  "telemetry": {
+    "aria": "Site telemetry",
+    "place": "São Paulo",
+    "build": "Build",
+    "fps": "FPS",
+    "lcp": "LCP",
+    "gpu": "GPU",
+    "availability": "Available for Q1 2027"
+  },
+  "now": {
+    "title": "Now",
+    "updated": "updated {date}",
+    "role": "Day job",
+    "building": "Building"
+  },
+  "sheet": {
+    "drawn": "Drawn by",
+    "title": "Title",
+    "sheet": "Sheet",
+    "location": "Location",
+    "elsewhere": "Elsewhere",
+    "rev": "Rev.",
+    "contact": "Contact",
+    "form": "Write a message"
+  },
+  "contact": {
+    "title": "Contact",
+    "name": "Name",
+    "email": "E-mail",
+    "message": "Message",
+    "send": "Send",
+    "sending": "Sending…",
+    "sent": "Sent. I'll reply by e-mail.",
+    "sentMail": "Your e-mail app should have opened with the message ready.",
+    "error": "Fill in name, e-mail and message.",
+    "subject": "Portfolio"
+  },
+  "stores": {
+    "eyebrow": "Schedule of projects",
+    "title": "Projects",
+    "lede": "Shopify projects I built or rebuilt, most of them alone and end to end. Each card is the brand; hover it to see the site as it is live today. When a project has numbers, they come from PageSpeed Insights on mobile, with the date they were measured.",
+    "count": "projects",
+    "pending": "cover pending",
+    "score": "Score",
+    "measured": "PageSpeed, mobile ·",
+    "median": "median",
+    "scoreHelp": "median PageSpeed score, mobile",
+    "howTo": "PageSpeed Insights loads the page on a throttled phone and scores it 0 to 100. Below, the three numbers behind the score, each on a ruler: clear is good, light hatch needs work, dense hatch is poor. Each dot is a store; the red needle is the median.",
+    "metric": {
+      "lcp": "When the main content shows up",
+      "tbt": "How long the page is too busy to respond",
+      "cls": "How much the layout jumps while loading"
+    },
+    "note": "Figures are for the few projects with a mechanism worth drawing. Every project here has its own page.",
+    "all": "All {n} projects",
+    "more": "More projects",
+    "building": "In development"
+  },
+  "projectPage": {
+    "platform": "Platform",
+    "year": "Year",
+    "role": "Role",
+    "live": "Live",
+    "case": "Case",
+    "openCase": "Open the full case",
+    "work": "What I did",
+    "perf": "Performance",
+    "scoreHelp": "PageSpeed score, mobile",
+    "value": "this project",
+    "perfPending": "Performance numbers pending. (Only visible in development.)",
+    "next": "Next project",
+    "status": "Status"
+  }
+}

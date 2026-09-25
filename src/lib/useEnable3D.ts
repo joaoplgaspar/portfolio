@@ -2,25 +2,22 @@
 
 import { useSyncExternalStore } from "react";
 
-/**
- * Decide se renderiza 3D pesado: só em telas largas e sem `prefers-reduced-motion`.
- * SSR-safe (server e primeira hidratação retornam false), sem setState-em-effect.
- */
+// Só liga 3D pesado em desktop (lg+) e sem prefers-reduced-motion. SSR-safe.
+const WIDE = "(min-width: 1024px)";
+const REDUCE = "(prefers-reduced-motion: reduce)";
+
 function subscribe(cb: () => void) {
-  const wide = window.matchMedia("(min-width: 768px)");
-  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
-  wide.addEventListener("change", cb);
-  reduce.addEventListener("change", cb);
+  const a = window.matchMedia(WIDE);
+  const b = window.matchMedia(REDUCE);
+  a.addEventListener("change", cb);
+  b.addEventListener("change", cb);
   return () => {
-    wide.removeEventListener("change", cb);
-    reduce.removeEventListener("change", cb);
+    a.removeEventListener("change", cb);
+    b.removeEventListener("change", cb);
   };
 }
 function getSnapshot() {
-  return (
-    window.matchMedia("(min-width: 768px)").matches &&
-    !window.matchMedia("(prefers-reduced-motion: reduce)").matches
-  );
+  return window.matchMedia(WIDE).matches && !window.matchMedia(REDUCE).matches;
 }
 function getServerSnapshot() {
   return false;

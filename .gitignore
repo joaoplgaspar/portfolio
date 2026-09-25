@@ -33,3 +33,10 @@ yarn-error.log*
 
 # typescript
 *.tsbuildinfo
+
+# windows junk
+desktop.ini
+Thumbs.db
+
+# QA visual (frames de transição, screenshots)
+.qa/
