@@ -15,12 +15,12 @@ export const about = {
     en: [
       "I'm a front-end engineer in São Paulo, and I build Shopify stores end to end: from basic sections to product pages, cart and checkout, in Liquid or headless Hydrogen. Large stores, thirty pages and up, solo, in days or weeks.",
       "What I optimize for is what a customer on a phone actually gets. Performance, SEO and structured data go in from the first section. When the platform doesn't do something, I build it: custom apps, Shopify Functions, optimistic carts in Liquid and in React.",
-      "In 2026 I shipped LIVRA, a reading app I designed, built and run alone: iOS, Android and web, 300 registered users in its first month.",
+      "In 2026 I shipped LIVRA, a reading app I designed, built and run alone: iOS, Android and web, 600 registered users in its first month.",
     ],
     pt: [
       "Sou engenheiro front-end em São Paulo e construo lojas Shopify de ponta a ponta: das seções básicas à página de produto, carrinho e checkout, em Liquid ou Hydrogen headless. Lojas grandes, de trinta páginas para cima, sozinho, em dias ou semanas.",
       "O que eu otimizo é o que o cliente no celular recebe de fato. Performance, SEO e dados estruturados entram desde a primeira seção. Quando a plataforma não faz alguma coisa, eu construo: custom apps, Shopify Functions, carrinho otimista em Liquid e em React.",
-      "Em 2026 lancei o LIVRA, um app de leitura que eu desenhei, construí e opero sozinho: iOS, Android e web, 300 usuários cadastrados no primeiro mês.",
+      "Em 2026 lancei o LIVRA, um app de leitura que eu desenhei, construí e opero sozinho: iOS, Android e web, 600 usuários cadastrados no primeiro mês.",
     ],
   } satisfies Record<"pt" | "en", string[]>,
 
@@ -33,38 +33,38 @@ export const about = {
       period: { en: "Before", pt: "Antes" },
       title: { en: "Technical high school, IT", pt: "Técnico em TI" },
       body: {
-        en: "Design, databases, robotics and front-end. Where the first websites came from.",
+        en: "Design, databases, robotics and front-end. Where I built my first websites.",
         pt: "Design, banco de dados, robótica e front-end. De onde vieram os primeiros sites.",
       },
     },
     {
       n: 12,
       kind: "edu",
-      period: { en: "2023—", pt: "2023—" },
+      period: { en: "2023–2026", pt: "2023–2026" },
       title: { en: "B.Sc. Computer Science", pt: "Ciência da Computação" },
-      body: { en: "In progress, alongside the work.", pt: "Em andamento, junto com o trabalho." },
+      body: { en: "Finishing in 2026, while working.", pt: "Termina em 2026, junto com o trabalho." },
     },
     {
       n: 14,
       kind: "shakers",
-      period: { en: "2024", pt: "2024" },
+      period: { en: "May 2024", pt: "mai. 2024" },
       title: { en: "SHAKERS · Intern", pt: "SHAKERS · Estágio" },
       body: {
-        en: "Shopify e-commerce: library components and techniques the platform doesn't ship.",
-        pt: "E-commerce em Shopify: componentes de biblioteca e técnicas que a plataforma não entrega.",
+        en: "Shopify e-commerce: reusable components and techniques the platform doesn't ship.",
+        pt: "E-commerce em Shopify: componentes reutilizáveis e técnicas que a plataforma não entrega.",
       },
     },
     {
       n: 16,
       kind: "shakers",
-      period: { en: "+9 months", pt: "+9 meses" },
+      period: { en: "Apr 2025", pt: "abr. 2025" },
       title: { en: "SHAKERS · Junior", pt: "SHAKERS · Júnior" },
-      body: { en: "Promoted about nine months after starting.", pt: "Promovido cerca de nove meses depois de entrar." },
+      body: { en: "Promoted eleven months after starting.", pt: "Promovido onze meses depois de entrar." },
     },
     {
       n: 18,
       kind: "shakers",
-      period: { en: "", pt: "" },
+      period: { en: "Aug 2025", pt: "ago. 2025" },
       title: { en: "SHAKERS · Squad lead", pt: "SHAKERS · Líder de squad" },
       body: {
         en: "Leading a support squad on Hydrogen React storefronts, including the first shared cart the agency shipped.",
@@ -77,7 +77,7 @@ export const about = {
       period: { en: "Now", pt: "Hoje" },
       title: { en: "SHAKERS · Solo, several stores a month", pt: "SHAKERS · Solo, várias lojas por mês" },
       body: {
-        en: "Whole stores alone, thirty pages end to end, Liquid and headless, in days or weeks. Still with a hand in leading the team.",
+        en: "Whole stores alone, thirty pages end to end, Liquid and headless, in days or weeks. Still helping lead the team.",
         pt: "Lojas inteiras sozinho, trinta páginas de ponta a ponta, Liquid e headless, em dias ou semanas. Ainda com atuação de liderança no time.",
       },
     },
@@ -97,8 +97,8 @@ export const about = {
       period: { en: "2026", pt: "2026" },
       title: { en: "LIVRA · Founder and CEO", pt: "LIVRA · Fundador e CEO" },
       body: {
-        en: "A real app with real users: designed, built and run alone. iOS, Android and web, 300 registered users in the first month.",
-        pt: "Um app de verdade com usuários de verdade: desenhado, construído e operado sozinho. iOS, Android e web, 300 usuários cadastrados no primeiro mês.",
+        en: "A real app with real users: designed, built and run alone. iOS, Android and web, 600 registered users in the first month.",
+        pt: "Um app de verdade com usuários de verdade: desenhado, construído e operado sozinho. iOS, Android e web, 600 usuários cadastrados no primeiro mês.",
       },
     },
   ] satisfies Stage[],
@@ -124,10 +124,10 @@ export const about = {
       {
         kind: "list",
         items: [
-          { label: "A base every store pulls from:", text: "sections, blocks and snippets live in one place, and each project takes them as a versioned dependency. When a base is copied into every project, each copy fixes its own bugs and the fixes stay there." },
+          { label: "A base every store pulls from:", text: "sections, blocks and snippets live in one place, and each project takes them as a versioned dependency. When a base is copied into every project, each copy fixes its own bugs and the fixes never leave it." },
           { label: "Fixes go back to the base:", text: "what one store corrects returns to the base, so the next store already has it." },
-          { label: "Checked by tools:", text: "anything that can be verified is: breakpoints, schema, spacing. Every section is measured at several widths before anyone reviews it by eye. That works the same for people and for AI agents building on the base." },
-          { label: "Existing stores too:", text: "on a store that already exists, hand-built pieces are swapped for base units one at a time, without a rewrite." },
+          { label: "Checked by tools:", text: "whatever can be verified automatically is, like breakpoints, schema and spacing. Every section is measured at several widths before anyone reviews it by eye. That works the same for people and for AI agents building on the base." },
+          { label: "Existing stores too:", text: "on a store that already exists, hand-built pieces are swapped for pieces from the base one at a time, without a rewrite." },
         ],
       },
     ],

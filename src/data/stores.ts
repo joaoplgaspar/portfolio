@@ -57,6 +57,8 @@ export type Store = {
   domain?: string;
   platform: "Liquid" | "Hydrogen" | "Nuvemshop";
   year: number;
+  /** Segmento da marca. Quem contrata lá fora procura o próprio mercado. */
+  segment?: Localized;
   scope: Localized;
   role?: Localized;
   /** O que eu fiz, em frases curtas. Só o que dá para afirmar. */
@@ -87,6 +89,7 @@ export const stores: Store[] = [
     domain: "store.roland.com.br",
     platform: "Hydrogen",
     year: 2025,
+    segment: { en: "Musical instruments", pt: "Instrumentos musicais" },
     scope: { en: "Two brands, two domains, one cart", pt: "Duas marcas, dois domínios, um carrinho" },
     role: { en: "Squad tech lead", pt: "Liderança técnica do squad" },
     cover: "/covers/roland.jpg",
@@ -102,6 +105,7 @@ export const stores: Store[] = [
     domain: "integralmedica.com.br",
     platform: "Hydrogen",
     year: 2025,
+    segment: { en: "Sports nutrition", pt: "Suplementos esportivos" },
     scope: { en: "Two brands on one admin, custom apps", pt: "Duas marcas num admin, custom apps" },
     role: { en: "Tech lead", pt: "Liderança técnica" },
     cover: "/covers/integralmedica.jpg",
@@ -118,6 +122,7 @@ export const stores: Store[] = [
     domain: "loja.fujifilm.com.br",
     platform: "Liquid",
     year: 2025,
+    segment: { en: "Cameras", pt: "Câmeras" },
     scope: { en: "Cameras and instax, whole store in Liquid", pt: "Câmeras e instax, loja inteira em Liquid" },
     cover: "/covers/fujifilm.jpg",
     logo: "/logos/fujifilm.svg",
@@ -131,6 +136,7 @@ export const stores: Store[] = [
     domain: "qixskateshop.com.br",
     platform: "Liquid",
     year: 2025,
+    segment: { en: "Skateboarding", pt: "Skate" },
     scope: { en: "Skate shop, a large Liquid theme built from scratch", pt: "Skate shop, tema Liquid grande feito do zero" },
     cover: "/covers/qix.jpg",
     logo: "/logos/qix.png",
@@ -144,7 +150,8 @@ export const stores: Store[] = [
     domain: "duxhumanhealth.com",
     platform: "Nuvemshop",
     year: 2024,
-    scope: { en: "Supplements, a large store on Nuvemshop", pt: "Suplementos, loja grande na Nuvemshop" },
+    segment: { en: "Supplements", pt: "Suplementos" },
+    scope: { en: "Supplements, a large store end to end", pt: "Suplementos, loja grande de ponta a ponta" },
     cover: "/covers/dux.jpg",
     // DUX.svg veio vazio (só um retângulo): a capa segura o cartão até a nova exportação.
     plate: "#1F1F2E",
@@ -157,6 +164,7 @@ export const stores: Store[] = [
     name: "HSM / Singularity",
     platform: "Hydrogen",
     year: 2026,
+    segment: { en: "Education", pt: "Educação" },
     scope: { en: "Two education brands, one headless storefront", pt: "Duas marcas de educação, uma vitrine headless" },
     role: SOLO,
     logo: ["/logos/hsm.png", "/logos/singularity.svg"],
@@ -170,6 +178,7 @@ export const stores: Store[] = [
     name: "Juan Valdez",
     platform: "Liquid",
     year: 2026,
+    segment: { en: "Coffee", pt: "Café" },
     scope: { en: "Coffee, whole store in Liquid", pt: "Café, loja inteira em Liquid" },
     work: [
       { en: "Optimistic cart", pt: "Carrinho otimista" },
@@ -185,6 +194,7 @@ export const stores: Store[] = [
     name: "Kappa",
     platform: "Liquid",
     year: 2026,
+    segment: { en: "Sportswear", pt: "Moda esportiva" },
     scope: { en: "Sportswear, a large Liquid store", pt: "Moda esportiva, loja grande em Liquid" },
     // kappa.com.br hoje roda em outra plataforma: domínio entra quando a loja Shopify for ao ar.
     logo: "/logos/kappa.png",
@@ -199,6 +209,7 @@ export const stores: Store[] = [
     domain: "uvline.com.br",
     platform: "Liquid",
     year: 2026,
+    segment: { en: "Sun-protection apparel", pt: "Moda com proteção UV" },
     scope: { en: "Sun-protection apparel, whole store in Liquid", pt: "Moda com proteção solar, loja inteira em Liquid" },
     role: SOLO,
     work: [
@@ -218,6 +229,7 @@ export const stores: Store[] = [
     domain: "oficinadeinverno.com.br",
     platform: "Liquid",
     year: 2026,
+    segment: { en: "Winter apparel", pt: "Moda de inverno" },
     scope: { en: "Winter apparel, whole store in Liquid", pt: "Moda de inverno, loja inteira em Liquid" },
     cover: "/covers/oficina-de-inverno.jpg",
     logo: "/logos/oficina-de-inverno.svg",
@@ -230,6 +242,7 @@ export const stores: Store[] = [
     domain: "yosen.com.br",
     platform: "Liquid",
     year: 2026,
+    segment: { en: "Supplements", pt: "Suplementos" },
     scope: { en: "Supplements, Liquid theme", pt: "Suplementos, tema Liquid" },
     cover: "/covers/yosen.jpg",
     logo: "/logos/yosen.svg",
@@ -242,6 +255,7 @@ export const stores: Store[] = [
     name: "Mari Maria",
     platform: "Liquid",
     year: 2026,
+    segment: { en: "Beauty", pt: "Beleza" },
     scope: { en: "Beauty, whole store in Liquid", pt: "Beleza, loja inteira em Liquid" },
     role: SOLO,
     logo: "/logos/mari-maria.svg",
@@ -253,6 +267,7 @@ export const stores: Store[] = [
     name: "New Look Time / G-Shock",
     platform: "Liquid",
     year: 2026,
+    segment: { en: "Watches", pt: "Relógios" },
     scope: { en: "Watches, Liquid theme", pt: "Relógios, tema Liquid" },
     logo: ["/logos/new-look-time.png", "/logos/g-shock.png"],
     plate: "#FFFFFF",
@@ -263,6 +278,7 @@ export const stores: Store[] = [
     name: "Tânia Bulhões",
     platform: "Liquid",
     year: 2026,
+    segment: { en: "Home & tableware", pt: "Casa e mesa" },
     scope: { en: "Home and tableware, Liquid theme", pt: "Casa e mesa, tema Liquid" },
     logo: "/logos/tania-bulhoes.svg",
     plate: "#3D3F39",
@@ -273,6 +289,7 @@ export const stores: Store[] = [
     name: "BN Cachos",
     platform: "Liquid",
     year: 2026,
+    segment: { en: "Hair care", pt: "Cabelos" },
     scope: { en: "Hair care, Liquid theme", pt: "Cabelos cacheados, tema Liquid" },
     logo: "/logos/bn-cachos.svg",
     plate: "#FFFFFF",
@@ -293,6 +310,7 @@ export const stores: Store[] = [
     name: "Café Santa Monica",
     platform: "Liquid",
     year: 2026,
+    segment: { en: "Coffee", pt: "Café" },
     scope: { en: "Coffee, Liquid theme", pt: "Café, tema Liquid" },
     logo: "/logos/santa-monica.svg",
     plate: "#FFE7BC",
@@ -326,6 +344,7 @@ export const stores: Store[] = [
     domain: "adanutraceuticos.com.br",
     platform: "Liquid",
     year: 2025,
+    segment: { en: "Nutraceuticals", pt: "Nutracêuticos" },
     scope: { en: "Nutraceuticals, Liquid theme", pt: "Nutracêuticos, tema Liquid" },
     cover: "/covers/ada.jpg",
     logo: "/logos/ada.svg",
@@ -338,6 +357,7 @@ export const stores: Store[] = [
     domain: "francis.com.br",
     platform: "Liquid",
     year: 2025,
+    segment: { en: "Home fragrance", pt: "Perfumaria e casa" },
     scope: { en: "Home fragrance and body care, Liquid theme", pt: "Perfumaria e casa, tema Liquid" },
     cover: "/covers/casa-francis.jpg",
     logo: "/logos/casa-francis.svg",
@@ -351,6 +371,7 @@ export const stores: Store[] = [
     domain: "baianao.com.br",
     platform: "Liquid",
     year: 2025,
+    segment: { en: "Home & furniture", pt: "Casa e móveis" },
     scope: { en: "Home and furniture retail, Liquid theme built from scratch", pt: "Varejo de casa e móveis, tema Liquid feito do zero" },
     cover: "/covers/baianao.jpg",
     logo: "/logos/baianao.png",
@@ -363,6 +384,7 @@ export const stores: Store[] = [
     domain: "montecristo.com.br",
     platform: "Liquid",
     year: 2025,
+    segment: { en: "Watches", pt: "Relojoaria" },
     scope: { en: "Watch retailer, Liquid theme", pt: "Relojoaria, tema Liquid" },
     cover: "/covers/montecristo.jpg",
     logo: "/logos/montecristo.png",
@@ -374,6 +396,7 @@ export const stores: Store[] = [
     name: "Rocinante",
     platform: "Liquid",
     year: 2025,
+    segment: { en: "Music label", pt: "Gravadora" },
     domain: "tresselosrocinante.com",
     scope: { en: "Record label store, Liquid theme", pt: "Loja de gravadora, tema Liquid" },
     // rocinante.com.br é o site da gravadora; a loja (Três Selos) mora neste domínio.
@@ -388,6 +411,7 @@ export const stores: Store[] = [
     domain: "ironstudios.com.br",
     platform: "Liquid",
     year: 2024,
+    segment: { en: "Collectibles", pt: "Colecionáveis" },
     scope: { en: "Collectibles, Liquid theme customized from Dawn", pt: "Colecionáveis, tema Liquid customizado a partir do Dawn" },
     cover: "/covers/iron-studios.jpg",
     // Iron Studios.svg veio vazio: a capa segura o cartão até a nova exportação.
@@ -409,6 +433,19 @@ export function visibleStores() {
 /** Logos como lista, tenha o projeto um ou dois. */
 export function logosOf(s: { logo?: string | string[] }) {
   return s.logo ? ([] as string[]).concat(s.logo) : [];
+}
+
+/**
+ * Plataforma como aparece no site. Nuvemshop fica implícita: o público é
+ * quem contrata para Shopify, e o projeto vale pelo segmento e pela loja.
+ */
+export function platformLabel(s: Store) {
+  return s.platform === "Nuvemshop" ? undefined : s.platform;
+}
+
+/** Linha de meta do cartão: segmento · plataforma · ano. */
+export function storeMeta(s: Store, l: "en" | "pt") {
+  return [s.segment?.[l], platformLabel(s), s.year].filter(Boolean).join(" · ");
 }
 
 export function getStore(slug: string) {

@@ -15,13 +15,14 @@
     "dark": "Dark",
     "theme": "Dark mode",
     "contact": "Contact",
-    "projects": "Projects"
+    "projects": "Projects",
+    "resume": "Résumé"
   },
   "home": {
     "tagline": "Front-end engineer — I build what the platform says you can't.",
     "clients": "Also worked with",
     "lede": "Front-end engineer for Shopify. Whole stores, end to end, in Liquid or headless Hydrogen: sections, product pages, cart and checkout, with performance, SEO and structured data built in.",
-    "status": "Based in São Paulo. Several storefronts a month, mostly solo, still with a hand in leading the team. Founder of LIVRA.",
+    "status": "Squad leader at a Shopify agency in São Paulo, shipping several storefronts a month, mostly solo. Founder of LIVRA.",
     "index": "Brief description of the drawings",
     "fig": "FIG.",
     "open": "Open sheet",
@@ -34,7 +35,12 @@
     "selected": "Selected work",
     "expand": "Expand",
     "openFull": "Open the full page",
-    "close": "Close"
+    "close": "Close",
+    "proof": {
+      "stores": "storefronts since {year}",
+      "livra": "users in LIVRA's first month",
+      "tz": "1–2 h ahead of New York"
+    }
   },
   "project": {
     "overview": "Overview",
@@ -56,7 +62,8 @@
     "year": "Year",
     "stack": "Stack",
     "live": "In production",
-    "illustrative": "Simulation. Illustrative data, real mechanism."
+    "illustrative": "Simulation. Illustrative data, real mechanism.",
+    "owned": "What I owned"
   },
   "about": {
     "eyebrow": "About",
@@ -67,7 +74,7 @@
   "lab": {
     "eyebrow": "Lab",
     "title": "Lab",
-    "lede": "Experiments, demos and curiosities — where I test new ideas and techniques."
+    "lede": "Experiments, demos and odds and ends, where I try out new ideas and techniques."
   },
   "notFound": {
     "title": "Page not found.",
@@ -102,26 +109,28 @@
   "contact": {
     "title": "Contact",
     "name": "Name",
-    "email": "E-mail",
+    "email": "Email",
     "message": "Message",
     "send": "Send",
     "sending": "Sending…",
-    "sent": "Sent. I'll reply by e-mail.",
-    "sentMail": "Your e-mail app should have opened with the message ready.",
-    "error": "Fill in name, e-mail and message.",
-    "subject": "Portfolio"
+    "sent": "Sent. I'll reply by email.",
+    "sentMail": "Your email app should have opened with the message ready.",
+    "error": "Fill in your name, email and message.",
+    "subject": "Portfolio",
+    "tzKey": "Time zone",
+    "tz": "São Paulo, UTC−3: 1–2 hours ahead of New York, so US Eastern hours overlap fully."
   },
   "stores": {
     "eyebrow": "Schedule of projects",
     "title": "Projects",
-    "lede": "Shopify projects I built or rebuilt, most of them alone and end to end. Each card is the brand; hover it to see the site as it is live today. When a project has numbers, they come from PageSpeed Insights on mobile, with the date they were measured.",
+    "lede": "Shopify projects I built or rebuilt, most of them solo, end to end. Each card shows the brand; hover it to see the live site as it looks today. When a project has numbers, they come from PageSpeed Insights on mobile, with the date they were measured.",
     "count": "projects",
     "pending": "cover pending",
     "score": "Score",
     "measured": "PageSpeed, mobile ·",
     "median": "median",
     "scoreHelp": "median PageSpeed score, mobile",
-    "howTo": "PageSpeed Insights loads the page on a throttled phone and scores it 0 to 100. Below, the three numbers behind the score, each on a ruler: clear is good, light hatch needs work, dense hatch is poor. Each dot is a store; the red needle is the median.",
+    "howTo": "PageSpeed Insights loads the page on a throttled phone and scores it 0 to 100. Below are the three numbers behind the score, each on its own ruler: clear is good, light hatch needs work, dense hatch is poor. Each dot is a store; the red needle is the median.",
     "metric": {
       "lcp": "When the main content shows up",
       "tbt": "How long the page is too busy to respond",
@@ -130,7 +139,8 @@
     "note": "Figures are for the few projects with a mechanism worth drawing. Every project here has its own page.",
     "all": "All {n} projects",
     "more": "More projects",
-    "building": "In development"
+    "building": "In development",
+    "nutrition": "supplements & nutrition"
   },
   "projectPage": {
     "platform": "Platform",
@@ -145,6 +155,11 @@
     "value": "this project",
     "perfPending": "Performance numbers pending. (Only visible in development.)",
     "next": "Next project",
-    "status": "Status"
+    "status": "Status",
+    "segment": "Segment"
+  },
+  "resume": {
+    "note": "One page, US Letter. The PDF is this page, printed.",
+    "download": "Download PDF"
   }
 }

@@ -28,10 +28,12 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
       <h1 className="t-hero">{t("title")}</h1>
       <div className="mt-[clamp(40px,6vw,96px)] grid gap-10 lg:grid-cols-[minmax(0,4fr)_minmax(0,8fr)] lg:gap-[var(--gut)]">
         <div className="border-t border-fg pt-5">
-          <span className="tb-key">E-mail</span>
+          <span className="tb-key">{t("email")}</span>
           <a href={`mailto:${siteConfig.email}`} className="t-small tb-link">
             {siteConfig.email}
           </a>
+          <span className="tb-key mt-5">{t("tzKey")}</span>
+          <span className="t-small">{t("tz")}</span>
           <span className="tb-key mt-5">LinkedIn · GitHub</span>
           <span className="t-small flex gap-3">
             <a className="tb-link" href={siteConfig.social.linkedin} target="_blank" rel="noreferrer">

@@ -10,7 +10,7 @@ import { isShown } from "@/components/figures/registry";
 import { legends } from "@/data/figures";
 import { fetchPublishedProjects } from "@/data/projects";
 import { sheetPlan } from "@/lib/sheets";
-import { logosOf, stores, visibleStores } from "@/data/stores";
+import { logosOf, platformLabel, storeMeta, stores, visibleStores } from "@/data/stores";
 import WorkGrid, { type WorkItem } from "@/components/sheet/WorkGrid";
 import type { Print } from "@/components/sheet/ProjectThumb";
 import { Link } from "@/i18n/navigation";
@@ -69,6 +69,14 @@ export default async function HomePage({
   const tp = await getTranslations("project");
   const tpp = await getTranslations("projectPage");
   const shown = visibleStores();
+  const since = Math.min(...stores.map((s) => s.year));
+  const proof = [
+    { v: String(stores.length), k: t("proof.stores", { year: since }) },
+    { v: "600", k: t("proof.livra") },
+    { v: "UTC−3", k: t("proof.tz") },
+  ];
+  // Segmento da marca do case, quando o case é de uma loja (o LIVRA não é).
+  const segmentOf = (slug: string) => stores.find((s) => s.caseSlug === slug)?.segment?.[l];
   const fig = t("fig");
 
   // Cases com figura primeiro, depois os projetos com capa. Cada um vira um
@@ -78,7 +86,7 @@ export default async function HomePage({
       key: p.slug,
       mark: `${fig} ${i + 1}`,
       title: p.title,
-      meta: `${p.type[l]} · ${p.year}`,
+      meta: [segmentOf(p.slug), p.type[l], p.year].filter(Boolean).join(" · "),
       href: `/trabalho/${p.slug}`,
       cover:
         p.slug === "livra"
@@ -106,13 +114,14 @@ export default async function HomePage({
           key: s.slug,
           mark: s.mark,
           title: s.name,
-          meta: `${s.platform} · ${s.year}`,
+          meta: storeMeta(s, l),
           href: `/projetos/${s.slug}`,
           cover: s.logo ? { kind: "logo", logos: logosOf(s), plate: s.plate } : { kind: "site", src: s.cover! },
           print: s.logo ? s.cover : undefined,
           summary: s.scope[l],
           facts: [
-            { k: tpp("platform"), v: s.platform },
+            ...(s.segment ? [{ k: tpp("segment"), v: s.segment[l] }] : []),
+            ...(platformLabel(s) ? [{ k: tpp("platform"), v: platformLabel(s)! }] : []),
             { k: tpp("year"), v: String(s.year) },
             ...(s.role ? [{ k: tpp("role"), v: s.role[l] }] : []),
             ...(s.domain ? [] : [{ k: tpp("status"), v: ts("building") }]),
@@ -147,7 +156,7 @@ export default async function HomePage({
           slug: p.slug,
           title: p.title,
           caption: p.caption?.[l] ?? p.summary[l],
-          type: p.type[l],
+          type: segmentOf(p.slug) ?? p.type[l],
           year: p.year,
           live: p.live,
           print: printOf(p.slug, p.cover),
@@ -171,6 +180,15 @@ export default async function HomePage({
             </h1>
             <p className="t-small mt-6 max-w-[38ch] text-[0.9375rem]">{t("lede")}</p>
             <p className="t-small mt-3 max-w-[38ch] text-muted">{t("status")}</p>
+            {/* Prova em três números. Número de cliente não entra: só o que é meu. */}
+            <dl className="mt-6 grid max-w-[44ch] grid-cols-3 border-t border-fg">
+              {proof.map((x) => (
+                <div key={x.k} className="border-r border-line py-2 pr-3 pl-3 first:pl-0 last:border-r-0">
+                  <dd className="text-[1.375rem] leading-none font-[300] tabular-nums">{x.v}</dd>
+                  <dt className="t-small mt-1.5 leading-snug text-muted">{x.k}</dt>
+                </div>
+              ))}
+            </dl>
           </div>
         }
       />

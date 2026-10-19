@@ -36,6 +36,8 @@ export default async function ProjectsPage({ params }: { params: Promise<{ local
     { v: list.length, k: t("count") },
     { v: list.filter((s) => s.platform === "Liquid").length, k: "Liquid" },
     { v: list.filter((s) => s.platform === "Hydrogen").length, k: "Hydrogen" },
+    // Suplemento é o segmento que mais se repete, e o que mais pesa lá fora.
+    { v: list.filter((s) => /supplement|nutrition|nutraceutical/i.test(s.segment?.en ?? "")).length, k: t("nutrition") },
   ];
   const cardText = { pending: t("pending"), score: t("score"), measured: t("measured"), building: t("building") };
 
@@ -53,7 +55,7 @@ export default async function ProjectsPage({ params }: { params: Promise<{ local
       <h1 className="t-hero mt-6">{t("title")}</h1>
       <div className="mt-8 grid gap-8 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:gap-[var(--gut)]">
         <p className="max-w-[56ch] text-[clamp(1.0625rem,1.4vw,1.25rem)] leading-snug font-[480]">{t("lede")}</p>
-        <dl className="grid grid-cols-3 border-t border-fg pt-4 lg:self-end">
+        <dl className="grid grid-cols-4 gap-x-3 border-t border-fg pt-4 lg:self-end">
           {counts.map((c) => (
             <div key={c.k}>
               <dd className="t-hero text-[clamp(2.4rem,5vw,4.5rem)] tabular-nums">{c.v}</dd>

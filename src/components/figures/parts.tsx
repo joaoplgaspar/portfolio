@@ -1,6 +1,7 @@
 "use client";
 
 import { createContext, useContext, useId, type ReactNode } from "react";
+import { useSeq } from "./sequence";
 
 /**
  * Primitivas das figuras. O vocabulário é o de uma prancha de patente:
@@ -69,8 +70,26 @@ export function Part({ n, children }: { n: number; children: ReactNode }) {
 /**
  * Linha de chamada + numeral. Curva leve (como a feita à mão numa prancha),
  * ponto de contato na peça, numeral 12px além da ponta, na mesma direção.
+ *
+ * Com `label`, no modo simples a peça ganha nome escrito e o numeral fica
+ * pequeno ao lado: quem não conhece patente lê o nome; a legenda continua
+ * casando pelo numeral. `transient`: peça que só existe em alguns passos
+ * (a linha pendente, a alternativa descartada) — no modo simples, o nome
+ * só aparece quando ela está acesa.
  */
-export function Leader({ n, at, to }: { n: number; at: [number, number]; to: [number, number] }) {
+export function Leader({
+  n,
+  at,
+  to,
+  label,
+  transient = false,
+}: {
+  n: number;
+  at: [number, number];
+  to: [number, number];
+  label?: string;
+  transient?: boolean;
+}) {
   const [x1, y1] = at;
   const [x2, y2] = to;
   const dx = x2 - x1;
@@ -82,8 +101,13 @@ export function Leader({ n, at, to }: { n: number; at: [number, number]; to: [nu
   const tx = x2 + (dx / len) * 12;
   const ty = y2 + (dy / len) * 12 + 5;
   const on = useLit(n);
+  const { mode } = useSeq();
+  const named = !!label && mode === "plain";
+  const hidden = named && transient && !on;
+  // O nome cresce para longe da peça: à esquerda, à direita ou centrado.
+  const anchor = !named || Math.abs(dx) < Math.abs(dy) * 0.6 ? "middle" : dx < 0 ? "end" : "start";
   return (
-    <g>
+    <g style={{ opacity: hidden ? 0 : 1, transition: "opacity 500ms cubic-bezier(0.16, 1, 0.3, 1)" }}>
       <path
         d={`M${x1} ${y1} Q${cx} ${cy} ${x2} ${y2}`}
         strokeWidth={0.9}
@@ -94,11 +118,19 @@ export function Leader({ n, at, to }: { n: number; at: [number, number]; to: [nu
       <text
         x={tx}
         y={ty}
-        textAnchor="middle"
-        stroke="none"
-        className={`num late ${on ? "is-on" : ""}`}
+        textAnchor={anchor}
+        className={`num late ${named ? "num-named" : ""} ${on ? "is-on" : ""}`}
       >
-        {n}
+        {named ? (
+          <>
+            {label}
+            <tspan className="num-sup" dx={3}>
+              {n}
+            </tspan>
+          </>
+        ) : (
+          n
+        )}
       </text>
     </g>
   );

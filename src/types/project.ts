@@ -38,6 +38,11 @@ export interface Project {
   live?: string[];
   /** Números de escala do case (usuários, plataformas…). Só entra número medido. */
   stats?: { value: string; label: Localized }[];
+  /**
+   * O que foi meu, em três linhas, separado do time. Quem contrata lê isto
+   * antes de qualquer figura.
+   */
+  owned?: { pt: string[]; en: string[] };
   /** Legenda da figura (FIG. n) — uma frase, o mecanismo do case. */
   caption?: Localized;
   cover: string; // Cloudinary public_id

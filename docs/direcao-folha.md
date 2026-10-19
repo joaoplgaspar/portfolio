@@ -119,6 +119,28 @@ o slug em `components/figures/registry.ts`. Sem figura, o case não entra no
   formatos documentados em `src/data/stores.ts`; arquivos em `public/logos/`
   e `public/media/`.
 
+## v7 (2026-10-19: alvo internacional e figuras para quem não é dev)
+
+- **Alvo**: agências e empresas Shopify fora do Brasil. Número só do
+  LIVRA (600 usuários no 1º mês); métrica de cliente nunca.
+- **Currículo** em `/resume` (`data/resume.ts`), uma página Carta; o PDF é
+  a impressão da página (`node scripts/resume-pdf.mjs`, avisa se passar de
+  uma página).
+- **Home**: três números no topo (lojas desde 2024 · 600 · fuso). Projetos
+  têm `segment` (suplementos em destaque); Nuvemshop fica implícita
+  (`platformLabel`). Cada case abre com "What I owned".
+- **Figuras narradas em três atos** (FIG. 1 primeiro): problema → solução →
+  descartado → resultado. Cada passo tem `title` (régua clicável), `plain`
+  (legenda padrão) e `caption` (técnica). Botão Simples · Técnico, um só
+  para o site (`useMode`, salvo no navegador). No modo simples as peças
+  ganham nome (`Leader label`), as notas viram frase (`Note mode`) e o que
+  anda tem etiqueta (`Travel tag`: o produto, a pessoa, "salvo"). As quatro
+  figuras seguem o padrão; o descartado de cada uma sai do próprio case
+  (dois carrinhos sincronizados · desconto calculado na vitrine ·
+  arredondamento com decimais · uma fonte só). Onde não cabe nome na
+  linha de chamada, o nome vai na peça: caixas da FIG. 3 (`Box plain`),
+  cartões de fonte da FIG. 4.
+
 ## Mais projetos: como escala
 
 - **Figura** (poucos, profundos): case com mecanismo próprio. Entra no índice

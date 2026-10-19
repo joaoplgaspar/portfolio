@@ -9,6 +9,7 @@ import {
   useMemo,
   useRef,
   useState,
+  useSyncExternalStore,
   type ReactNode,
 } from "react";
 import type { Localized } from "@/types/project";
@@ -31,18 +32,65 @@ export type Step = {
   dur: number;
   /** Numerais acesos neste passo. */
   on?: number[];
+  /** Legenda técnica: numerais, nomes de API. É a do modo "técnico". */
   caption: Localized;
+  /** Legenda para quem não é dev. Quando existe, é a padrão. */
+  plain?: Localized;
+  /** Rótulo curto do passo na régua (uma ou duas palavras). */
+  title?: Localized;
+  /** Ato da história: problema e descartado acendem em sinal na régua. */
+  act?: "problem" | "solution" | "rejected" | "result";
 };
+
+/**
+ * Modo de leitura das figuras. "plain" fala com quem contrata; "tech", com
+ * quem vai revisar o código. Um só para o site inteiro: trocar numa figura
+ * troca em todas, e a escolha fica salva no navegador (se ele deixar).
+ */
+export type Mode = "plain" | "tech";
+const MODE_KEY = "fig-mode";
+const MODE_EVENT = "fig-mode";
+let modeMemo: Mode = "plain";
+
+function readMode(): Mode {
+  try {
+    const v = localStorage.getItem(MODE_KEY);
+    if (v === "tech" || v === "plain") modeMemo = v;
+  } catch {}
+  return modeMemo;
+}
+
+function subscribeMode(cb: () => void) {
+  window.addEventListener(MODE_EVENT, cb);
+  window.addEventListener("storage", cb);
+  return () => {
+    window.removeEventListener(MODE_EVENT, cb);
+    window.removeEventListener("storage", cb);
+  };
+}
+
+export function useMode() {
+  const mode = useSyncExternalStore(subscribeMode, readMode, () => "plain" as Mode);
+  const setMode = useCallback((m: Mode) => {
+    modeMemo = m;
+    try {
+      localStorage.setItem(MODE_KEY, m);
+    } catch {}
+    window.dispatchEvent(new Event(MODE_EVENT));
+  }, []);
+  return [mode, setMode] as const;
+}
 
 type Listener = (step: number, t: number) => void;
 
 type SeqCtx = {
   step: number;
   reduced: boolean;
+  mode: Mode;
   subscribe: (fn: Listener) => () => void;
 };
 
-const Ctx = createContext<SeqCtx>({ step: -1, reduced: false, subscribe: () => () => {} });
+const Ctx = createContext<SeqCtx>({ step: -1, reduced: false, mode: "plain", subscribe: () => () => {} });
 export const useSeq = () => useContext(Ctx);
 
 export function useReducedMotion() {
@@ -68,6 +116,7 @@ export function useSequence(
   }: { autoplay?: boolean; loop?: boolean; onEnd?: () => void } = {},
 ) {
   const reduced = useReducedMotion();
+  const [mode, setMode] = useMode();
   const [step, setStep] = useState(0);
   const [playing, setPlaying] = useState(autoplay);
   const [visible, setVisible] = useState(true);
@@ -146,13 +195,15 @@ export function useSequence(
   // Com movimento reduzido cada passo é mostrado já concluído.
   const jump = useCallback((i: number) => go(i, reduced ? 1 : 0), [go, reduced]);
 
-  const ctx = useMemo<SeqCtx>(() => ({ step, reduced, subscribe }), [step, reduced, subscribe]);
+  const ctx = useMemo<SeqCtx>(() => ({ step, reduced, mode, subscribe }), [step, reduced, mode, subscribe]);
 
   return {
     step,
     steps,
     playing: playing && !reduced,
     reduced,
+    mode,
+    setMode,
     ctx,
     observe,
     subscribe,
@@ -188,6 +239,7 @@ export function Travel({
   reverse = false,
   signal = false,
   r = 3.6,
+  tag,
 }: {
   d: string;
   step: number;
@@ -196,42 +248,74 @@ export function Travel({
   reverse?: boolean;
   signal?: boolean;
   r?: number;
+  /**
+   * O que está andando, escrito numa etiqueta (o produto, a pessoa, o
+   * "salvo"). Sem etiqueta, um ponto. Uma coisa com nome se segue com o
+   * olho; um ponto, não.
+   */
+  tag?: string;
 }) {
   const { subscribe, reduced } = useSeq();
   const path = useRef<SVGPathElement>(null);
   const dot = useRef<SVGCircleElement>(null);
+  const box = useRef<SVGGElement>(null);
 
   useEffect(() => {
     if (reduced) return;
     const p = path.current;
-    const c = dot.current;
-    if (!p || !c) return;
+    const el: SVGGraphicsElement | null = tag ? box.current : dot.current;
+    if (!p || !el) return;
     const len = p.getTotalLength();
     return subscribe((s, t) => {
       const local = (t - from) / (to - from);
       if (s !== step || local <= 0 || local >= 1) {
-        c.style.opacity = "0";
+        el.style.opacity = "0";
         return;
       }
       const k = ease(local);
       const pt = p.getPointAtLength((reverse ? 1 - k : k) * len);
-      c.setAttribute("cx", String(pt.x));
-      c.setAttribute("cy", String(pt.y));
+      if (tag) {
+        el.setAttribute("transform", `translate(${pt.x} ${pt.y})`);
+      } else {
+        el.setAttribute("cx", String(pt.x));
+        el.setAttribute("cy", String(pt.y));
+      }
       // Entra e sai por opacidade: nada aparece nem some de uma vez.
-      c.style.opacity = String(Math.min(1, local / 0.18, (1 - local) / 0.18));
+      el.style.opacity = String(Math.min(1, local / 0.18, (1 - local) / 0.18));
     });
-  }, [subscribe, reduced, step, from, to, reverse, d]);
+  }, [subscribe, reduced, step, from, to, reverse, d, tag]);
+
+  // Largura da etiqueta pelo número de caracteres (mono: largura fixa).
+  const w = tag ? tag.length * 8.6 + 22 : 0;
 
   return (
     <g aria-hidden>
       <path ref={path} d={d} stroke="none" fill="none" />
-      <circle
-        ref={dot}
-        r={r}
-        fill={signal ? "var(--accent)" : "currentColor"}
-        stroke="none"
-        style={{ opacity: 0 }}
-      />
+      {tag ? (
+        <g ref={box} style={{ opacity: 0 }}>
+          <rect
+            x={-w / 2}
+            y={-12}
+            width={w}
+            height={24}
+            rx={12}
+            fill="var(--plate)"
+            stroke={signal ? "var(--accent)" : "currentColor"}
+            strokeWidth={1.2}
+          />
+          <text x={0} y={5} textAnchor="middle" className={`tag ${signal ? "tag-signal" : ""}`}>
+            {tag}
+          </text>
+        </g>
+      ) : (
+        <circle
+          ref={dot}
+          r={r}
+          fill={signal ? "var(--accent)" : "currentColor"}
+          stroke="none"
+          style={{ opacity: 0 }}
+        />
+      )}
     </g>
   );
 }
@@ -252,6 +336,7 @@ export function Note({
   anchor = "start",
   children,
   signal = false,
+  mode,
 }: {
   at: number | number[];
   x: number;
@@ -259,14 +344,18 @@ export function Note({
   anchor?: "start" | "middle" | "end";
   children: string;
   signal?: boolean;
+  /** Só neste modo de leitura. Sem modo, nos dois. */
+  mode?: Mode;
 }) {
+  const current = useSeq().mode;
+  if (mode && mode !== current) return null;
   return (
     <Show at={at}>
       <text
         x={x}
         y={y}
         textAnchor={anchor}
-        className={`code note ${signal ? "note-signal" : ""}`}
+        className={`code note ${mode === "plain" ? "note-plain" : ""} ${signal ? "note-signal" : ""}`}
         stroke="var(--bg)"
         strokeWidth={4}
         paintOrder="stroke"

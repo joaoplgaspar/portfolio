@@ -17,7 +17,7 @@ export const cartLab: L<{ title: string; lede: string; ui: CartLabText }> = {
     ui: {
       one: "One cart (shipped)",
       sync: "Two carts, synced (rejected)",
-      both: "Add on both at once",
+      both: "Add to both at once",
       reset: "Reset",
       add: "Add",
       cart: "Cart",
@@ -56,8 +56,8 @@ export const brands: L<{ wipe: string; a: string; b: string; discountTitle: stri
     wipe: "Same template — drag",
     a: "integralmedica.com.br",
     b: "darkness.com.br",
-    discountTitle: "A rule small to state, impossible to configure",
-    discountLede: "Employee discount, computed from the compare-at price instead of the selling price. Every off-the-shelf app does the second. So it became an app.",
+    discountTitle: "Simple to state, impossible to configure",
+    discountLede: "Employee discount, computed from the compare-at price instead of the selling price. Every off-the-shelf app does the latter. So it became an app.",
     ui: {
       compareAt: "Compare-at price",
       price: "Selling price",
@@ -89,7 +89,7 @@ export const brands: L<{ wipe: string; a: string; b: string; discountTitle: stri
 export const reconcile: L<{ title: string; lede: string; ui: ReconcileText }> = {
   en: {
     title: "Four answers for one book",
-    lede: "Every source answers, none of them fully right. Reconcile picks each field from the source that's trusted for it. Then take CBL down.",
+    lede: "Every source answers; none is fully right. Reconcile picks each field from the source that's trusted for it. Then take CBL down.",
     ui: {
       run: "Reconcile",
       undo: "Show raw sources",
@@ -167,7 +167,7 @@ export const taxLab: L<{ title: string; lede: string; ui: TaxLabText }> = {
       person: "Person (CPF)",
       company: "Company (CNPJ)",
       malformed: "Broken CNPJ",
-      simples: "Company opted into Simples Nacional",
+      simples: "Company under Simples Nacional",
       value: "Order value",
       subtotal: "Subtotal",
       withholding: "Withholding at source",
@@ -178,7 +178,7 @@ export const taxLab: L<{ title: string; lede: string; ui: TaxLabText }> = {
         invalid: "Check digits don't match. The validation Function blocks the checkout.",
         below: "Company, but below the first tier: nothing is withheld.",
         applied: "Company above the first tier: the discount Function returns the withholding as a fixed amount.",
-        simples: "Simples Nacional: part of the taxes aren't withheld, so the rate drops.",
+        simples: "Simples Nacional: some of the taxes aren't withheld, so the rate drops.",
       },
       tiers: "Illustrative tiers: below R$ 250 → 0 · up to R$ 5,000 → 5% · above → 6.5%",
     },

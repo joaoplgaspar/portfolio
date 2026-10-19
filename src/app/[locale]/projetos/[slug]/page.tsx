@@ -10,7 +10,7 @@ import TitleBlock from "@/components/sheet/TitleBlock";
 import ProjectPerf from "@/components/perf/ProjectPerf";
 import { isShown } from "@/components/figures/registry";
 import { fetchPublishedProjects } from "@/data/projects";
-import { getStore, logosOf, visibleStores } from "@/data/stores";
+import { getStore, logosOf, platformLabel, visibleStores } from "@/data/stores";
 import LogoPlate from "@/components/sheet/LogoPlate";
 
 export function generateStaticParams() {
@@ -73,7 +73,8 @@ export default async function ProjectPage({ params }: { params: Promise<{ locale
 
       <div className="mt-10 grid border-t border-fg md:grid-cols-2 md:gap-x-[var(--gut)]">
         <dl>
-          <Row k={tp("platform")}>{s.platform}</Row>
+          {s.segment && <Row k={tp("segment")}>{s.segment[l]}</Row>}
+          {platformLabel(s) && <Row k={tp("platform")}>{platformLabel(s)}</Row>}
           <Row k={tp("year")}>{s.year}</Row>
         </dl>
         <dl>

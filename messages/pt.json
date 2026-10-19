@@ -15,13 +15,14 @@
     "dark": "Escuro",
     "theme": "Modo escuro",
     "contact": "Contato",
-    "projects": "Projetos"
+    "projects": "Projetos",
+    "resume": "Currículo"
   },
   "home": {
     "tagline": "Front-end engineer — construo o que a plataforma diz que não dá.",
     "clients": "Também trabalhei com",
     "lede": "Engenheiro front-end para Shopify. Lojas inteiras, de ponta a ponta, em Liquid ou Hydrogen headless: seções, página de produto, carrinho e checkout, com performance, SEO e dados estruturados de fábrica.",
-    "status": "Em São Paulo. Várias lojas por mês, a maioria sozinho, ainda com atuação de liderança no time. Fundador do LIVRA.",
+    "status": "Squad leader numa agência Shopify em São Paulo, com várias lojas por mês, a maioria sozinho. Fundador do LIVRA.",
     "index": "Breve descrição dos desenhos",
     "fig": "FIG.",
     "open": "Abrir prancha",
@@ -34,7 +35,12 @@
     "selected": "Trabalho selecionado",
     "expand": "Expandir",
     "openFull": "Abrir a página completa",
-    "close": "Fechar"
+    "close": "Fechar",
+    "proof": {
+      "stores": "lojas desde {year}",
+      "livra": "usuários no 1º mês do LIVRA",
+      "tz": "1–2 h à frente de Nova York"
+    }
   },
   "project": {
     "overview": "Visão geral",
@@ -56,7 +62,8 @@
     "year": "Ano",
     "stack": "Stack",
     "live": "Em produção",
-    "illustrative": "Simulação. Dados ilustrativos, mecanismo real."
+    "illustrative": "Simulação. Dados ilustrativos, mecanismo real.",
+    "owned": "O que foi meu"
   },
   "about": {
     "eyebrow": "Sobre",
@@ -109,7 +116,9 @@
     "sent": "Enviado. Respondo por e-mail.",
     "sentMail": "Seu app de e-mail deve ter aberto com a mensagem pronta.",
     "error": "Preencha nome, e-mail e mensagem.",
-    "subject": "Portfólio"
+    "subject": "Portfólio",
+    "tzKey": "Fuso",
+    "tz": "São Paulo, UTC−3: 1–2 horas à frente de Nova York, com o horário comercial da costa leste inteiro em comum."
   },
   "stores": {
     "eyebrow": "Quadro de projetos",
@@ -130,7 +139,8 @@
     "note": "Figuras são para os poucos projetos com um mecanismo que vale desenhar. Todo projeto aqui tem página própria.",
     "all": "Todos os {n} projetos",
     "more": "Mais projetos",
-    "building": "Em desenvolvimento"
+    "building": "Em desenvolvimento",
+    "nutrition": "suplementos e nutrição"
   },
   "projectPage": {
     "platform": "Plataforma",
@@ -145,6 +155,11 @@
     "value": "este projeto",
     "perfPending": "Números de performance pendentes. (Visível só em desenvolvimento.)",
     "next": "Próximo projeto",
-    "status": "Status"
+    "status": "Status",
+    "segment": "Segmento"
+  },
+  "resume": {
+    "note": "Em inglês, uma página, formato Carta (EUA). O PDF é esta página impressa.",
+    "download": "Baixar PDF"
   }
 }

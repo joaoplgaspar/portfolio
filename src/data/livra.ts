@@ -89,7 +89,7 @@ export const screens: Screen[] = [
         x: 36,
         y: 46,
         text: {
-          en: "Coins by final position. A contract since real users arrived: changing it needs a recorded decision.",
+          en: "Coins are paid by final position. A fixed contract since real users arrived: changing it takes a documented decision.",
           pt: "Moedas pela posição final. Contrato desde que chegaram usuários reais: mudar exige decisão registrada.",
         },
       },
@@ -118,7 +118,7 @@ export const screens: Screen[] = [
         x: 62,
         y: 55,
         text: {
-          en: "Tied to the book and the page you're on, so the session ends as progress.",
+          en: "Tied to the book and the page you're on, so finishing a session logs progress.",
           pt: "Presa ao livro e à página em que você está: a sessão termina como progresso.",
         },
       },
@@ -200,7 +200,7 @@ export const scanner: ScanStep[] = [
     src: "/livra/scan-3.webp",
     dur: 3,
     caption: {
-      en: "Choose how they enter: want to read, reading, read, or just owned.",
+      en: "Choose which shelf they go on: want to read, reading, read, or just owned.",
       pt: "Escolha como entram: quero ler, lendo, lido ou só tenho.",
     },
   },

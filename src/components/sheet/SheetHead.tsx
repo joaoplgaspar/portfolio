@@ -11,6 +11,7 @@ const LINKS = [
   { href: "/", key: "work" },
   { href: "/projetos", key: "projects" },
   { href: "/sobre", key: "about" },
+  { href: "/resume", key: "resume" },
   { href: "/contato", key: "contact" },
 ] as const;
 

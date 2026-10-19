@@ -1,7 +1,7 @@
 import CardFaces from "./CardFaces";
 import { Link } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
-import { LAB, fmtLab, type Store } from "@/data/stores";
+import { LAB, fmtLab, storeMeta, type Store } from "@/data/stores";
 
 /**
  * Loja no quadro: a primeira dobra da loja no ar dentro de uma janela
@@ -52,7 +52,7 @@ export default function StoreCard({
       <div className="mt-2 flex items-baseline justify-between gap-3">
         <h3 className="t-small">{store.name}</h3>
         <span className="t-small shrink-0 text-faint">
-          {store.platform} · {store.year}
+          {storeMeta(store, locale)}
         </span>
       </div>
       {!compact && <p className="t-small mt-0.5 text-muted">{store.scope[locale]}</p>}

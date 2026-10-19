@@ -191,6 +191,20 @@ export default async function ProjectPage({
         }}
       />
 
+      {project.owned && (
+        <section className="mt-[clamp(40px,5vw,72px)] grid gap-4 border-t border-fg pt-5 lg:grid-cols-[minmax(0,4fr)_minmax(0,8fr)] lg:gap-[var(--gut)]">
+          <h2 className="t-title text-[clamp(1.5rem,2.4vw,2.2rem)]">{t("owned")}</h2>
+          <ol className="max-w-[62ch]">
+            {project.owned[l].map((line, i) => (
+              <li key={i} className="flex gap-4 border-b border-line py-3 text-[1.0625rem] leading-[1.5]">
+                <span className="t-fig shrink-0 pt-1 text-faint">{String(i + 1).padStart(2, "0")}</span>
+                <span>{line}</span>
+              </li>
+            ))}
+          </ol>
+        </section>
+      )}
+
       <div className="mt-[clamp(48px,7vw,112px)] space-y-[clamp(56px,8vw,128px)]">
         {body}
         {project.body && <CaseText blocks={project.body[l]} />}
