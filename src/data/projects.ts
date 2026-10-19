@@ -15,7 +15,7 @@ const projects: Project[] = [
       pt: "Design, front-end e back-end serverless",
       en: "Design, front-end and serverless back-end",
     },
-    year: 2025,
+    year: 2026,
     owned: {
       en: [
         "Everything, alone: product, design, front-end, back-end and operations.",

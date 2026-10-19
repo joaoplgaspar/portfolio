@@ -63,7 +63,7 @@ export const resume = {
       org: "LIVRA",
       context: "Reading app · iOS, Android, web",
       url: "https://uselivra.com",
-      period: "2025 – Present",
+      period: "2026 – Present",
       roles: [{ title: "Founder & sole engineer" }],
       bullets: [
         "Designed, built and run the whole product alone: 600 registered users in the first month.",
