@@ -5,7 +5,7 @@
 export const siteConfig = {
   name: "João Pedro Gaspar",
   role: "Front-end Engineer",
-  url: "https://jpg-portfolio.vercel.app",
+  url: "https://jpgaspar.dev",
   email: "jpgaspar.dev@gmail.com",
   location: "São Paulo · GMT-3",
   stack: "React · Next · Three.js · GSAP · Shopify · Liquid · Hydrogen · Firebase",

@@ -1,6 +1,7 @@
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { ImageResponse } from "next/og";
+import { siteConfig } from "@/lib/site";
 
 /**
  * Imagem de compartilhamento (LinkedIn, WhatsApp, Slack…): a marca ".jpg" no
@@ -50,7 +51,7 @@ export default async function Image({ params }: { params: Promise<{ locale: stri
         </div>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", fontSize: 26, fontWeight: 600, color: "#b7b1a4" }}>
           <span>João Pedro Gaspar · {t.role}</span>
-          <span>jpg-portfolio.vercel.app</span>
+          <span>{new URL(siteConfig.url).host}</span>
         </div>
       </div>
     ),
