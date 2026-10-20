@@ -9,6 +9,9 @@ import CaseText from "@/components/cases/CaseText";
 import { isShown } from "@/components/figures/registry";
 import { fetchPublishedProjects } from "@/data/projects";
 import { about } from "@/data/about";
+import { siteConfig } from "@/lib/site";
+import JsonLd from "@/components/seo/JsonLd";
+import { breadcrumbNode, graph, personNode, webPageNode } from "@/lib/schema";
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;
@@ -26,8 +29,15 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
   const projects = (await fetchPublishedProjects()).filter(isShown);
   const plan = sheetPlan(projects.length);
 
+  const ld = graph(
+    { ...webPageNode(l, "/about", t("eyebrow"), "ProfilePage"), mainEntity: { "@id": personNode(l)["@id"] } },
+    personNode(l),
+    breadcrumbNode(l, [[siteConfig.name, "/"], [t("eyebrow"), "/about"]]),
+  );
+
   return (
     <>
+      <JsonLd data={ld} />
       <p className="t-fig uppercase text-faint">{t("eyebrow")}</p>
       <h1 className="t-hero mt-6 max-w-[16ch] text-[clamp(2.6rem,6.4vw,7rem)]">{t("title")}</h1>
 

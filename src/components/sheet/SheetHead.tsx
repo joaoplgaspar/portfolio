@@ -5,6 +5,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { Link, usePathname, useRouter } from "@/i18n/navigation";
 import { routing } from "@/i18n/routing";
 import { siteConfig } from "@/lib/site";
+import JpgMark from "@/components/brand/JpgMark";
 import ThemeSwitch from "./ThemeSwitch";
 
 const LINKS = [
@@ -56,9 +57,11 @@ export default function SheetHead() {
 
   return (
     <header className="sheet-head t-small">
-      <Link href="/" className="truncate" onClick={() => setOpen(false)}>
-        <span className="sm:hidden">J.P. Gaspar</span>
-        <span className="hidden sm:inline">{siteConfig.name}</span>
+      {/* a marca senta na linha de base do nome; o -mb compensa as descendentes
+          (j, p, g ocupam 20% da altura abaixo da linha) */}
+      <Link href="/" className="flex min-w-0 items-baseline gap-3 text-fg" onClick={() => setOpen(false)}>
+        <JpgMark className="h-[30px] w-auto shrink-0 -mb-[6px]" />
+        <span className="sr-only truncate sm:not-sr-only">{siteConfig.name}</span>
       </Link>
 
       {/* desktop */}

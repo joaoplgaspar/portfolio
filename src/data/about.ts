@@ -54,7 +54,7 @@ export const about = {
       kind: "edu",
       period: { en: "2023–2026", pt: "2023–2026" },
       title: { en: "B.Sc. Computer Science", pt: "Ciência da Computação" },
-      body: { en: "Finishing in 2026, while working.", pt: "Termina em 2026, junto com o trabalho." },
+      body: { en: "At UNASP, São Paulo campus. Finishing in 2026, while working.", pt: "No UNASP, campus São Paulo. Termina em 2026, junto com o trabalho." },
     },
     {
       n: 14,

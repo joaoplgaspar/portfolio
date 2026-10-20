@@ -13,12 +13,15 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "lab" });
-  return pageMeta({
-    locale: locale as Locale,
-    path: "/lab",
-    title: t("title"),
-    description: t("lede"),
-  });
+  return {
+    ...pageMeta({
+      locale: locale as Locale,
+      path: "/lab",
+      title: t("title"),
+      description: t("lede"),
+    }),
+    robots: { index: false, follow: true },
+  };
 }
 
 export default async function LabPage({

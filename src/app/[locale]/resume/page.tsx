@@ -11,6 +11,20 @@ export async function generateMetadata(): Promise<Metadata> {
     title: "Résumé",
     description: resume.summary,
     alternates: { canonical: "/resume" },
+    openGraph: {
+      type: "profile",
+      siteName: siteConfig.name,
+      title: `Résumé — ${siteConfig.name}`,
+      description: resume.summary,
+      url: "/resume",
+      images: [{ url: "/en/opengraph-image", width: 1200, height: 630 }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `Résumé — ${siteConfig.name}`,
+      description: resume.summary,
+      images: ["/en/opengraph-image"],
+    },
   };
 }
 

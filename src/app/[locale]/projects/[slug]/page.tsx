@@ -14,6 +14,9 @@ import { getStore, logosOf, platformLabel, visibleStores } from "@/data/stores";
 import { mockOf } from "@/data/mocks";
 import DeviceMock from "@/components/sheet/DeviceMock";
 import LogoPlate from "@/components/sheet/LogoPlate";
+import JsonLd from "@/components/seo/JsonLd";
+import { siteConfig } from "@/lib/site";
+import { breadcrumbNode, graph, webPageNode } from "@/lib/schema";
 
 export function generateStaticParams() {
   return visibleStores().map((s) => ({ slug: s.slug }));
@@ -62,8 +65,15 @@ export default async function ProjectPage({ params }: { params: Promise<{ locale
   const next = list[(i + 1) % list.length];
   const isDev = process.env.NODE_ENV !== "production";
 
+  const path = `/projects/${slug}`;
+  const ld = graph(
+    webPageNode(l, path, s.name),
+    breadcrumbNode(l, [[siteConfig.name, "/"], [t("title"), "/projects"], [s.name, path]]),
+  );
+
   return (
     <article>
+      <JsonLd data={ld} />
       <div className="t-small flex justify-between">
         <Link href="/projects" className="tb-link">
           ← {t("title")}

@@ -7,6 +7,7 @@ import type { Locale } from "@/i18n/routing";
 import { pageMeta } from "@/lib/metadata";
 import { siteConfig } from "@/lib/site";
 import JsonLd from "@/components/seo/JsonLd";
+import { PERSON_ID, breadcrumbNode, graph, pageUrl, webPageNode } from "@/lib/schema";
 import TitleBlock from "@/components/sheet/TitleBlock";
 import CaseHead from "@/components/cases/CaseHead";
 import CaseText from "@/components/cases/CaseText";
@@ -90,15 +91,24 @@ export default async function ProjectPage({
   const n = idx + 1;
   const next: Project | undefined = all.length > 1 ? all[(idx + 1) % all.length] : undefined;
 
-  const creativeWork = {
-    "@context": "https://schema.org",
-    "@type": "CreativeWork",
-    name: project.title,
-    about: project.summary[l],
-    creator: { "@type": "Person", name: siteConfig.name, url: siteConfig.url },
-    dateCreated: String(project.year),
-    keywords: project.stack.join(", "),
-  };
+  const path = `/work/${slug}`;
+  const creativeWork = graph(
+    webPageNode(l, path, project.title),
+    {
+      "@type": "CreativeWork",
+      "@id": `${pageUrl(l, path)}#work`,
+      name: project.title,
+      url: pageUrl(l, path),
+      abstract: project.summary[l],
+      inLanguage: l === "pt" ? "pt-BR" : "en",
+      creator: { "@id": PERSON_ID },
+      mainEntityOfPage: { "@id": `${pageUrl(l, path)}#webpage` },
+      dateCreated: String(project.year),
+      keywords: project.stack.join(", "),
+      ...(project.live?.[0] ? { sameAs: project.live[0].startsWith("http") ? project.live[0] : `https://${project.live[0]}` } : {}),
+    },
+    breadcrumbNode(l, [[siteConfig.name, "/"], [project.title, path]]),
+  );
 
   const fig = th("fig");
   const caption = project.caption?.[l] ?? project.summary[l];

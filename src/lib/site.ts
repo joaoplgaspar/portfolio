@@ -6,7 +6,7 @@ export const siteConfig = {
   name: "João Pedro Gaspar",
   role: "Front-end Engineer",
   url: "https://jpgaspar.dev",
-  email: "jpgaspar.dev@gmail.com",
+  email: "hello@jpgaspar.dev",
   location: "São Paulo · GMT-3",
   stack: "React · Next · Three.js · GSAP · Shopify · Liquid · Hydrogen · Firebase",
   social: {
