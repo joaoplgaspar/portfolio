@@ -8,6 +8,7 @@ import type { Locale } from "@/i18n/routing";
 import Figure, { stepsOf } from "@/components/figures/Figure";
 import Narration, { type NarrationLabels } from "@/components/figures/Narration";
 import DeviceMock from "./DeviceMock";
+import { FigOptions } from "@/components/figures/parts";
 import type { Mock } from "@/data/mocks";
 import { SeqProvider, useSequence } from "@/components/figures/sequence";
 import LogoPlate from "./LogoPlate";
@@ -375,9 +376,12 @@ function ExpandedFigure({
   return (
     <div>
       <div ref={observe} className="plate border border-fg px-[4%] pt-6 pb-4">
-        <SeqProvider seq={seq}>
-          <Figure slug={slug} lit={steps[step]?.on ?? []} title={caption} />
-        </SeqProvider>
+        {/* Na home, sem lupa: o painel já é o lugar de ver de perto. */}
+        <FigOptions lens={false}>
+          <SeqProvider seq={seq}>
+            <Figure slug={slug} lit={steps[step]?.on ?? []} title={caption} />
+          </SeqProvider>
+        </FigOptions>
       </div>
       <div className="mt-4">
         <Narration seq={seq} locale={locale} labels={t} />

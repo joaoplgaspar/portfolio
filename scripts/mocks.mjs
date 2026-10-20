@@ -10,9 +10,13 @@
 // Só conteúdo público: nada de área logada ou dado de operação.
 import { chromium } from "playwright";
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import sharp from "sharp";
 
 const W = 390;
 const MAX_H = 3600;
+// Desktop: a mesma página em 1280 px, para o notebook do mockup.
+const DW = 1280;
+const DMAX_H = 4800;
 
 const src = readFileSync("src/data/stores.ts", "utf8");
 const TARGETS = [...src.matchAll(/slug: "([^"]+)",[\s\S]*?(?=\n  \{|\n\];)/g)]
@@ -145,8 +149,34 @@ for (const { slug, url } of list) {
       fullPage: true,
       clip: { x: 0, y: 0, width: W, height: h },
     });
-    sizes[slug] = { w: W, h };
-    console.log(`ok   ${slug} — ${url} (${h}px)`);
+    // Desktop: outra aba, mesma rotina. Guardado em WebP via sharp (o Next
+    // já tem), porque uma página inteira de 1280 px em JPEG pesa demais.
+    const desk = await browser.newPage({ viewport: { width: DW, height: 800 }, locale: "pt-BR" });
+    let d = null;
+    try {
+      await desk.goto(url, { waitUntil: "domcontentloaded", timeout: 60000 });
+      await desk.waitForTimeout(5000);
+      await dismiss(desk);
+      for (let y = 0; y <= DMAX_H; y += 600) {
+        await desk.evaluate((v) => window.scrollTo(0, v), y);
+        await desk.waitForTimeout(300);
+      }
+      await desk.evaluate(() => window.scrollTo(0, 0));
+      await desk.waitForTimeout(1500);
+      await dismiss(desk);
+      await hideOverlays(desk);
+      const dfull = await desk.evaluate(() => document.documentElement.scrollHeight);
+      const dh = Math.min(dfull, DMAX_H);
+      const buf = await desk.screenshot({ type: "png", fullPage: true, clip: { x: 0, y: 0, width: DW, height: dh } });
+      await sharp(buf).webp({ quality: 68 }).toFile(`public/mocks/${slug}-desktop.webp`);
+      d = { w: DW, h: dh };
+    } catch (e) {
+      console.log(`  desktop falhou ${slug}: ${e.message.split("\n")[0]}`);
+    } finally {
+      await desk.close();
+    }
+    sizes[slug] = d ? { w: W, h, desktop: d } : { w: W, h };
+    console.log(`ok   ${slug} — ${url} (${h}px${d ? `, desktop ${d.h}px` : ""})`);
   } catch (e) {
     console.log(`FALHOU ${slug}: ${e.message.split("\n")[0]}`);
   } finally {

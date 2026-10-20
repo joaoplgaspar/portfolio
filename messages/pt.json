@@ -21,8 +21,7 @@
   "home": {
     "tagline": "Front-end engineer — construo o que a plataforma diz que não dá.",
     "clients": "Também trabalhei com",
-    "lede": "Engenheiro front-end para Shopify. Lojas inteiras, de ponta a ponta, em Liquid ou Hydrogen headless: seções, página de produto, carrinho e checkout, com performance, SEO e dados estruturados de fábrica.",
-    "status": "Squad leader numa agência Shopify em São Paulo, com várias lojas por mês, a maioria sozinho. Fundador do LIVRA.",
+    "lede": "Engenheiro front-end Shopify e squad leader numa agência Shopify. Lojas inteiras, de ponta a ponta, em Liquid e Hydrogen headless.",
     "index": "Breve descrição dos desenhos",
     "fig": "FIG.",
     "open": "Abrir prancha",
@@ -40,7 +39,8 @@
       "stores": "lojas desde {year}",
       "livra": "usuários no 1º mês do LIVRA",
       "tz": "1–2 h à frente de Nova York"
-    }
+    },
+    "figTabs": "Figuras"
   },
   "project": {
     "overview": "Visão geral",

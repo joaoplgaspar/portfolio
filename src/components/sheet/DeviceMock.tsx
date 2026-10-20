@@ -6,6 +6,8 @@ import type { Mock } from "@/data/mocks";
 
 /** Altura da tela do celular na captura (390 × 844). */
 const PHONE_H = 844;
+/** Tela do notebook: 16:10, então 1280 px de largura mostram 800 de altura. */
+const SCREEN = 10 / 16;
 
 /**
  * Mockup em traço de prancha: um notebook com a primeira dobra do site e, na
@@ -39,6 +41,11 @@ export default function DeviceMock({
   const end = phone ? `${-(1 - PHONE_H / phone.h) * 100}%` : "0%";
   // Velocidade constante de leitura: ~1 s a cada 200 px de página.
   const dur = phone ? `${Math.max(10, phone.h / 200)}s` : "0s";
+  // Desktop: a mesma ideia, num ritmo um pouco diferente para os dois não
+  // andarem juntos como um só.
+  const full = phone?.desktop;
+  const dEnd = full ? `${-(1 - (full.w * SCREEN) / full.h) * 100}%` : "0%";
+  const dDur = full ? `${Math.max(12, full.h / 230)}s` : "0s";
 
   return (
     <figure ref={root} className={`mock relative ${inView ? "is-in" : ""} ${phone ? "pb-[6%] sm:pr-[14%]" : ""}`}>
@@ -54,7 +61,18 @@ export default function DeviceMock({
             <span className="t-code truncate text-muted">{domain}</span>
           </div>
           <div className="relative aspect-[16/10] overflow-hidden border-[1.25px] border-fg">
-            {desktop && (
+            {full ? (
+              <Image
+                src={full.src}
+                alt=""
+                width={full.w}
+                height={full.h}
+                priority={priority}
+                sizes="(min-width: 1280px) 1000px, 90vw"
+                className="mock-scroll block h-auto w-full"
+                style={{ ["--mock-end" as string]: dEnd, ["--mock-dur" as string]: dDur }}
+              />
+            ) : desktop && (
               <Image
                 src={desktop}
                 alt=""
@@ -76,7 +94,7 @@ export default function DeviceMock({
             vectorEffect="non-scaling-stroke"
           />
         </svg>
-        <p className="t-code mt-2 text-faint">1440 × 900</p>
+        <p className="t-code mt-2 text-faint">{full ? `${full.w} × ${Math.round(full.w * SCREEN)}` : "1440 × 900"}</p>
       </div>
 
       {/* celular, na frente, com a página inteira rolando */}

@@ -4,10 +4,11 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 import { Link } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
 import type { Legend } from "@/data/figures";
-import Stage, { type StageLabels } from "@/components/figures/Stage";
-import { stepsOf } from "@/components/figures/Figure";
-import { useSequence } from "@/components/figures/sequence";
-import ProjectThumb, { type Print } from "./ProjectThumb";
+import type { StageLabels } from "@/components/figures/Stage";
+import Figure, { stepsOf } from "@/components/figures/Figure";
+import { FigOptions } from "@/components/figures/parts";
+import { SeqProvider, useSequence } from "@/components/figures/sequence";
+import type { Print } from "./ProjectThumb";
 
 export type HomeItem = {
   slug: string;
@@ -20,24 +21,25 @@ export type HomeItem = {
 };
 
 /**
- * A home é uma prancha: índice de figuras à esquerda, a figura ativa à
- * direita contando a sua história em passos. Quando a narração termina, a
- * próxima figura entra. O traço vermelho sob o título é o progresso real
- * dessa narração — não um relógio decorativo. Com movimento reduzido nada
- * troca sozinho; os passos avançam pelos controles.
+ * Primeira tela da home: um ponto focal só.
+ *
+ * À esquerda, quem é (vem pronto em `intro`). À direita, a figura ativa em
+ * modo quieto: só a peça em foco tem nome, sem numerais, sem lupa, sem
+ * controles. Embaixo, uma linha de legenda (sempre a simples) e as abas das
+ * figuras; o traço sob a aba ativa é o progresso real da narração, e quando
+ * ela termina a próxima figura entra. A narração completa, com régua, modo
+ * técnico e controles, fica no case. Com movimento reduzido nada toca
+ * sozinho: aparecem ← → para andar os passos.
  */
 export default function HomeSheet({
   items,
-  legends,
   locale,
   intro,
-  extra,
   t,
 }: {
   intro: ReactNode;
-  extra?: ReactNode;
   items: HomeItem[];
-  legends: Record<string, Legend>;
+  legends?: Record<string, Legend>;
   locale: Locale;
   t: { index: string; open: string; live: string } & StageLabels;
 }) {
@@ -50,71 +52,54 @@ export default function HomeSheet({
     <div className="home-grid">
       <div className="[grid-area:intro]">{intro}</div>
 
-      <section aria-labelledby="idx-h" className="[grid-area:idx] lg:self-start">
-        <h2 id="idx-h" className="t-fig mb-3 uppercase text-faint">
-          {t.index}
-        </h2>
-        <ol className="idx-list border-t border-fg">
-          {items.map((p, i) => (
-            <li key={p.slug}>
-              <Link
-                href={`/work/${p.slug}`}
-                className="idx-row flex items-center gap-4 border-b border-line py-2.5"
-                data-on={i === on}
-                onMouseEnter={() => setOn(i)}
-                onFocus={() => setOn(i)}
-              >
-                <ProjectThumb print={p.print} on={i === on} />
-                <span className="min-w-0 flex-1 @container">
-                  <span className="flex items-baseline justify-between gap-4">
-                    <span className="t-fig text-faint">
-                      {t.fig} {i + 1}
-                    </span>
-                    <span className="t-small truncate text-faint">
-                      {p.type} · {p.year}
-                    </span>
-                  </span>
-                  <span
-                    className="idx-title t-title mt-0.5 block"
-                    style={{ "--len": p.title.length } as React.CSSProperties}
-                  >
-                    {p.title}
-                  </span>
-                  <span
-                    className="idx-clock mt-1.5 block"
-                    aria-hidden
-                    ref={(el) => {
-                      clocks.current[i] = el;
-                    }}
-                  />
-                </span>
-              </Link>
-            </li>
-          ))}
-        </ol>
-        {extra}
-      </section>
-
       <section className="min-w-0 [grid-area:fig]">
-        <HomeStage
+        <QuietStage
           key={item.slug}
           item={item}
           n={on + 1}
-          legend={legends[item.slug] ?? []}
           locale={locale}
           t={t}
           clock={() => clocks.current[on]}
           onEnd={() => setOn((i) => (i + 1) % items.length)}
         />
+
+        <nav aria-label={t.index} className="mt-5 border-t border-fg">
+          <ol className="grid grid-cols-2 sm:grid-cols-4">
+            {items.map((p, i) => (
+              <li key={p.slug} className="min-w-0">
+                <button
+                  type="button"
+                  onClick={() => setOn(i)}
+                  onMouseEnter={() => setOn(i)}
+                  aria-current={i === on ? "true" : undefined}
+                  className={`group block w-full py-2.5 pr-3 text-left transition-colors ${i === on ? "text-fg" : "text-faint hover:text-fg"}`}
+                >
+                  <span className="t-fig block">
+                    {t.fig} {i + 1}
+                  </span>
+                  <span className="t-small mt-0.5 block truncate font-[600]">{p.title}</span>
+                  <span className="mt-2 block h-[2px] overflow-hidden bg-line" aria-hidden>
+                    <span
+                      ref={(el) => {
+                        clocks.current[i] = el;
+                      }}
+                      className="block h-full origin-left bg-accent"
+                      style={{ transform: "scaleX(0)" }}
+                    />
+                  </span>
+                </button>
+              </li>
+            ))}
+          </ol>
+        </nav>
       </section>
     </div>
   );
 }
 
-function HomeStage({
+function QuietStage({
   item,
   n,
-  legend,
   locale,
   t,
   clock,
@@ -122,7 +107,6 @@ function HomeStage({
 }: {
   item: HomeItem;
   n: number;
-  legend: Legend;
   locale: Locale;
   t: { open: string; live: string } & StageLabels;
   clock: () => HTMLSpanElement | null;
@@ -131,9 +115,10 @@ function HomeStage({
   const steps = stepsOf(item.slug);
   const seq = useSequence(steps, { autoplay: true, loop: true, onEnd });
   const total = steps.reduce((a, s) => a + s.dur, 0);
-  const { subscribe } = seq;
+  const { subscribe, step, observe, reduced, prev, next } = seq;
+  const cur = steps[step];
 
-  // Progresso total da narração, escrito direto no traço do índice.
+  // Progresso total da narração, escrito direto no traço da aba.
   useEffect(() => {
     const el = clock();
     const off = subscribe((s, tt) => {
@@ -147,23 +132,36 @@ function HomeStage({
   }, [subscribe, steps, total, clock]);
 
   return (
-    <>
-      <Stage
-        seq={seq}
-        slug={item.slug}
-        n={n}
-        title={item.caption}
-        legend={legend}
-        locale={locale}
-        labels={t}
-        corner={item.live && <span className="t-code text-muted">{t.live}: {item.live.join(" · ")}</span>}
-        showLegend={false}
-      />
-      <div className="mt-4 flex justify-end">
-        <Link href={`/work/${item.slug}`} className="t-small tb-link">
+    <div>
+      <div ref={observe} className="plate relative border border-fg px-[4%] pt-10 pb-4">
+        <span className="t-fig absolute top-3 left-4">
+          {t.fig} {n} · {item.title}
+        </span>
+        <Link href={`/work/${item.slug}`} className="t-small tb-link absolute top-2.5 right-4">
           {t.open} →
         </Link>
+        <FigOptions lens={false} quiet>
+          <SeqProvider seq={seq} mode="plain">
+            <Figure slug={item.slug} lit={cur?.on ?? []} title={item.caption} />
+          </SeqProvider>
+        </FigOptions>
       </div>
-    </>
+      <div className="mt-3 flex items-start gap-3">
+        {reduced && (
+          <div className="seg shrink-0" role="group">
+            <button type="button" className="ctl !h-8 !px-2.5" onClick={prev} aria-label={t.prev}>
+              ←
+            </button>
+            <button type="button" className="ctl !h-8 !px-2.5" onClick={next} aria-label={t.next}>
+              →
+            </button>
+          </div>
+        )}
+        <p className="min-h-[2.8em] max-w-[64ch] text-[0.9375rem] leading-snug font-[520]" aria-live="polite">
+          {cur?.title && <span className={`mr-1.5 font-[750] ${cur.act === "problem" || cur.act === "rejected" ? "text-accent" : ""}`}>{cur.title[locale]} ·</span>}
+          {(cur?.plain ?? cur?.caption)?.[locale]}
+        </p>
+      </div>
+    </div>
   );
 }

@@ -30,6 +30,25 @@ export type FigProps = {
 };
 
 const Lit = createContext<number[]>([]);
+
+/**
+ * Opções de quem monta a figura. `lens`: a lupa "Detalhe A" no hover.
+ * `quiet`: a figura só nomeia a peça em foco no passo; numerais e nomes das
+ * outras peças somem. É o modo da home, onde a figura divide a primeira tela
+ * com o resto e não pode ser mais uma coisa gritando.
+ */
+const Opts = createContext({ lens: true, quiet: false });
+export function FigOptions({
+  lens = true,
+  quiet = false,
+  children,
+}: {
+  lens?: boolean;
+  quiet?: boolean;
+  children: ReactNode;
+}) {
+  return <Opts.Provider value={{ lens, quiet }}>{children}</Opts.Provider>;
+}
 const useLit = (n: number) => useContext(Lit).includes(n);
 
 /** Id seguro para `url(#…)` — o formato do useId muda entre versões do React. */
@@ -173,7 +192,8 @@ export function Fig({
     useLocale() === "pt" ? `DETALHE A · ${String(LENS_Z).replace(".", ",")}:1` : `DETAIL A · ${LENS_Z}:1`;
   usePlotter(content, pen, svg, draw);
   // Capa estática (draw=false) não tem lupa: ela é um link, não uma prancha.
-  useLens(svg, lens, draw);
+  const opts = useContext(Opts);
+  useLens(svg, lens, draw && opts.lens);
 
   return (
     <Lit.Provider value={lit}>
@@ -259,8 +279,10 @@ export function Leader({
   const ty = y2 + (dy / len) * 12 + 5;
   const on = useLit(n);
   const { mode } = useSeq();
+  const { quiet } = useContext(Opts);
   const named = !!label && mode === "plain";
-  const hidden = named && transient && !on;
+  // Quieto: só a peça acesa aparece, e só pelo nome (sem nome, nada).
+  const hidden = quiet ? !(on && named) : named && transient && !on;
   // O nome cresce para longe da peça: à esquerda, à direita ou centrado.
   const anchor = !named || Math.abs(dx) < Math.abs(dy) * 0.6 ? "middle" : dx < 0 ? "end" : "start";
   return (
@@ -281,9 +303,11 @@ export function Leader({
         {named ? (
           <>
             {label}
-            <tspan className="num-sup" dx={3}>
-              {n}
-            </tspan>
+            {!quiet && (
+              <tspan className="num-sup" dx={3}>
+                {n}
+              </tspan>
+            )}
           </>
         ) : (
           n

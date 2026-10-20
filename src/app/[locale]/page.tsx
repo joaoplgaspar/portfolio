@@ -164,7 +164,7 @@ export default async function HomePage({
           print: printOf(p.slug, p.cover),
         }))}
         t={{
-          index: t("index"),
+          index: t("figTabs"),
           open: t("open"),
           fig: t("fig"),
           live: t("live"),
@@ -180,8 +180,7 @@ export default async function HomePage({
               <br />
               {last}
             </h1>
-            <p className="t-small mt-6 max-w-[38ch] text-[0.9375rem]">{t("lede")}</p>
-            <p className="t-small mt-3 max-w-[38ch] text-muted">{t("status")}</p>
+            <p className="mt-6 max-w-[34ch] text-[1.0625rem] leading-snug font-[480]">{t("lede")}</p>
             {/* Prova em três números. Número de cliente não entra: só o que é meu. */}
             <dl className="mt-6 grid max-w-[44ch] grid-cols-3 border-t border-fg">
               {proof.map((x) => (

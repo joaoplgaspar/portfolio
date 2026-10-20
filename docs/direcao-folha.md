@@ -158,6 +158,21 @@ o slug em `components/figures/registry.ts`. Sem figura, o case não entra no
   com `domain`); a Ada fica de fora por causa de um pop-up que volta na
   captura.
 
+## v9 (2026-10-20: primeira tela com um ponto focal)
+
+- Feedback: a primeira tela tinha informação demais (nome, dois parágrafos,
+  três números, índice com logos, figura com régua, botões e legenda) e
+  não dava para saber onde olhar.
+- Agora: à esquerda nome, uma frase e os três números; à direita a figura em
+  **modo quieto** (`FigOptions quiet`): só a peça em foco no passo tem nome,
+  sem numerais, sem lupa, sem controles, legenda sempre simples. Embaixo, uma
+  linha de legenda e quatro abas (FIG. 1–4) com o progresso. O índice com
+  logos saiu daqui: as capas já estão em "Trabalho selecionado".
+- A lupa "Detalhe A" não existe na home (nem no painel): só nos cases e na
+  Sobre.
+- Mockups: o notebook também rola a página inteira (captura de 1280 px em
+  WebP, `<slug>-desktop.webp`).
+
 ## Mais projetos: como escala
 
 - **Figura** (poucos, profundos): case com mecanismo próprio. Entra no índice

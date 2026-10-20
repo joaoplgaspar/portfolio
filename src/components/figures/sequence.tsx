@@ -261,8 +261,10 @@ export function useSequence(
   };
 }
 
-export function SeqProvider({ seq, children }: { seq: Sequence; children: ReactNode }) {
-  return <Ctx.Provider value={seq.ctx}>{children}</Ctx.Provider>;
+/** `mode` força um modo de leitura só aqui (a home é sempre simples). */
+export function SeqProvider({ seq, mode, children }: { seq: Sequence; mode?: Mode; children: ReactNode }) {
+  const value = useMemo(() => (mode ? { ...seq.ctx, mode } : seq.ctx), [seq.ctx, mode]);
+  return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
 }
 
 /** O passo atual está em `at`? */

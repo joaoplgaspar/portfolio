@@ -522,18 +522,20 @@ html {
 
 /* Home: intro e índice à esquerda, prancha à direita. No celular a
    prancha sobe para logo depois da intro — é o que prende o olho. */
+/* Primeira tela da home: um ponto focal. À esquerda quem é (nome, uma
+   frase, três números); à direita a figura, quieta, com a legenda do passo e
+   as abas das figuras. O índice com capas mora em "Trabalho selecionado". */
 .home-grid {
   display: grid;
   row-gap: 40px;
-  grid-template-areas: "intro" "fig" "idx";
+  grid-template-areas: "intro" "fig";
 }
 @media (min-width: 1024px) {
   .home-grid {
-    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-    grid-template-rows: auto 1fr;
-    column-gap: calc(var(--gut) * 1.5);
-    row-gap: 48px;
-    grid-template-areas: "intro fig" "idx fig";
+    grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+    column-gap: calc(var(--gut) * 2);
+    grid-template-areas: "intro fig";
+    align-items: center;
     min-height: calc(100svh - 2 * var(--pad) - 52px - 2 * var(--gut));
   }
 }

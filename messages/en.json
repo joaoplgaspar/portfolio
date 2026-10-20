@@ -21,8 +21,7 @@
   "home": {
     "tagline": "Front-end engineer — I build what the platform says you can't.",
     "clients": "Also worked with",
-    "lede": "Front-end engineer for Shopify. Whole stores, end to end, in Liquid or headless Hydrogen: sections, product pages, cart and checkout, with performance, SEO and structured data built in.",
-    "status": "Squad leader at a Shopify agency in São Paulo, shipping several storefronts a month, mostly solo. Founder of LIVRA.",
+    "lede": "Shopify front-end engineer and squad leader at a Shopify agency. Whole stores, end to end, in Liquid and headless Hydrogen.",
     "index": "Brief description of the drawings",
     "fig": "FIG.",
     "open": "Open sheet",
@@ -40,7 +39,8 @@
       "stores": "storefronts since {year}",
       "livra": "users in LIVRA's first month",
       "tz": "1–2 h ahead of New York"
-    }
+    },
+    "figTabs": "Figures"
   },
   "project": {
     "overview": "Overview",
