@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 /**
- * LIVRA — reconciliação de catálogo, em miniatura.
+ * Livra — reconciliação de catálogo, em miniatura.
  *
  * Quatro fontes respondem pelo mesmo livro, cada uma com o seu defeito
  * típico (descrito no case). "Reconciliar" escolhe campo a campo de quem

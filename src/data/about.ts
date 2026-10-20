@@ -1,6 +1,6 @@
 import type { CaseBlock, Localized } from "@/types/project";
 
-/** Estágio da trajetória — vira um degrau (ou a torre, no caso do LIVRA). */
+/** Estágio da trajetória — vira um degrau (ou a torre, no caso do Livra). */
 export interface Stage {
   n: number;
   /** Período exibido. Vazio quando a data exata não foi confirmada. */
@@ -23,12 +23,12 @@ export const about = {
     en: [
       "I'm a front-end engineer in São Paulo, and I build Shopify stores end to end: from basic sections to product pages, cart and checkout, in Liquid or headless Hydrogen. Large stores, thirty pages and up, solo, in days or weeks.",
       "What I optimize for is what a customer on a phone actually gets. Performance, SEO and structured data go in from the first section. When the platform doesn't do something, I build it: custom apps, Shopify Functions, optimistic carts in Liquid and in React.",
-      "In 2026 I shipped LIVRA, a reading app I designed, built and run alone: iOS, Android and web, 600 registered users in its first month.",
+      "In 2026 I shipped Livra, a reading app I designed, built and run alone: iOS, Android and web, 600 registered users in its first month.",
     ],
     pt: [
       "Sou engenheiro front-end em São Paulo e construo lojas Shopify de ponta a ponta: das seções básicas à página de produto, carrinho e checkout, em Liquid ou Hydrogen headless. Lojas grandes, de trinta páginas para cima, sozinho, em dias ou semanas.",
       "O que eu otimizo é o que o cliente no celular recebe de fato. Performance, SEO e dados estruturados entram desde a primeira seção. Quando a plataforma não faz alguma coisa, eu construo: custom apps, Shopify Functions, carrinho otimista em Liquid e em React.",
-      "Em 2026 lancei o LIVRA, um app de leitura que eu desenhei, construí e opero sozinho: iOS, Android e web, 600 usuários cadastrados no primeiro mês.",
+      "Em 2026 lancei o Livra, um app de leitura que eu desenhei, construí e opero sozinho: iOS, Android e web, 600 usuários cadastrados no primeiro mês.",
     ],
   } satisfies Record<"pt" | "en", string[]>,
 
@@ -115,10 +115,10 @@ export const about = {
     },
     {
       n: 30,
-      short: { en: "LIVRA", pt: "LIVRA" },
+      short: { en: "Livra", pt: "Livra" },
       kind: "founder",
       period: { en: "2026", pt: "2026" },
-      title: { en: "LIVRA · Founder and CEO", pt: "LIVRA · Fundador e CEO" },
+      title: { en: "Livra · Founder and CEO", pt: "Livra · Fundador e CEO" },
       body: {
         en: "A real app with real users: designed, built and run alone. iOS, Android and web, 600 registered users in the first month.",
         pt: "Um app de verdade com usuários de verdade: desenhado, construído e operado sozinho. iOS, Android e web, 600 usuários cadastrados no primeiro mês.",

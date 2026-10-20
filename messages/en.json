@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "João Pedro Gaspar — Front-end Engineer",
-    "description": "Front-end engineer for Shopify: whole stores end to end, in Liquid or headless Hydrogen, with performance, SEO and structured data built in. Founder of LIVRA."
+    "description": "Front-end engineer for Shopify: whole stores end to end, in Liquid or headless Hydrogen, with performance, SEO and structured data built in. Founder of Livra."
   },
   "nav": {
     "work": "Work",
@@ -37,7 +37,7 @@
     "close": "Close",
     "proof": {
       "stores": "storefronts since {year}",
-      "livra": "users in LIVRA's first month",
+      "livra": "users in Livra's first month",
       "tz": "1–2 h ahead of New York"
     },
     "figTabs": "Figures"
@@ -69,7 +69,7 @@
     "eyebrow": "About",
     "title": "I work at the edge of what commerce platforms allow — and a little past it.",
     "does": "What I build",
-    "stairCaption": "Trajectory, in section. The tower on the right is LIVRA."
+    "stairCaption": "Trajectory, in section. The tower on the right is Livra."
   },
   "lab": {
     "eyebrow": "Lab",

@@ -8,7 +8,7 @@
  * os leitores automáticos (ATS) conseguirem extrair.
  *
  * Regras:
- * - Número só do LIVRA. Métrica de cliente (conversão, performance, receita)
+ * - Número só do Livra. Métrica de cliente (conversão, performance, receita)
  *   é confidencial e não entra.
  * - Nunca citar a base interna (biblioteca) do empregador: ela vira "o
  *   método", sem nome, comando ou regra.
@@ -38,7 +38,7 @@ export const resume = {
   timezone: "UTC−3 · 1–2 h ahead of US Eastern",
 
   summary:
-    "Front-end engineer who builds Shopify stores end to end, in Liquid and headless Hydrogen: sections, product pages, cart and checkout, with performance, SEO and structured data built in from day one. I ship 30-page stores solo in days to weeks, and extend the platform with checkout UI extensions, Shopify Functions and custom apps when it falls short. Founder of LIVRA, a reading app I built and run alone (React, Capacitor, Firebase).",
+    "Front-end engineer who builds Shopify stores end to end, in Liquid and headless Hydrogen: sections, product pages, cart and checkout, with performance, SEO and structured data built in from day one. I ship 30-page stores solo in days to weeks, and extend the platform with checkout UI extensions, Shopify Functions and custom apps when it falls short. Founder of Livra, a reading app I built and run alone (React, Capacitor, Firebase).",
 
   experience: [
     {
@@ -60,7 +60,7 @@ export const resume = {
       ],
     },
     {
-      org: "LIVRA",
+      org: "Livra",
       context: "Reading app · iOS, Android, web",
       url: "https://uselivra.com",
       period: "2026 – Present",

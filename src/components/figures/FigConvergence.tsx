@@ -5,7 +5,7 @@ import { Fig, HIDDEN, Hatch, Leader, Part, useSafeId, type FigProps } from "./pa
 import { Note, Show, Travel, useSeq, type Step } from "./sequence";
 
 /**
- * FIG — LIVRA. Quatro das seis fontes de catálogo convergindo numa obra.
+ * FIG — Livra. Quatro das seis fontes de catálogo convergindo numa obra.
  *
  * 10 Google Books · 12 Apple Books · 14 CBL · 16 Open Library
  * 18 reconciliação obra × edição · 20 registro canônico
@@ -93,8 +93,8 @@ export const STEPS: Step[] = [
     on: [18],
     title: { en: "Match", pt: "Combina" },
     plain: {
-      en: "LIVRA takes each detail from the source that gets it right and merges them into one book.",
-      pt: "O LIVRA pega cada dado da fonte que acerta aquele dado e junta tudo num livro só.",
+      en: "Livra takes each detail from the source that gets it right and merges them into one book.",
+      pt: "O Livra pega cada dado da fonte que acerta aquele dado e junta tudo num livro só.",
     },
     caption: {
       en: "Reconciliation (18) takes each field from the source trusted for it. apple-X, google-Y and isbn:Z converge on one work.",

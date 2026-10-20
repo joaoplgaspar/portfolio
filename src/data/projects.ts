@@ -1,15 +1,15 @@
 import type { Project } from "@/types/project";
 
 /**
- * Regra de produção: só renderiza `published: true`. Hoje: apenas LIVRA.
+ * Regra de produção: só renderiza `published: true`. Hoje: apenas Livra.
  * DUX/Vivo ficam como estrutura (published: false). Placeholders "EM BREVE"
  * aparecem só em DEV (densidade do índice), nunca em produção.
- * Launch DoD: ≥ 3 cases publicados. Ordem futura: loja-demo → LIVRA → demais.
+ * Launch DoD: ≥ 3 cases publicados. Ordem futura: loja-demo → Livra → demais.
  */
 const projects: Project[] = [
   {
     slug: "livra",
-    title: "LIVRA",
+    title: "Livra",
     client: { pt: "Projeto próprio", en: "My own product" },
     role: {
       pt: "Design, front-end e back-end serverless",
@@ -42,7 +42,7 @@ const projects: Project[] = [
         { kind: "heading", text: "Contexto" },
         {
           kind: "text",
-          text: "O leitor brasileiro vive entre catálogos que não conversam: Skoob tem acervo nacional mas o produto parou no tempo; Goodreads ignora o Brasil; nenhum tem um loop de hábito de verdade. O LIVRA é um diário de leitura gamificado — streak, ligas semanais, economia de moedas, modo foco — desenhado para quem já transforma leitura em conteúdo no TikTok e no Instagram.",
+          text: "O leitor brasileiro vive entre catálogos que não conversam: Skoob tem acervo nacional mas o produto parou no tempo; Goodreads ignora o Brasil; nenhum tem um loop de hábito de verdade. O Livra é um diário de leitura gamificado — streak, ligas semanais, economia de moedas, modo foco — desenhado para quem já transforma leitura em conteúdo no TikTok e no Instagram.",
         },
         { kind: "heading", text: "O problema técnico central" },
         {
@@ -78,7 +78,7 @@ const projects: Project[] = [
         { kind: "heading", text: "Context" },
         {
           kind: "text",
-          text: "Brazilian readers are stuck between catalogs that don't talk to each other: Skoob has the Brazilian titles but the product stalled years ago; Goodreads ignores Brazil; neither has a real habit loop. LIVRA is a gamified reading journal (streaks, weekly leagues, a coin economy, focus mode) built for readers who already turn books into content on TikTok and Instagram.",
+          text: "Brazilian readers are stuck between catalogs that don't talk to each other: Skoob has the Brazilian titles but the product stalled years ago; Goodreads ignores Brazil; neither has a real habit loop. Livra is a gamified reading journal (streaks, weekly leagues, a coin economy, focus mode) built for readers who already turn books into content on TikTok and Instagram.",
         },
         { kind: "heading", text: "The core technical problem" },
         {

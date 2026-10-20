@@ -21,7 +21,7 @@ export const revalidate = 60; // ISR: novos projetos aparecem sem redeploy
 
 /** O que identifica cada case de relance no índice: a marca, sempre. */
 /**
- * Identidade do LIVRA (marca "Fita em L", aprovada em 07/10/2026, fonte:
+ * Identidade do Livra (marca "Fita em L", aprovada em 07/10/2026, fonte:
  * E:/Projetos/lura/src/components/brand). Fundo = a tinta da marca
  * (#16110d, o mesmo do hero de uselivra.com); logo = versão escura do
  * lockup, ícone papel + fita laranja e "livra" em papel. A tela é a home do
@@ -118,7 +118,7 @@ export default async function HomePage({
     { v: "600", k: t("proof.livra") },
     { v: "UTC−3", k: t("proof.tz") },
   ];
-  // Segmento da marca do case, quando o case é de uma loja (o LIVRA não é).
+  // Segmento da marca do case, quando o case é de uma loja (o Livra não é).
   const segmentOf = (slug: string) => stores.find((s) => s.caseSlug === slug)?.segment?.[l];
   const fig = t("fig");
 

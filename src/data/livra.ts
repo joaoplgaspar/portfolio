@@ -1,7 +1,7 @@
 import type { Localized } from "@/types/project";
 
 /**
- * LIVRA — telas anotadas e fluxo do scanner.
+ * Livra — telas anotadas e fluxo do scanner.
  *
  * Fonte das imagens: os prints de produção da landing do app
  * (lura/public/assets/landing, já públicos em uselivra.com) e capturas do

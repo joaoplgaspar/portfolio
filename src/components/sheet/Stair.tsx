@@ -18,7 +18,7 @@ import LegendList from "@/components/figures/LegendList";
  * paralela embaixo do chão, porque correu junto com o trabalho. O que veio
  * antes fica do outro lado de uma linha de interrupção (o trecho omitido de
  * um desenho técnico). A certificação é o degrau tracejado, em construção; o
- * LIVRA é a torre ao lado, mais alta que a escada.
+ * Livra é a torre ao lado, mais alta que a escada.
  */
 
 const GROUND = 350;
@@ -257,7 +257,7 @@ function Drawing({ stages, locale }: { stages: Stage[]; locale: Locale }) {
         </text>
       </g>
 
-      {/* 30 · torre do LIVRA, mais alta que a escada */}
+      {/* 30 · torre do Livra, mais alta que a escada */}
       {tower && (
         <Part n={tower.n}>
           <rect x={TX} y={TTOP} width={TW} height={GROUND - TTOP} fill="var(--bg)" strokeWidth={1.6} className="draw" pathLength={1} />

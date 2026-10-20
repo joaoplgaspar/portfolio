@@ -41,7 +41,7 @@ export const now = {
     },
     {
       kind: "building",
-      title: "LIVRA",
+      title: "Livra",
       detail: {
         pt: "6 APIs de catálogo convergindo numa identidade canônica de livro",
         en: "6 catalog APIs converging into one canonical book identity",

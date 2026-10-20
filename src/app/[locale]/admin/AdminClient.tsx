@@ -216,7 +216,7 @@ export default function AdminClient() {
     const db = getFirestore(app);
     try {
       // Grava o Project inteiro — passar por draftToDoc perderia o `body`
-      // (corpo rico do case), e a PDP do LIVRA ficaria vazia.
+      // (corpo rico do case), e a PDP do Livra ficaria vazia.
       for (const p of getSeedProjects()) {
         await addDoc(collection(db, "projects"), {
           ...p,

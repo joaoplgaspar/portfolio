@@ -15,7 +15,7 @@ export type HeadText = {
 /**
  * Cabeçalho da prancha do case. O título muda de forma conforme o projeto:
  * Roland / Boss se divide no eixo (duas marcas, uma fronteira no meio);
- * Integral / Darkness empilha as duas marcas; LIVRA é uma palavra só.
+ * Integral / Darkness empilha as duas marcas; Livra é uma palavra só.
  */
 export default function CaseHead({
   project,

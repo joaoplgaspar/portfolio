@@ -35,7 +35,7 @@ seis fontes de catálogo que discordam. A figura é esse específico, desenhado.
 |---|---|---|
 | Roland / Boss | título dividido no eixo; figura bilateral | CartLab: um carrinho vs. dois sincronizados, com a corrida reproduzível |
 | Integral / Darkness | marcas empilhadas; vista explodida das camadas | cortina entre as duas vitrines + calculadora do desconto invertido |
-| LIVRA | uma palavra gigante; convergência de fontes | reconciliação campo a campo + queda da CBL e a regra do cache vazio |
+| Livra | uma palavra gigante; convergência de fontes | reconciliação campo a campo + queda da CBL e a regra do cache vazio |
 
 Case novo = uma figura em `components/figures/`, a legenda em `data/figures.ts`,
 o slug em `components/figures/registry.ts`. Sem figura, o case não entra no
@@ -54,7 +54,7 @@ o slug em `components/figures/registry.ts`. Sem figura, o case não entra no
 - **Blueprint.** Tema escuro = cópia heliográfica: azul de cianotipia, giz,
   lápis vermelho do revisor, quadrícula visível. Sistema de cor → papel;
   escolha salva em `localStorage`, aplicada antes da pintura.
-- **LIVRA** virou o case principal: números de escala (300 usuários no 1º
+- **Livra** virou o case principal: números de escala (300 usuários no 1º
   mês, 3 plataformas, 203 functions, 1 pessoa), telas de produção anotadas com
   numerais (FIG. 3a–d), scanner gravado em aparelho (3e), temas (3f). Imagens
   em `public/livra/`, textos em `data/livra.ts`.
@@ -77,7 +77,7 @@ o slug em `components/figures/registry.ts`. Sem figura, o case não entra no
   formulário (`/contact`, endpoint opcional `NEXT_PUBLIC_CONTACT_ENDPOINT`,
   senão mailto).
 - **Sobre**: trajetória em corte de escada (estágio → júnior → líder de squad →
-  solo em várias lojas por mês; certificação Shopify tracejada) e o LIVRA como
+  solo em várias lojas por mês; certificação Shopify tracejada) e o Livra como
   torre separada (fundador). Datas sem confirmação ficam vazias.
 - **Projetos** (`/projects`, antes "Lojas"): destaques grandes, o resto três
   por linha; cada projeto tem página própria em `/projects/[slug]` com o
@@ -122,7 +122,7 @@ o slug em `components/figures/registry.ts`. Sem figura, o case não entra no
 ## v7 (2026-10-19: alvo internacional e figuras para quem não é dev)
 
 - **Alvo**: agências e empresas Shopify fora do Brasil. Número só do
-  LIVRA (600 usuários no 1º mês); métrica de cliente nunca.
+  Livra (600 usuários no 1º mês); métrica de cliente nunca.
 - **Currículo** em `/resume` (`data/resume.ts`), uma página Carta; o PDF é
   a impressão da página (`node scripts/resume-pdf.mjs`, avisa se passar de
   uma página).
@@ -175,7 +175,7 @@ o slug em `components/figures/registry.ts`. Sem figura, o case não entra no
 
 - **Margem da marca** (`BrandMargin`): dentro da prancha da home, à esquerda
   do desenho, a placa da marca (cor e logo), o nome, uma linha e um celular
-  pequeno com o site rolando (LIVRA: o app; HSM: "em desenvolvimento").
+  pequeno com o site rolando (Livra: o app; HSM: "em desenvolvimento").
   De quem é → como funciona. No celular vira faixa, sem o aparelho.
 - **Entrada**: o traço leva 3,4 s (`PLOT`) e a narração da home só começa
   depois. A pena segue a ordem de um plotter (vizinho mais próximo) e
