@@ -48,6 +48,12 @@ export function personNode(locale: Locale) {
     },
     knowsAbout,
     knowsLanguage: ["pt-BR", "en", "es"],
+    alumniOf: {
+      "@type": "CollegeOrUniversity",
+      name: "Centro Universitário Adventista de São Paulo (UNASP)",
+      alternateName: "UNASP",
+      url: "https://www.unasp.br",
+    },
     sameAs: [siteConfig.social.linkedin, siteConfig.social.github].filter(Boolean),
   };
 }

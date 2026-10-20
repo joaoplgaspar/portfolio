@@ -85,7 +85,7 @@ export const resume = {
   ],
 
   education: [
-    { title: "B.Sc. Computer Science", org: "", period: "2023 – 2026 (expected)" },
+    { title: "B.Sc. Computer Science", org: "UNASP, São Paulo campus", period: "2023 – 2026 (expected)" },
     { title: "Technical diploma in Information Technology", org: "", period: "" },
   ],
 
