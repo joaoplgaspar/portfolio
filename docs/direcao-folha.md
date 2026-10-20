@@ -173,6 +173,14 @@ o slug em `components/figures/registry.ts`. Sem figura, o case não entra no
 - Mockups: o notebook também rola a página inteira (captura de 1280 px em
   WebP, `<slug>-desktop.webp`).
 
+- **Margem da marca** (`BrandMargin`): dentro da prancha da home, à esquerda
+  do desenho, a placa da marca (cor e logo), o nome, uma linha e um celular
+  pequeno com o site rolando (LIVRA: o app; HSM: "em desenvolvimento").
+  De quem é → como funciona. No celular vira faixa, sem o aparelho.
+- **Entrada**: o traço leva 3,4 s (`PLOT`) e a narração da home só começa
+  depois. A pena segue a ordem de um plotter (vizinho mais próximo) e
+  levanta quando o próximo traço fica longe, em vez de pular pela prancha.
+
 ## Mais projetos: como escala
 
 - **Figura** (poucos, profundos): case com mecanismo próprio. Entra no índice

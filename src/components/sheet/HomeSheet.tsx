@@ -6,9 +6,10 @@ import type { Locale } from "@/i18n/routing";
 import type { Legend } from "@/data/figures";
 import type { StageLabels } from "@/components/figures/Stage";
 import Figure, { stepsOf } from "@/components/figures/Figure";
-import { FigOptions } from "@/components/figures/parts";
+import { FigOptions, PLOT } from "@/components/figures/parts";
 import { SeqProvider, useSequence } from "@/components/figures/sequence";
 import type { Print } from "./ProjectThumb";
+import BrandMargin, { type Brand } from "./BrandMargin";
 
 export type HomeItem = {
   slug: string;
@@ -18,6 +19,7 @@ export type HomeItem = {
   year: number;
   live?: string[];
   print?: Print;
+  brand?: Brand;
 };
 
 /**
@@ -113,10 +115,17 @@ function QuietStage({
   onEnd: () => void;
 }) {
   const steps = stepsOf(item.slug);
-  const seq = useSequence(steps, { autoplay: true, loop: true, onEnd });
+  const seq = useSequence(steps, { autoplay: false, loop: true, onEnd });
   const total = steps.reduce((a, s) => a + s.dur, 0);
-  const { subscribe, step, observe, reduced, prev, next } = seq;
+  const { subscribe, step, observe, reduced, prev, next, setPlaying } = seq;
   const cur = steps[step];
+
+  // A narração só começa quando o traço de plotter termina: primeiro o
+  // desenho entra inteiro, depois ele conta a história.
+  useEffect(() => {
+    const id = window.setTimeout(() => setPlaying(true), PLOT + 200);
+    return () => window.clearTimeout(id);
+  }, [setPlaying]);
 
   // Progresso total da narração, escrito direto no traço da aba.
   useEffect(() => {
@@ -133,18 +142,23 @@ function QuietStage({
 
   return (
     <div>
-      <div ref={observe} className="plate relative border border-fg px-[4%] pt-10 pb-4">
+      <div ref={observe} className="plate relative border border-fg px-4 pt-10 pb-4">
         <span className="t-fig absolute top-3 left-4">
-          {t.fig} {n} · {item.title}
+          {t.fig} {n}
         </span>
         <Link href={`/work/${item.slug}`} className="t-small tb-link absolute top-2.5 right-4">
           {t.open} →
         </Link>
-        <FigOptions lens={false} quiet>
-          <SeqProvider seq={seq} mode="plain">
-            <Figure slug={item.slug} lit={cur?.on ?? []} title={item.caption} />
-          </SeqProvider>
-        </FigOptions>
+        <div className="grid gap-4 md:grid-cols-[minmax(150px,23%)_minmax(0,1fr)] md:items-stretch">
+          {item.brand && <BrandMargin brand={item.brand} />}
+          <div className={`min-w-0 self-center ${item.brand ? "" : "md:col-span-2"}`}>
+            <FigOptions lens={false} quiet>
+              <SeqProvider seq={seq} mode="plain">
+                <Figure slug={item.slug} lit={cur?.on ?? []} title={item.caption} />
+              </SeqProvider>
+            </FigOptions>
+          </div>
+        </div>
       </div>
       <div className="mt-3 flex items-start gap-3">
         {reduced && (

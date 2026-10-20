@@ -57,7 +57,7 @@ export function useSafeId(prefix: string) {
 }
 
 /** Duração total do traço de plotter, em ms. */
-const PLOT = 1900;
+export const PLOT = 3400;
 /** Lupa "Detalhe A": raio (unidades do desenho) e escala. */
 const LENS_R = 92;
 const LENS_Z = 2.4;
@@ -68,6 +68,12 @@ const LENS_Z = 2.4;
  * percorrendo a linha da vez. O tempo de cada traço é proporcional ao
  * comprimento dele; o total é sempre PLOT. Texto e hachura (`.late`) entram
  * no fim. Movimento reduzido: nada disso, o CSS já zera as animações.
+ *
+ * Como num plotter de verdade, a ordem não é a do código: cada próximo
+ * traço é o que começa mais perto de onde o anterior terminou. Quando o
+ * próximo fica longe, a pena levanta (some), reaparece lá e volta a
+ * desenhar: ela nunca atravessa a prancha pulando. A posição é medida a cada
+ * quadro, porque há peças que se movem enquanto o desenho entra (FIG. 2).
  */
 function usePlotter(
   content: RefObject<SVGGElement | null>,
@@ -81,18 +87,39 @@ function usePlotter(
     const nib = pen.current;
     if (!draw || !root || !g || !nib) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const screen = root.getScreenCTM();
-    if (!screen) return;
-    const inv = screen.inverse();
+    if (!root.getScreenCTM()) return;
 
-    const items = Array.from(g.querySelectorAll<SVGGeometryElement>(".draw")).map((el) => {
+    const rs0 = root.getScreenCTM()!.inverse();
+    const at = (el: SVGGeometryElement, d: number) => {
+      const p = el.getPointAtLength(d);
+      const m = el.getScreenCTM();
+      return m ? new DOMPoint(p.x, p.y).matrixTransform(rs0.multiply(m)) : p;
+    };
+    const raw = Array.from(g.querySelectorAll<SVGGeometryElement>(".draw")).map((el) => {
       let len = 1;
       try {
         len = Math.max(1, el.getTotalLength());
       } catch {}
-      const m = el.getScreenCTM();
-      return { el, len, m: m ? inv.multiply(m) : null, start: 0, dur: 0 };
+      return { el, len, start: 0, dur: 0, a: at(el, 0), b: at(el, len) };
     });
+    // Ordem de plotter: o vizinho mais próximo de onde a pena está.
+    const items: typeof raw = [];
+    const left = raw.slice();
+    let cur = left.shift();
+    while (cur) {
+      items.push(cur);
+      const end = cur.b;
+      let best = 0;
+      let bestD = Infinity;
+      for (let k = 0; k < left.length; k++) {
+        const d = Math.hypot(left[k].a.x - end.x, left[k].a.y - end.y);
+        if (d < bestD) {
+          bestD = d;
+          best = k;
+        }
+      }
+      cur = left.splice(best, 1)[0];
+    }
     const total = items.reduce((a, b) => a + b.len, 0) || 1;
     let acc = 0;
     for (const it of items) {
@@ -107,10 +134,14 @@ function usePlotter(
 
     let raf = 0;
     let i = 0;
+    let px = NaN;
+    let py = NaN;
+    let lifted = 0;
+    let last = -1;
     const t0 = performance.now();
     const tick = (now: number) => {
       const e = now - t0;
-      if (e > PLOT + 120 || !items.length) {
+      if (e > PLOT + 160 || !items.length) {
         nib.style.opacity = "0";
         return;
       }
@@ -118,10 +149,20 @@ function usePlotter(
       const it = items[i];
       const f = Math.min(1, Math.max(0, (e - it.start) / it.dur));
       const p = it.el.getPointAtLength(f * it.len);
-      const q = it.m ? new DOMPoint(p.x, p.y).matrixTransform(it.m) : p;
-      nib.setAttribute("cx", String(q.x));
-      nib.setAttribute("cy", String(q.y));
-      nib.style.opacity = "1";
+      // Do traço para o desenho, medido agora (a peça pode ter se movido).
+      const rs = root.getScreenCTM();
+      const es = it.el.getScreenCTM();
+      const q = rs && es ? new DOMPoint(p.x, p.y).matrixTransform(rs.inverse().multiply(es)) : p;
+      // Troca de traço longe do ponto anterior: a pena levanta, reaparece lá
+      // e volta aos poucos. Dentro do mesmo traço ela só desenha.
+      if (Number.isNaN(px) || (i !== last && Math.hypot(q.x - px, q.y - py) > 30)) lifted = 8;
+      last = i;
+      px = q.x;
+      py = q.y;
+      nib.setAttribute("cx", String(px));
+      nib.setAttribute("cy", String(py));
+      nib.style.opacity = lifted > 0 ? String(Math.max(0, 1 - lifted / 6)) : "1";
+      if (lifted > 0) lifted--;
       raf = requestAnimationFrame(tick);
     };
     raf = requestAnimationFrame(tick);

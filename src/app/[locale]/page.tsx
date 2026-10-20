@@ -12,6 +12,7 @@ import { fetchPublishedProjects } from "@/data/projects";
 import { sheetPlan } from "@/lib/sheets";
 import { logosOf, platformLabel, storeMeta, stores, visibleStores } from "@/data/stores";
 import { mockOf } from "@/data/mocks";
+import type { Brand } from "@/components/sheet/BrandMargin";
 import WorkGrid, { type WorkItem } from "@/components/sheet/WorkGrid";
 import type { Print } from "@/components/sheet/ProjectThumb";
 import { Link } from "@/i18n/navigation";
@@ -25,6 +26,35 @@ function printOf(slug: string, cover: string): Print | undefined {
   const brand = brandOf(slug);
   if (brand) return { kind: "logo", ...brand };
   return cover ? { kind: "site", src: cover } : undefined;
+}
+
+/**
+ * Margem da prancha na home: logo, nome, uma linha e o que mostrar no
+ * celular (o site no ar, as telas do app, ou "em desenvolvimento").
+ */
+function brandCard(caseSlug: string, name: string, l: Locale): Brand | undefined {
+  if (caseSlug === "livra") {
+    return {
+      logos: ["/logos/livra.png"],
+      plate: "#BC4B2F",
+      name,
+      line: l === "pt" ? "App de leitura · iOS, Android e web" : "Reading app · iOS, Android and web",
+      screen: { kind: "app", src: "/livra/app-inicio.webp" },
+    };
+  }
+  const s = stores.find((x) => x.caseSlug === caseSlug);
+  const logos = s ? logosOf(s) : [];
+  if (!s || !logos.length) return undefined;
+  const mock = mockOf(s.slug);
+  return {
+    logos,
+    plate: s.plate,
+    name,
+    line: s.scope[l],
+    screen: mock
+      ? { kind: "site", mock }
+      : { kind: "building", label: l === "pt" ? "Em desenvolvimento" : "In development" },
+  };
 }
 
 /** Logo e cor da marca de um case, vindos da loja que aponta para ele. */
@@ -162,6 +192,7 @@ export default async function HomePage({
           year: p.year,
           live: p.live,
           print: printOf(p.slug, p.cover),
+          brand: brandCard(p.slug, p.title, l),
         }))}
         t={{
           index: t("figTabs"),
