@@ -41,7 +41,16 @@ export async function generateMetadata({
       "performance",
       "portfolio",
     ],
-    icons: { icon: "/favicon-32x32.png" },
+    // Marca ".jpg" (scripts/brand/build.mjs): ICO para navegador antigo, SVG
+    // para os atuais, PNG sem raio para o iPhone (ele arredonda sozinho).
+    icons: {
+      icon: [
+        { url: "/favicon.ico", sizes: "16x16 32x32 48x48" },
+        { url: "/icon.svg", type: "image/svg+xml" },
+      ],
+      apple: "/apple-touch-icon.png",
+    },
+    manifest: "/site.webmanifest",
     robots: { index: true, follow: true },
     openGraph: {
       type: "website",

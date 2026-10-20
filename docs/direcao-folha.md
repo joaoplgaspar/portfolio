@@ -181,6 +181,23 @@ o slug em `components/figures/registry.ts`. Sem figura, o case não entra no
   depois. A pena segue a ordem de um plotter (vizinho mais próximo) e
   levanta quando o próximo traço fica longe, em vez de pular pela prancha.
 
+## Marca pessoal ".jpg" (2026-10-20)
+
+- As iniciais J.P.G. lidas como extensão de arquivo: um ponto em sinal na
+  linha de base e "jpg" em Archivo 300, tracking −0,05em. Escolhida entre
+  quatro direções (carimbo, .jpg, retícula, chamada).
+- Favicon e ícones: placa de tinta, o ponto em sinal e um "j" em papel
+  (Archivo 600). iPhone e Android recebem a placa sem raio, com a marca a
+  80% (o sistema arredonda e corta).
+- Tudo é gerado por `scripts/brand/build.mjs` a partir de contornos
+  (`scripts/brand/glyphs.json`, feitos por `glyphs.py` com a Archivo da
+  Google Fonts): nenhum arquivo depende de fonte instalada. Saída em
+  `public/brand/` (logo, assinatura com nome, avatar 400) e na raiz de
+  `public/` (favicon.ico, icon.svg, apple-touch-icon, icon-192/512).
+- Imagem de compartilhamento: `[locale]/opengraph-image.tsx`, tema Grafite,
+  Archivo de `assets/fonts/`. O proxy de idioma não passa por ela (o
+  /en/opengraph-image redirecionava).
+
 ## Mais projetos: como escala
 
 - **Figura** (poucos, profundos): case com mecanismo próprio. Entra no índice
