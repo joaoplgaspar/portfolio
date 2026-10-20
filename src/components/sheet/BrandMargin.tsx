@@ -1,6 +1,7 @@
 import Image from "next/image";
 import type { Mock } from "@/data/mocks";
 import LogoPlate from "./LogoPlate";
+import { PLOT } from "@/components/figures/parts";
 
 /** O que aparece no celular da margem. */
 export type BrandScreen =
@@ -52,6 +53,9 @@ export default function BrandMargin({ brand }: { brand: Brand }) {
                 style={{
                   ["--mock-end" as string]: `${-(1 - PHONE_H / screen.mock.h) * 100}%`,
                   ["--mock-dur" as string]: `${Math.max(10, screen.mock.h / 200)}s`,
+                  // Só começa a rolar depois do traço de plotter: na entrada
+                  // da página, uma coisa de cada vez.
+                  animationDelay: `${PLOT + 400}ms`,
                 }}
               />
             )}

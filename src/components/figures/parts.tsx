@@ -138,6 +138,9 @@ function usePlotter(
     let py = NaN;
     let lifted = 0;
     let last = -1;
+    let m: DOMMatrix | null = null;
+    let mAt = -1;
+    let frame = 0;
     const t0 = performance.now();
     const tick = (now: number) => {
       const e = now - t0;
@@ -149,10 +152,18 @@ function usePlotter(
       const it = items[i];
       const f = Math.min(1, Math.max(0, (e - it.start) / it.dur));
       const p = it.el.getPointAtLength(f * it.len);
-      // Do traço para o desenho, medido agora (a peça pode ter se movido).
-      const rs = root.getScreenCTM();
-      const es = it.el.getScreenCTM();
-      const q = rs && es ? new DOMPoint(p.x, p.y).matrixTransform(rs.inverse().multiply(es)) : p;
+      // Do traço para o desenho. getScreenCTM força o navegador a refazer o
+      // layout, então a matriz é medida ao trocar de traço e a cada 10
+      // quadros (o bastante para as peças que deslizam na FIG. 2), não em
+      // todo quadro.
+      if (i !== mAt || frame % 10 === 0) {
+        const rs = root.getScreenCTM();
+        const es = it.el.getScreenCTM();
+        m = rs && es ? rs.inverse().multiply(es) : null;
+        mAt = i;
+      }
+      frame++;
+      const q = m ? new DOMPoint(p.x, p.y).matrixTransform(m) : p;
       // Troca de traço longe do ponto anterior: a pena levanta, reaparece lá
       // e volta aos poucos. Dentro do mesmo traço ela só desenha.
       if (Number.isNaN(px) || (i !== last && Math.hypot(q.x - px, q.y - py) > 30)) lifted = 8;

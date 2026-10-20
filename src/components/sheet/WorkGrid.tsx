@@ -12,6 +12,7 @@ import { FigOptions } from "@/components/figures/parts";
 import type { Mock } from "@/data/mocks";
 import { SeqProvider, useSequence } from "@/components/figures/sequence";
 import LogoPlate from "./LogoPlate";
+import Near from "./Near";
 
 /**
  * Trabalho selecionado, de ponta a ponta da prancha: grade em faixas (uma
@@ -52,6 +53,13 @@ export type WorkItem = {
 export type WorkGridText = NarrationLabels & { expand: string; open: string; close: string; live: string; stack: string };
 
 const EASE = "cubic-bezier(0.16, 1, 0.3, 1)";
+
+/** Cor que segura o lugar da capa enquanto ela não monta. */
+function plateOf(item: WorkItem) {
+  const c = item.cover;
+  if (c.kind === "logo") return ([] as (string | undefined)[]).concat(c.plate)[0] ?? "var(--plate)";
+  return "var(--plate)";
+}
 
 function Cover({ item, sizes }: { item: WorkItem; sizes: string }) {
   const c = item.cover;
@@ -131,7 +139,10 @@ export default function WorkGrid({ items, locale, t }: { items: WorkItem[]; loca
                   className={`relative block overflow-hidden border border-fg ${big ? "aspect-[16/10] lg:aspect-auto lg:flex-1" : "aspect-[16/10]"}`}
                 >
                   <span className="absolute inset-0 transition-transform duration-[900ms] group-hover:scale-[1.03]" style={{ transitionTimingFunction: EASE }}>
-                    <Cover item={item} sizes={big ? "(min-width: 1024px) 64vw, 100vw" : "(min-width: 1024px) 32vw, 50vw"} />
+                    {/* Abaixo da dobra: a imagem só monta perto da tela; antes, a cor da marca. */}
+                    <Near fallback={<span className="absolute inset-0 block" style={{ background: plateOf(item) }} />}>
+                      <Cover item={item} sizes={big ? "(min-width: 1024px) 64vw, 100vw" : "(min-width: 1024px) 32vw, 50vw"} />
+                    </Near>
                   </span>
                   <CropMarks />
                   <span className="t-fig absolute bottom-3 left-3 translate-y-2 border border-fg bg-[var(--bg)] px-2 py-1 opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:opacity-100">
