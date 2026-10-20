@@ -1,3 +1,0 @@
-module.exports=[20342,a=>{"use strict";var b=a.i(11481);(0,b.registerVersion)("firebase","12.14.0","app");let c={apiKey:"AIzaSyBEJbut-PnMLQKvP3myAcKA5fbhO98IumY",authDomain:"jplg-portfolio.firebaseapp.com",projectId:"jplg-portfolio",storageBucket:"jplg-portfolio.firebasestorage.app",messagingSenderId:"1016168185370",appId:"1:1016168185370:web:df792b8f69135a9d061ba3"},d=!!(c.apiKey&&c.projectId);a.s(["getFirebaseApp",0,function(){return d?(0,b.getApps)().length?(0,b.getApp)():(0,b.initializeApp)(c):null},"isFirebaseConfigured",0,d],20342)}];
-
-//# sourceMappingURL=src_lib_firebase_ts_1rlzkoy._.js.map
