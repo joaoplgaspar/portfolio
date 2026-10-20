@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 import { Link } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
 import type { Legend } from "@/data/figures";
@@ -10,6 +10,11 @@ import { FigOptions, PLOT } from "@/components/figures/parts";
 import { SeqProvider, useSequence } from "@/components/figures/sequence";
 import type { Print } from "./ProjectThumb";
 import BrandMargin, { type Brand } from "./BrandMargin";
+
+/** Quanto a figura leva para se apagar antes da próxima entrar (ms). */
+const FADE = 280;
+/** Quanto o mouse precisa ficar numa aba para ela trocar a figura (ms). */
+const INTENT = 300;
 
 export type HomeItem = {
   slug: string;
@@ -45,8 +50,41 @@ export default function HomeSheet({
   locale: Locale;
   t: { index: string; open: string; live: string } & StageLabels;
 }) {
+  // `sel` é a aba escolhida (responde na hora); `on` é a figura na prancha,
+  // que só troca depois que a anterior se apaga.
+  const [sel, setSel] = useState(0);
   const [on, setOn] = useState(0);
+  const [out, setOut] = useState(false);
   const clocks = useRef<(HTMLSpanElement | null)[]>([]);
+  const swap = useRef(0);
+  const intent = useRef(0);
+
+  const go = useCallback((i: number) => {
+    setSel(i);
+    window.clearTimeout(swap.current);
+    setOut(true);
+    swap.current = window.setTimeout(() => {
+      setOn(i);
+      setOut(false);
+    }, FADE);
+  }, []);
+
+  // Hover só troca se o mouse ficar na aba: passar por cima não troca nada.
+  const hoverIn = (i: number) => {
+    window.clearTimeout(intent.current);
+    if (i === sel) return;
+    intent.current = window.setTimeout(() => go(i), INTENT);
+  };
+  const hoverOut = () => window.clearTimeout(intent.current);
+
+  useEffect(
+    () => () => {
+      window.clearTimeout(swap.current);
+      window.clearTimeout(intent.current);
+    },
+    [],
+  );
+
   const item = items[on];
   if (!item) return null;
 
@@ -55,15 +93,23 @@ export default function HomeSheet({
       <div className="[grid-area:intro]">{intro}</div>
 
       <section className="min-w-0 [grid-area:fig]">
-        <QuietStage
-          key={item.slug}
-          item={item}
-          n={on + 1}
-          locale={locale}
-          t={t}
-          clock={() => clocks.current[on]}
-          onEnd={() => setOn((i) => (i + 1) % items.length)}
-        />
+        <div
+          style={{
+            opacity: out ? 0 : 1,
+            transform: out ? "translateY(6px)" : "none",
+            transition: `opacity ${FADE}ms cubic-bezier(0.16, 1, 0.3, 1), transform ${FADE}ms cubic-bezier(0.16, 1, 0.3, 1)`,
+          }}
+        >
+          <QuietStage
+            key={item.slug}
+            item={item}
+            n={on + 1}
+            locale={locale}
+            t={t}
+            clock={() => clocks.current[on]}
+            onEnd={() => go((on + 1) % items.length)}
+          />
+        </div>
 
         <nav aria-label={t.index} className="mt-5 border-t border-fg">
           <ol className="grid grid-cols-2 sm:grid-cols-4">
@@ -71,10 +117,11 @@ export default function HomeSheet({
               <li key={p.slug} className="min-w-0">
                 <button
                   type="button"
-                  onClick={() => setOn(i)}
-                  onMouseEnter={() => setOn(i)}
-                  aria-current={i === on ? "true" : undefined}
-                  className={`group block w-full py-2.5 pr-3 text-left transition-colors ${i === on ? "text-fg" : "text-faint hover:text-fg"}`}
+                  onClick={() => i !== sel && go(i)}
+                  onMouseEnter={() => hoverIn(i)}
+                  onMouseLeave={hoverOut}
+                  aria-current={i === sel ? "true" : undefined}
+                  className={`group block w-full py-2.5 pr-3 text-left transition-colors duration-300 ${i === sel ? "text-fg" : "text-faint hover:text-fg"}`}
                 >
                   <span className="t-fig block">
                     {t.fig} {i + 1}
@@ -141,7 +188,7 @@ function QuietStage({
   }, [subscribe, steps, total, clock]);
 
   return (
-    <div>
+    <div className="stage-in">
       <div ref={observe} className="plate relative border border-fg px-4 pt-10 pb-4">
         <span className="t-fig absolute top-3 left-4">
           {t.fig} {n}
