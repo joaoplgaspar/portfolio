@@ -4,7 +4,7 @@ import { siteConfig } from "@/lib/site";
 import { visibleStores } from "@/data/stores";
 
 // /lab fica fora até ter experimento rodando de verdade.
-const PATHS = ["/", "/sobre", "/contato"];
+const PATHS = ["/", "/about", "/contact"];
 
 // Acompanha o ISR das páginas: projeto novo no /admin entra no sitemap sem redeploy.
 export const revalidate = 60;
@@ -13,9 +13,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const projects = await fetchPublishedProjects();
   const all = [
     ...PATHS,
-    "/projetos",
-    ...visibleStores().map((s) => `/projetos/${s.slug}`),
-    ...projects.map((p) => `/trabalho/${p.slug}`),
+    "/projects",
+    ...visibleStores().map((s) => `/projects/${s.slug}`),
+    ...projects.map((p) => `/work/${p.slug}`),
   ];
 
   return all.map((path) => {

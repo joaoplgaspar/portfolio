@@ -14,7 +14,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const { locale } = await params;
   const l = locale as Locale;
   const t = await getTranslations({ locale, namespace: "about" });
-  return pageMeta({ locale: l, path: "/sobre", title: t("eyebrow"), description: about.paragraphs[l][0] });
+  return pageMeta({ locale: l, path: "/about", title: t("eyebrow"), description: about.paragraphs[l][0] });
 }
 
 export default async function AboutPage({ params }: { params: Promise<{ locale: string }> }) {

@@ -13,7 +13,7 @@ import { fmtLab, median, visibleStores, type LabMetric } from "@/data/stores";
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "stores" });
-  return pageMeta({ locale: locale as Locale, path: "/projetos", title: t("title"), description: t("lede") });
+  return pageMeta({ locale: locale as Locale, path: "/projects", title: t("title"), description: t("lede") });
 }
 
 /**

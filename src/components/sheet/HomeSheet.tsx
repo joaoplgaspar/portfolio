@@ -58,7 +58,7 @@ export default function HomeSheet({
           {items.map((p, i) => (
             <li key={p.slug}>
               <Link
-                href={`/trabalho/${p.slug}`}
+                href={`/work/${p.slug}`}
                 className="idx-row flex items-center gap-4 border-b border-line py-2.5"
                 data-on={i === on}
                 onMouseEnter={() => setOn(i)}
@@ -160,7 +160,7 @@ function HomeStage({
         showLegend={false}
       />
       <div className="mt-4 flex justify-end">
-        <Link href={`/trabalho/${item.slug}`} className="t-small tb-link">
+        <Link href={`/work/${item.slug}`} className="t-small tb-link">
           {t.open} →
         </Link>
       </div>

@@ -74,13 +74,13 @@ o slug em `components/figures/registry.ts`. Sem figura, o case não entra no
   opacidade. Estados (contagem, preenchimento) mudam com transição de 600–700 ms.
 - **Posicionamento**: engenheiro Shopify de loja inteira (Liquid e headless),
   performance/SEO/dados estruturados. Sem "aberto a propostas": só contato e
-  formulário (`/contato`, endpoint opcional `NEXT_PUBLIC_CONTACT_ENDPOINT`,
+  formulário (`/contact`, endpoint opcional `NEXT_PUBLIC_CONTACT_ENDPOINT`,
   senão mailto).
 - **Sobre**: trajetória em corte de escada (estágio → júnior → líder de squad →
   solo em várias lojas por mês; certificação Shopify tracejada) e o LIVRA como
   torre separada (fundador). Datas sem confirmação ficam vazias.
-- **Projetos** (`/projetos`, antes "Lojas"): destaques grandes, o resto três
-  por linha; cada projeto tem página própria em `/projetos/[slug]` com o
+- **Projetos** (`/projects`, antes "Lojas"): destaques grandes, o resto três
+  por linha; cada projeto tem página própria em `/projects/[slug]` com o
   básico e o bloco de performance (nota + LCP/TBT/CLS em régua, com data).
   Substitui `/performance`. Capa da loja no ar
   (`scripts/covers.mjs`), escopo, e PageSpeed com data quando houver print.

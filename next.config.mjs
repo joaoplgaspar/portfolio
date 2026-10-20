@@ -28,6 +28,10 @@ function buildSha() {
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Um segundo servidor de dev (o de verificação) usa outra pasta: dois
+  // servidores na mesma .next/dev sobrescrevem o estado um do outro e as
+  // rotas dinâmicas passam a dar 404.
+  distDir: process.env.NEXT_DIST_DIR || ".next",
   reactStrictMode: true,
   env: {
     NEXT_PUBLIC_BUILD_SHA: buildSha(),
@@ -40,6 +44,15 @@ const nextConfig = {
       { protocol: "https", hostname: "res.cloudinary.com" },
       { protocol: "https", hostname: "firebasestorage.googleapis.com" },
     ],
+  },
+  // As rotas eram em português até 2026-10. Link antigo já compartilhado
+  // (currículo, LinkedIn, e-mail) cai na rota nova em vez de dar 404.
+  async redirects() {
+    const moved = { trabalho: "work", projetos: "projects", sobre: "about", contato: "contact" };
+    return Object.entries(moved).flatMap(([from, to]) => [
+      { source: `/${from}/:path*`, destination: `/${to}/:path*`, permanent: true },
+      { source: `/pt/${from}/:path*`, destination: `/pt/${to}/:path*`, permanent: true },
+    ]);
   },
 };
 

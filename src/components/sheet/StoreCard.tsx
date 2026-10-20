@@ -42,7 +42,7 @@ export default function StoreCard({
   );
 
   // Destaque abre o case; o resto abre a própria página do projeto.
-  const href = store.caseSlug ? `/trabalho/${store.caseSlug}` : `/projetos/${store.slug}`;
+  const href = store.caseSlug ? `/work/${store.caseSlug}` : `/projects/${store.slug}`;
 
   return (
     <article>

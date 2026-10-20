@@ -19,7 +19,7 @@ function findChrome() {
 }
 
 const origin = process.argv[2] || "http://localhost:3000/";
-const target = process.argv[3] || "/sobre";
+const target = process.argv[3] || "/about";
 const VIEWPORT = { width: 1280, height: 800 };
 const WARMUP = 2500; // deixa o requestIdleCallback compilar o shader
 

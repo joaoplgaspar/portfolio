@@ -10,7 +10,7 @@ export function pageMeta({
   description,
 }: {
   locale: Locale;
-  path: string; // "/", "/sobre", "/trabalho/livra"...
+  path: string; // "/", "/about", "/work/livra"...
   title: string;
   description: string;
 }): Metadata {

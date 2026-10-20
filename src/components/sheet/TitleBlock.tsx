@@ -29,7 +29,7 @@ export default async function TitleBlock({
           <a href={`mailto:${siteConfig.email}`} className="t-small tb-link">
             {siteConfig.email}
           </a>
-          <Link href="/contato" className="t-small tb-link">
+          <Link href="/contact" className="t-small tb-link">
             {t("form")} →
           </Link>
         </span>

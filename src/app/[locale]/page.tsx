@@ -87,7 +87,7 @@ export default async function HomePage({
       mark: `${fig} ${i + 1}`,
       title: p.title,
       meta: [segmentOf(p.slug), p.type[l], p.year].filter(Boolean).join(" · "),
-      href: `/trabalho/${p.slug}`,
+      href: `/work/${p.slug}`,
       cover:
         p.slug === "livra"
           ? { kind: "app", srcs: ["/livra/app-liga.webp", "/livra/app-inicio.webp", "/livra/app-lura.webp"] }
@@ -107,7 +107,7 @@ export default async function HomePage({
       figure: { slug: p.slug, caption: p.caption?.[l] ?? p.summary[l] },
     })),
     ...shown
-      // Só os destaques: o resto mora em /projetos, senão a home vira lista.
+      // Só os destaques: o resto mora em /projects, senão a home vira lista.
       .filter((s) => s.featured && (s.cover || s.logo) && !s.caseSlug)
       .map(
         (s): WorkItem => ({
@@ -115,7 +115,7 @@ export default async function HomePage({
           mark: s.mark,
           title: s.name,
           meta: storeMeta(s, l),
-          href: `/projetos/${s.slug}`,
+          href: `/projects/${s.slug}`,
           cover: s.logo ? { kind: "logo", logos: logosOf(s), plate: s.plate } : { kind: "site", src: s.cover! },
           print: s.logo ? s.cover : undefined,
           summary: s.scope[l],
@@ -198,7 +198,7 @@ export default async function HomePage({
           <h2 id="work-h" className="t-title">
             {t("selected")}
           </h2>
-          <Link href="/projetos" className="t-small tb-link">
+          <Link href="/projects" className="t-small tb-link">
             {ts("all", { n: shown.length })} →
           </Link>
         </div>

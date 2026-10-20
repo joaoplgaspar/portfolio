@@ -9,7 +9,7 @@ import LocaleSwitch from "@/components/i18n/LocaleSwitch";
 const LINKS = [
   { href: "/", key: "work" },
   { href: "/lab", key: "lab" },
-  { href: "/sobre", key: "about" },
+  { href: "/about", key: "about" },
 ] as const;
 
 export default function SiteHeader() {

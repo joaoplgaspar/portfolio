@@ -2,7 +2,7 @@ import type { Localized } from "@/types/project";
 
 /**
  * Quadro de projetos — todo trabalho que não vira figura entra aqui, e cada
- * um tem página própria em /projetos/[slug].
+ * um tem página própria em /projects/[slug].
  *
  * Figura = poucos cases, profundos (mecanismo desenhado). Projeto = muitos,
  * com a marca e, quando houver, os números do PageSpeed.
@@ -18,7 +18,7 @@ import type { Localized } from "@/types/project";
  * - Nunca citar a base interna (biblioteca) de onde o projeto partiu: ela é
  *   do empregador. "Liquid" basta.
  *
- * Faces do cartão em /projetos (hover troca da 1ª para a 2ª):
+ * Faces do cartão em /projects (hover troca da 1ª para a 2ª):
  * - `logo`  → 1ª face: logo centralizado sobre a cor da marca (`plate`), em
  *   public/logos/. Dois logos (marcas irmãs) se revezam em loop. SVG leve; logo
  *   pesado ou com imagem embutida vira PNG recortado. Sem logo, a 1ª face é a

@@ -68,8 +68,8 @@ check((await link.count()) > 0, "entrada com href vira link");
 if (await link.count()) {
   await link.scrollIntoViewIfNeeded();
   await link.click();
-  await page.waitForURL("**/trabalho/**", { timeout: 6000 }).catch(() => {});
-  check(page.url().includes("/trabalho/"), `link navega para o case (${page.url()})`);
+  await page.waitForURL("**/work/**", { timeout: 6000 }).catch(() => {});
+  check(page.url().includes("/work/"), `link navega para o case (${page.url()})`);
 }
 
 check(errors.length === 0, "sem erros de runtime");

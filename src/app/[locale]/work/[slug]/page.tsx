@@ -45,7 +45,7 @@ export async function generateMetadata({
   const l = locale as Locale;
   return pageMeta({
     locale: l,
-    path: `/trabalho/${slug}`,
+    path: `/work/${slug}`,
     title: project.title,
     description: project.summary[l],
   });
@@ -211,7 +211,7 @@ export default async function ProjectPage({
       </div>
 
       {next && (
-        <Link href={`/trabalho/${next.slug}`} className="group mt-8 block border-t border-fg pt-5">
+        <Link href={`/work/${next.slug}`} className="group mt-8 block border-t border-fg pt-5">
           <span className="t-fig text-faint">
             {t("next")} · {fig} {all.indexOf(next) + 1}
           </span>

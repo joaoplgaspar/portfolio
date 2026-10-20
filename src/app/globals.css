@@ -101,6 +101,31 @@ body {
   background: var(--fg);
   color: var(--bg);
 }
+/* Barra de rolagem: um traço de tinta sobre o papel, fino e reto, como a
+   régua da prancha. Chrome, Edge e Firefox usam o padrão (cor e largura);
+   o Safari, os pseudo-elementos, onde dá para acender o sinal no hover. */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: var(--fg) var(--bg);
+}
+@supports not (scrollbar-color: auto) {
+  ::-webkit-scrollbar {
+    width: 9px;
+    height: 9px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--bg);
+    border-left: 1px solid var(--line);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--fg);
+    border: 3px solid var(--bg);
+    border-radius: 0;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--accent);
+  }
+}
 :focus-visible {
   outline: 1.5px solid var(--accent);
   outline-offset: 3px;
@@ -385,6 +410,13 @@ body {
   font-size: 14px;
   font-weight: 650;
   fill: var(--fg);
+}
+/* Nome escrito sobre hachura (escada da Sobre): menor e com contorno de papel. */
+.fig text.stair-name {
+  font-size: 13px;
+  stroke: var(--plate);
+  stroke-width: 4px;
+  paint-order: stroke;
 }
 /* Etiqueta do que anda pelo desenho (produto, pessoa, "salvo"). */
 .fig text.tag {

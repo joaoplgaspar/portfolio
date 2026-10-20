@@ -9,10 +9,10 @@ import ThemeSwitch from "./ThemeSwitch";
 
 const LINKS = [
   { href: "/", key: "work" },
-  { href: "/projetos", key: "projects" },
-  { href: "/sobre", key: "about" },
+  { href: "/projects", key: "projects" },
+  { href: "/about", key: "about" },
   { href: "/resume", key: "resume" },
-  { href: "/contato", key: "contact" },
+  { href: "/contact", key: "contact" },
 ] as const;
 
 export default function SheetHead() {
@@ -24,7 +24,7 @@ export default function SheetHead() {
 
   const current = (href: string) =>
     href === "/"
-      ? pathname === "/" || pathname.startsWith("/trabalho")
+      ? pathname === "/" || pathname.startsWith("/work")
       : pathname === href || pathname.startsWith(`${href}/`);
 
   useEffect(() => {

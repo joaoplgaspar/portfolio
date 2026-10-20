@@ -47,7 +47,7 @@ export const now = {
         en: "6 catalog APIs converging into one canonical book identity",
       },
       meta: { pt: "beta fechado", en: "closed beta" },
-      href: "/trabalho/livra",
+      href: "/work/livra",
     },
   ] satisfies NowEntry[],
 };

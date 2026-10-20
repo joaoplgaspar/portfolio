@@ -117,7 +117,7 @@ export default function IndexList({ items }: { items: IndexItem[] }) {
         {items.map((it, i) => (
           <li key={it.slug}>
             <Link
-              href={`/trabalho/${it.slug}`}
+              href={`/work/${it.slug}`}
               className="idx-row"
               onMouseEnter={() => enter(i)}
               onFocus={() => focusRow(i)}

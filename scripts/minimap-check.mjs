@@ -17,7 +17,7 @@ function findChrome() {
   return dir ? `${base}/${dir}/chrome-linux/chrome` : undefined;
 }
 
-const url = process.argv[2] || "http://localhost:3005/trabalho/livra";
+const url = process.argv[2] || "http://localhost:3005/work/livra";
 const VIEWPORT = { width: 1440, height: 900 };
 
 let failures = 0;

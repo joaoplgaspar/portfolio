@@ -6,8 +6,16 @@ export interface Stage {
   /** Período exibido. Vazio quando a data exata não foi confirmada. */
   period: Localized;
   title: Localized;
+  /** Nome curto: vai na régua da narração e escrito no degrau. */
+  short: Localized;
   body: Localized;
   kind: "edu" | "shakers" | "cert" | "founder";
+  /**
+   * Início e fim (AAAA-MM) para pôr o degrau no tempo de verdade: a largura
+   * do piso é o tempo no cargo. Sem data, o estágio fica fora do eixo.
+   */
+  from?: string;
+  to?: string;
 }
 
 export const about = {
@@ -29,6 +37,7 @@ export const about = {
   stages: [
     {
       n: 10,
+      short: { en: "Tech school", pt: "Técnico" },
       kind: "edu",
       period: { en: "Before", pt: "Antes" },
       title: { en: "Technical high school, IT", pt: "Técnico em TI" },
@@ -39,6 +48,9 @@ export const about = {
     },
     {
       n: 12,
+      short: { en: "Degree", pt: "Faculdade" },
+      from: "2023-01",
+      to: "2026-12",
       kind: "edu",
       period: { en: "2023–2026", pt: "2023–2026" },
       title: { en: "B.Sc. Computer Science", pt: "Ciência da Computação" },
@@ -46,6 +58,9 @@ export const about = {
     },
     {
       n: 14,
+      short: { en: "Intern", pt: "Estágio" },
+      from: "2024-05",
+      to: "2025-04",
       kind: "shakers",
       period: { en: "May 2024", pt: "mai. 2024" },
       title: { en: "SHAKERS · Intern", pt: "SHAKERS · Estágio" },
@@ -56,6 +71,9 @@ export const about = {
     },
     {
       n: 16,
+      short: { en: "Junior", pt: "Júnior" },
+      from: "2025-04",
+      to: "2025-08",
       kind: "shakers",
       period: { en: "Apr 2025", pt: "abr. 2025" },
       title: { en: "SHAKERS · Junior", pt: "SHAKERS · Júnior" },
@@ -63,6 +81,8 @@ export const about = {
     },
     {
       n: 18,
+      short: { en: "Squad leader", pt: "Squad leader" },
+      from: "2025-08",
       kind: "shakers",
       period: { en: "Aug 2025", pt: "ago. 2025" },
       title: { en: "SHAKERS · Squad lead", pt: "SHAKERS · Líder de squad" },
@@ -73,6 +93,7 @@ export const about = {
     },
     {
       n: 20,
+      short: { en: "Now", pt: "Hoje" },
       kind: "shakers",
       period: { en: "Now", pt: "Hoje" },
       title: { en: "SHAKERS · Solo, several stores a month", pt: "SHAKERS · Solo, várias lojas por mês" },
@@ -83,6 +104,7 @@ export const about = {
     },
     {
       n: 22,
+      short: { en: "Certification", pt: "Certificação" },
       kind: "cert",
       period: { en: "In progress", pt: "Em andamento" },
       title: { en: "Shopify specialist", pt: "Especialista Shopify" },
@@ -93,6 +115,7 @@ export const about = {
     },
     {
       n: 30,
+      short: { en: "LIVRA", pt: "LIVRA" },
       kind: "founder",
       period: { en: "2026", pt: "2026" },
       title: { en: "LIVRA · Founder and CEO", pt: "LIVRA · Fundador e CEO" },

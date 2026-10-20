@@ -26,7 +26,7 @@ export async function generateMetadata({
   const s = getStore(slug);
   if (!s) return {};
   const l = locale as Locale;
-  return pageMeta({ locale: l, path: `/projetos/${slug}`, title: s.name, description: s.scope[l] });
+  return pageMeta({ locale: l, path: `/projects/${slug}`, title: s.name, description: s.scope[l] });
 }
 
 function Row({ k, children }: { k: string; children: React.ReactNode }) {
@@ -62,7 +62,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ locale
   return (
     <article>
       <div className="t-small flex justify-between">
-        <Link href="/projetos" className="tb-link">
+        <Link href="/projects" className="tb-link">
           ← {t("title")}
         </Link>
         <span className="t-fig">{s.mark}</span>
@@ -90,7 +90,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ locale
           )}
           {s.caseSlug && (
             <Row k={tp("case")}>
-              <Link href={`/trabalho/${s.caseSlug}`} className="tb-link">
+              <Link href={`/work/${s.caseSlug}`} className="tb-link">
                 {tp("openCase")} →
               </Link>
             </Row>
@@ -186,7 +186,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ locale
       )}
 
       {next && next.slug !== s.slug && (
-        <Link href={`/projetos/${next.slug}`} className="group mt-[clamp(56px,8vw,128px)] block border-t border-fg pt-5">
+        <Link href={`/projects/${next.slug}`} className="group mt-[clamp(56px,8vw,128px)] block border-t border-fg pt-5">
           <span className="t-fig text-faint">
             {tp("next")} · {next.mark}
           </span>

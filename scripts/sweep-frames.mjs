@@ -1,6 +1,6 @@
 // QA da transição iridescente — captura N frames durante uma troca de rota.
 // uso: node scripts/sweep-frames.mjs [origem] [destino] [n-frames] [pasta]
-// ex.: node scripts/sweep-frames.mjs http://localhost:3000/ /sobre 12 .qa/sweep
+// ex.: node scripts/sweep-frames.mjs http://localhost:3000/ /about 12 .qa/sweep
 //
 // Clica no primeiro link interno que aponta para <destino> e fotografa a
 // janela a cada ~95 ms. Serve para conferir o ritmo (a faixa cobre mesmo a
@@ -18,7 +18,7 @@ function findChrome() {
 }
 
 const origin = process.argv[2] || "http://localhost:3000/";
-const target = process.argv[3] || "/sobre";
+const target = process.argv[3] || "/about";
 const frames = Number(process.argv[4] || 12);
 const outDir = process.argv[5] || ".qa/sweep";
 const STEP = 95; // ms entre frames — cobre os ~1.14 s da transição em 12
