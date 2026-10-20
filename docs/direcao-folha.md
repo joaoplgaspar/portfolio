@@ -141,6 +141,23 @@ o slug em `components/figures/registry.ts`. Sem figura, o case não entra no
   linha de chamada, o nome vai na peça: caixas da FIG. 3 (`Box plain`),
   cartões de fonte da FIG. 4.
 
+## v8 (2026-10-19: mais "uau", sem sair da prancha)
+
+- **Traço de plotter**: os traços de toda figura são plotados um depois do
+  outro em 1,9 s, com uma pena em sinal percorrendo a linha (`usePlotter` em
+  `figures/parts.tsx`). Texto e hachura entram no fim (`--plot-late`).
+- **Lupa "Detalhe A"**: no hover com mouse, um círculo mostra a peça em 2,4:1,
+  com o rótulo de escala. É o próprio desenho reutilizado (`<use>`), então o
+  que anda na figura anda na lupa.
+- **Scroll conduz a narração** nos cases (tela ≥ 1024 × 700, sem movimento
+  reduzido): a prancha prende abaixo do cabeçalho e o passo segue o scroll;
+  ←, → e a régua rolam a página até o passo. No celular, toca sozinha.
+- **Mockups**: notebook com a primeira dobra e celular com a página inteira
+  rolando (`components/sheet/DeviceMock.tsx`), no case, na página do projeto
+  e no painel da home. Capturas por `node scripts/mocks.mjs [slug]` (só loja
+  com `domain`); a Ada fica de fora por causa de um pop-up que volta na
+  captura.
+
 ## Mais projetos: como escala
 
 - **Figura** (poucos, profundos): case com mecanismo próprio. Entra no índice

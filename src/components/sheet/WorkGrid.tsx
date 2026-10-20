@@ -7,6 +7,8 @@ import { Link } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
 import Figure, { stepsOf } from "@/components/figures/Figure";
 import Narration, { type NarrationLabels } from "@/components/figures/Narration";
+import DeviceMock from "./DeviceMock";
+import type { Mock } from "@/data/mocks";
 import { SeqProvider, useSequence } from "@/components/figures/sequence";
 import LogoPlate from "./LogoPlate";
 
@@ -36,6 +38,8 @@ export type WorkItem = {
     | { kind: "logo"; logos: string[]; plate?: string | string[] };
   /** Print do site no ar, mostrada no painel quando a capa é o logo. */
   print?: string;
+  /** Página inteira no celular (mockup no painel), quando a loja tem captura. */
+  mock?: Mock;
   summary: string;
   facts: { k: string; v: string }[];
   stack?: string[];
@@ -274,6 +278,8 @@ function Expanded({
             <div className="border-b border-fg p-4 lg:border-r lg:border-b-0 lg:p-6">
               {item.figure ? (
                 <ExpandedFigure slug={item.figure.slug} caption={item.figure.caption} locale={locale} t={t} />
+              ) : item.mock && item.print ? (
+                <DeviceMock desktop={item.print} phone={item.mock} domain={item.live?.[0]} />
               ) : (
                 <div className="border border-fg">
                   <div className="flex items-center justify-between border-b border-fg px-3 py-1.5">

@@ -11,6 +11,7 @@ import { legends } from "@/data/figures";
 import { fetchPublishedProjects } from "@/data/projects";
 import { sheetPlan } from "@/lib/sheets";
 import { logosOf, platformLabel, storeMeta, stores, visibleStores } from "@/data/stores";
+import { mockOf } from "@/data/mocks";
 import WorkGrid, { type WorkItem } from "@/components/sheet/WorkGrid";
 import type { Print } from "@/components/sheet/ProjectThumb";
 import { Link } from "@/i18n/navigation";
@@ -118,6 +119,7 @@ export default async function HomePage({
           href: `/projects/${s.slug}`,
           cover: s.logo ? { kind: "logo", logos: logosOf(s), plate: s.plate } : { kind: "site", src: s.cover! },
           print: s.logo ? s.cover : undefined,
+          mock: mockOf(s.slug),
           summary: s.scope[l],
           facts: [
             ...(s.segment ? [{ k: tpp("segment"), v: s.segment[l] }] : []),

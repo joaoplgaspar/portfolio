@@ -438,7 +438,41 @@ html {
 }
 .fig-draw .late {
   opacity: 0;
-  animation: fadeIn 500ms var(--ease) 700ms forwards;
+  /* Com o plotter, texto e hachura entram no fim do traço (--plot-late). */
+  animation: fadeIn 500ms var(--ease) var(--plot-late, 700ms) forwards;
+}
+/* Mockup: a página inteira sobe dentro do celular, devagar, e volta. */
+.mock-scroll {
+  animation: mock-scroll var(--mock-dur, 18s) cubic-bezier(0.65, 0, 0.35, 1) infinite alternate;
+  animation-play-state: paused;
+  will-change: transform;
+}
+.mock.is-in .mock-scroll {
+  animation-play-state: running;
+}
+@keyframes mock-scroll {
+  0%,
+  6% {
+    transform: translateY(0);
+  }
+  94%,
+  100% {
+    transform: translateY(var(--mock-end, 0%));
+  }
+}
+/* Lupa "Detalhe A". */
+.fig .lens {
+  transition: opacity 180ms var(--ease);
+}
+.fig text.lens-label {
+  font-family: var(--ff-mono), monospace;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  fill: var(--fg);
+  stroke: var(--plate);
+  stroke-width: 4px;
+  paint-order: stroke;
 }
 @keyframes draw {
   to {

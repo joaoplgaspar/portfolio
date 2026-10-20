@@ -1,6 +1,16 @@
 "use client";
 
-import { createContext, useContext, useId, type ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useId,
+  useLayoutEffect,
+  useRef,
+  type ReactNode,
+  type RefObject,
+} from "react";
+import { useLocale } from "next-intl";
 import { useSeq } from "./sequence";
 
 /**
@@ -27,6 +37,118 @@ export function useSafeId(prefix: string) {
   return prefix + useId().replace(/[^a-zA-Z0-9_-]/g, "");
 }
 
+/** Duração total do traço de plotter, em ms. */
+const PLOT = 1900;
+/** Lupa "Detalhe A": raio (unidades do desenho) e escala. */
+const LENS_R = 92;
+const LENS_Z = 2.4;
+
+/**
+ * Traço de plotter: os traços da figura não surgem juntos, são plotados um
+ * depois do outro, na ordem do desenho, com uma pena (o ponto em sinal)
+ * percorrendo a linha da vez. O tempo de cada traço é proporcional ao
+ * comprimento dele; o total é sempre PLOT. Texto e hachura (`.late`) entram
+ * no fim. Movimento reduzido: nada disso, o CSS já zera as animações.
+ */
+function usePlotter(
+  content: RefObject<SVGGElement | null>,
+  pen: RefObject<SVGCircleElement | null>,
+  svg: RefObject<SVGSVGElement | null>,
+  draw: boolean,
+) {
+  useLayoutEffect(() => {
+    const root = svg.current;
+    const g = content.current;
+    const nib = pen.current;
+    if (!draw || !root || !g || !nib) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const screen = root.getScreenCTM();
+    if (!screen) return;
+    const inv = screen.inverse();
+
+    const items = Array.from(g.querySelectorAll<SVGGeometryElement>(".draw")).map((el) => {
+      let len = 1;
+      try {
+        len = Math.max(1, el.getTotalLength());
+      } catch {}
+      const m = el.getScreenCTM();
+      return { el, len, m: m ? inv.multiply(m) : null, start: 0, dur: 0 };
+    });
+    const total = items.reduce((a, b) => a + b.len, 0) || 1;
+    let acc = 0;
+    for (const it of items) {
+      it.start = (acc / total) * PLOT;
+      it.dur = Math.max(50, (it.len / total) * PLOT);
+      acc += it.len;
+      it.el.style.animationDelay = `${it.start}ms`;
+      it.el.style.animationDuration = `${it.dur}ms`;
+      it.el.style.animationTimingFunction = "linear";
+    }
+    root.style.setProperty("--plot-late", `${PLOT * 0.8}ms`);
+
+    let raf = 0;
+    let i = 0;
+    const t0 = performance.now();
+    const tick = (now: number) => {
+      const e = now - t0;
+      if (e > PLOT + 120 || !items.length) {
+        nib.style.opacity = "0";
+        return;
+      }
+      while (i < items.length - 1 && items[i + 1].start <= e) i++;
+      const it = items[i];
+      const f = Math.min(1, Math.max(0, (e - it.start) / it.dur));
+      const p = it.el.getPointAtLength(f * it.len);
+      const q = it.m ? new DOMPoint(p.x, p.y).matrixTransform(it.m) : p;
+      nib.setAttribute("cx", String(q.x));
+      nib.setAttribute("cy", String(q.y));
+      nib.style.opacity = "1";
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [content, pen, svg, draw]);
+}
+
+/**
+ * Lupa "Detalhe A": no hover (só com mouse), um círculo mostra a peça sob o
+ * ponteiro ampliada, como o detalhe em escala de uma prancha. É o próprio
+ * desenho reutilizado (`<use>`), então o que anda na figura anda na lupa.
+ */
+function useLens(svg: RefObject<SVGSVGElement | null>, lens: RefObject<SVGGElement | null>, on: boolean) {
+  useEffect(() => {
+    const root = svg.current;
+    const g = lens.current;
+    if (!on || !root || !g) return;
+    if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+    const circles = g.querySelectorAll<SVGCircleElement>("[data-c]");
+    const use = g.querySelector<SVGUseElement>("[data-use]");
+    const label = g.querySelector<SVGTextElement>("[data-label]");
+    const move = (ev: PointerEvent) => {
+      const m = root.getScreenCTM();
+      if (!m || ev.pointerType !== "mouse") return;
+      const p = new DOMPoint(ev.clientX, ev.clientY).matrixTransform(m.inverse());
+      circles.forEach((c) => {
+        c.setAttribute("cx", String(p.x));
+        c.setAttribute("cy", String(p.y));
+      });
+      use?.setAttribute("transform", `translate(${p.x} ${p.y}) scale(${LENS_Z}) translate(${-p.x} ${-p.y})`);
+      label?.setAttribute("x", String(p.x + LENS_R * 0.7));
+      label?.setAttribute("y", String(p.y + LENS_R + 16));
+      g.style.opacity = "1";
+    };
+    const leave = () => {
+      g.style.opacity = "0";
+    };
+    root.addEventListener("pointermove", move);
+    root.addEventListener("pointerleave", leave);
+    return () => {
+      root.removeEventListener("pointermove", move);
+      root.removeEventListener("pointerleave", leave);
+    };
+  }, [svg, lens, on]);
+}
+
 export function Fig({
   title,
   draw = true,
@@ -41,9 +163,22 @@ export function Fig({
   viewBox?: string;
 }) {
   const tid = useSafeId("t");
+  const cid = useSafeId("c");
+  const kid = useSafeId("k");
+  const svg = useRef<SVGSVGElement>(null);
+  const content = useRef<SVGGElement>(null);
+  const pen = useRef<SVGCircleElement>(null);
+  const lens = useRef<SVGGElement>(null);
+  const label =
+    useLocale() === "pt" ? `DETALHE A · ${String(LENS_Z).replace(".", ",")}:1` : `DETAIL A · ${LENS_Z}:1`;
+  usePlotter(content, pen, svg, draw);
+  // Capa estática (draw=false) não tem lupa: ela é um link, não uma prancha.
+  useLens(svg, lens, draw);
+
   return (
     <Lit.Provider value={lit}>
     <svg
+      ref={svg}
       viewBox={viewBox}
       className={`fig ${draw ? "fig-draw" : ""}`}
       role="img"
@@ -55,7 +190,29 @@ export function Fig({
       strokeLinecap="round"
     >
       <title id={tid}>{title}</title>
-      {children}
+      <g id={cid} ref={content}>
+        {children}
+      </g>
+      {draw && (
+        <>
+          <circle ref={pen} r={3.4} fill="var(--accent)" stroke="none" style={{ opacity: 0 }} aria-hidden />
+          <g ref={lens} className="lens" aria-hidden pointerEvents="none" style={{ opacity: 0 }}>
+            <defs>
+              <clipPath id={kid}>
+                <circle data-c r={LENS_R} />
+              </clipPath>
+            </defs>
+            <g clipPath={`url(#${kid})`}>
+              <circle data-c r={LENS_R} fill="var(--plate)" stroke="none" />
+              <use data-use href={`#${cid}`} />
+            </g>
+            <circle data-c r={LENS_R} strokeWidth={1.4} />
+            <text data-label className="lens-label">
+              {label}
+            </text>
+          </g>
+        </>
+      )}
     </svg>
     </Lit.Provider>
   );

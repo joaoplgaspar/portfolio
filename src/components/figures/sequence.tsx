@@ -113,7 +113,20 @@ export function useSequence(
     autoplay = true,
     loop = true,
     onEnd,
-  }: { autoplay?: boolean; loop?: boolean; onEnd?: () => void } = {},
+    controlled = false,
+    onSeek,
+  }: {
+    autoplay?: boolean;
+    loop?: boolean;
+    onEnd?: () => void;
+    /**
+     * Controlada de fora (o scroll da página): o relógio não anda, quem
+     * move a sequência é `scrub(progresso)`.
+     */
+    controlled?: boolean;
+    /** Com controle externo, ←, → e a régua pedem o passo por aqui. */
+    onSeek?: (i: number) => void;
+  } = {},
 ) {
   const reduced = useReducedMotion();
   const [mode, setMode] = useMode();
@@ -146,7 +159,7 @@ export function useSequence(
   );
 
   // Relógio.
-  const running = playing && !reduced && visible;
+  const running = playing && !reduced && visible && !controlled;
   useEffect(() => {
     if (!running) return;
     let raf = 0;
@@ -195,6 +208,35 @@ export function useSequence(
   // Com movimento reduzido cada passo é mostrado já concluído.
   const jump = useCallback((i: number) => go(i, reduced ? 1 : 0), [go, reduced]);
 
+  // Progresso 0..1 da sequência inteira → passo e tempo dentro dele, pelas
+  // durações (um passo longo ocupa mais scroll).
+  const total = useMemo(() => steps.reduce((a, s) => a + s.dur, 0), [steps]);
+  const scrub = useCallback(
+    (p: number) => {
+      const target = Math.min(0.9999, Math.max(0, p)) * total;
+      let acc = 0;
+      let i = 0;
+      while (i < steps.length - 1 && acc + steps[i].dur <= target) {
+        acc += steps[i].dur;
+        i++;
+      }
+      stepRef.current = i;
+      tRef.current = (target - acc) / steps[i].dur;
+      setStep(i);
+      emit();
+    },
+    [steps, total, emit],
+  );
+  const seek = useCallback(
+    (i: number) => {
+      const n = steps.length;
+      const k = ((i % n) + n) % n;
+      if (onSeek) onSeek(k);
+      else jump(k);
+    },
+    [steps.length, onSeek, jump],
+  );
+
   const ctx = useMemo<SeqCtx>(() => ({ step, reduced, mode, subscribe }), [step, reduced, mode, subscribe]);
 
   return {
@@ -207,9 +249,13 @@ export function useSequence(
     ctx,
     observe,
     subscribe,
-    go: jump,
-    next: () => jump(stepRef.current + 1),
-    prev: () => jump(stepRef.current - 1),
+    go: seek,
+    next: () => seek(stepRef.current + 1),
+    prev: () => seek(stepRef.current - 1),
+    scrub,
+    controlled,
+    /** Início do passo `i` na sequência inteira, 0..1 (para rolar até ele). */
+    startOf: (i: number) => steps.slice(0, i).reduce((a, s) => a + s.dur, 0) / total,
     toggle: () => setPlaying((p) => !p),
     setPlaying,
   };

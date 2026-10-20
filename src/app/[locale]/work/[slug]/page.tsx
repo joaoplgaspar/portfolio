@@ -26,6 +26,9 @@ import Themes from "@/components/cases/livra/Themes";
 import { fetchPublishedProjects, fetchProject } from "@/data/projects";
 import type { Project } from "@/types/project";
 import { sheetPlan } from "@/lib/sheets";
+import { stores } from "@/data/stores";
+import { mockOf } from "@/data/mocks";
+import DeviceMock from "@/components/sheet/DeviceMock";
 
 export const revalidate = 60; // ISR
 export const dynamicParams = true; // slugs novos renderizam sob demanda
@@ -79,6 +82,8 @@ export default async function ProjectPage({
   if (!project) notFound();
 
   const t = await getTranslations("project");
+  const store = stores.find((x) => x.caseSlug === slug);
+  const liveMock = store ? mockOf(store.slug) : undefined;
   const th = await getTranslations("home");
   const all = (await fetchPublishedProjects()).filter(isShown);
   const idx = all.findIndex((p) => p.slug === slug);
@@ -202,6 +207,13 @@ export default async function ProjectPage({
               </li>
             ))}
           </ol>
+        </section>
+      )}
+
+      {/* A loja como ela está no ar: notebook e celular, antes do mecanismo. */}
+      {store?.cover && liveMock && (
+        <section className="mt-[clamp(40px,5vw,72px)]">
+          <DeviceMock desktop={store.cover} phone={liveMock} domain={store.domain} />
         </section>
       )}
 

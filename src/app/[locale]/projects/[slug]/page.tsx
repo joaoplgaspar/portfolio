@@ -11,6 +11,8 @@ import ProjectPerf from "@/components/perf/ProjectPerf";
 import { isShown } from "@/components/figures/registry";
 import { fetchPublishedProjects } from "@/data/projects";
 import { getStore, logosOf, platformLabel, visibleStores } from "@/data/stores";
+import { mockOf } from "@/data/mocks";
+import DeviceMock from "@/components/sheet/DeviceMock";
 import LogoPlate from "@/components/sheet/LogoPlate";
 
 export function generateStaticParams() {
@@ -48,6 +50,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ locale
   const l = locale as Locale;
   const s = getStore(slug);
   if (!s) notFound();
+  const mock = mockOf(s.slug);
 
   const t = await getTranslations("stores");
   const tp = await getTranslations("projectPage");
@@ -98,6 +101,11 @@ export default async function ProjectPage({ params }: { params: Promise<{ locale
         </dl>
       </div>
 
+      {mock && s.cover ? (
+        <div className="mt-[clamp(40px,6vw,88px)]">
+          <DeviceMock desktop={s.cover} phone={mock} domain={s.domain} priority />
+        </div>
+      ) : (
       <figure className="mt-[clamp(40px,6vw,88px)]">
         <div className="border border-fg bg-[var(--plate)]">
           <div className="flex items-center justify-between gap-3 border-b border-fg px-3 py-2">
@@ -120,6 +128,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ locale
           </div>
         </div>
       </figure>
+      )}
 
       {s.media && (
         <figure className="mt-6 border border-fg">

@@ -8,8 +8,8 @@ export type NarrationLabels = { play: string; pause: string; prev: string; next:
 
 // Rótulos do modo: só existem aqui, onde o botão vive.
 const MODE = {
-  en: { plain: "Simple", tech: "Technical", aria: "Explanation" },
-  pt: { plain: "Simples", tech: "Técnico", aria: "Explicação" },
+  en: { plain: "Simple", tech: "Technical", aria: "Explanation", scroll: "Scroll" },
+  pt: { plain: "Simples", tech: "Técnico", aria: "Explicação", scroll: "Role" },
 } as const;
 
 /**
@@ -28,7 +28,7 @@ export default function Narration({
   locale: Locale;
   labels: NarrationLabels;
 }) {
-  const { subscribe, step, steps, playing, reduced, prev, next, toggle, go, mode, setMode } = seq;
+  const { subscribe, step, steps, playing, reduced, prev, next, toggle, go, mode, setMode, controlled } = seq;
   const bar = useRef<HTMLSpanElement>(null);
 
   // Preenche o segmento do passo atual conforme o tempo anda.
@@ -54,10 +54,16 @@ export default function Narration({
           <button type="button" className="ctl !h-8 !px-2.5" onClick={prev} aria-label={labels.prev}>
             ←
           </button>
-          {!reduced && (
+          {!reduced && !controlled && (
             <button type="button" className="ctl !h-8 !px-2.5" onClick={toggle} aria-label={playing ? labels.pause : labels.play}>
               {playing ? "❚❚" : "▶"}
             </button>
+          )}
+          {/* Quando o scroll conduz, não há o que tocar: o botão vira a dica. */}
+          {controlled && (
+            <span className="ctl !h-8 !px-2.5 pointer-events-none text-muted" aria-hidden>
+              {MODE[locale].scroll} ↓
+            </span>
           )}
           <button type="button" className="ctl !h-8 !px-2.5" onClick={next} aria-label={labels.next}>
             →
