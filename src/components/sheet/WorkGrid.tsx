@@ -35,7 +35,7 @@ export type WorkItem = {
   href: string;
   cover:
     | { kind: "site"; src: string }
-    | { kind: "app"; srcs: string[] }
+    | { kind: "app"; srcs: string[]; plate?: string; mark?: string }
     | { kind: "drawing"; slug: string }
     | { kind: "logo"; logos: string[]; plate?: string | string[] };
   /** Print do site no ar, mostrada no painel quando a capa é o logo. */
@@ -58,6 +58,7 @@ const EASE = "cubic-bezier(0.16, 1, 0.3, 1)";
 function plateOf(item: WorkItem) {
   const c = item.cover;
   if (c.kind === "logo") return ([] as (string | undefined)[]).concat(c.plate)[0] ?? "var(--plate)";
+  if (c.kind === "app") return c.plate ?? "var(--plate)";
   return "var(--plate)";
 }
 
@@ -69,12 +70,25 @@ function Cover({ item, sizes }: { item: WorkItem; sizes: string }) {
   if (c.kind === "logo") return <LogoPlate logos={c.logos} plate={c.plate} sizes={sizes} />;
   if (c.kind === "app") {
     return (
-      <span className="absolute inset-0 flex items-center justify-center gap-[4%] bg-[var(--plate)] px-[8%]">
+      <span
+        className="absolute inset-0 flex items-center justify-center gap-[4%] px-[8%]"
+        style={{ background: c.plate ?? "var(--plate)" }}
+      >
+        {/* Marca do app no canto, como no cabeçalho do site dele. */}
+        {c.mark && (
+          <span className="absolute top-[7%] left-[5%] block h-[9%] w-[22%]">
+            <Image src={c.mark} alt="" fill sizes="160px" unoptimized className="object-contain object-left" />
+          </span>
+        )}
         {c.srcs.map((src, i) => (
           <span
             key={src}
-            className="relative block aspect-[430/787] w-[26%] overflow-hidden rounded-[14px] border-[1.25px] border-fg"
-            style={{ transform: `translateY(${(i - 1) * -6}%)` }}
+            className="relative block aspect-[430/787] w-[26%] overflow-hidden rounded-[14px] border-[1.25px]"
+            style={{
+              transform: `translateY(${(i - 1) * -6}%)`,
+              // Sobre o fundo escuro da marca, o contorno é papel, não tinta.
+              borderColor: c.plate ? "rgba(244, 236, 220, 0.35)" : "var(--fg)",
+            }}
           >
             <Image src={src} alt="" fill sizes="20vw" className="object-cover object-top" />
           </span>

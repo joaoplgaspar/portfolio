@@ -20,9 +20,21 @@ import { Link } from "@/i18n/navigation";
 export const revalidate = 60; // ISR: novos projetos aparecem sem redeploy
 
 /** O que identifica cada case de relance no índice: a marca, sempre. */
+/**
+ * Identidade do LIVRA (marca "Fita em L", aprovada em 07/10/2026, fonte:
+ * E:/Projetos/lura/src/components/brand). Fundo = a tinta da marca
+ * (#16110d, o mesmo do hero de uselivra.com); logo = versão escura do
+ * lockup, ícone papel + fita laranja e "livra" em papel. A tela é a home do
+ * app em out/2026, numa conta de demonstração.
+ */
+const LIVRA = {
+  logo: "/logos/livra-lockup.svg",
+  plate: "#16110d",
+  screen: "/livra/app-inicio-2026-10.webp",
+};
+
 function printOf(slug: string, cover: string): Print | undefined {
-  // Wordmark do app: "Livra" em Fraunces itálica, papel sobre a terracota do tema Linho.
-  if (slug === "livra") return { kind: "logo", logos: ["/logos/livra.png"], plate: "#BC4B2F" };
+  if (slug === "livra") return { kind: "logo", logos: [LIVRA.logo], plate: LIVRA.plate };
   const brand = brandOf(slug);
   if (brand) return { kind: "logo", ...brand };
   return cover ? { kind: "site", src: cover } : undefined;
@@ -35,11 +47,11 @@ function printOf(slug: string, cover: string): Print | undefined {
 function brandCard(caseSlug: string, name: string, l: Locale): Brand | undefined {
   if (caseSlug === "livra") {
     return {
-      logos: ["/logos/livra.png"],
-      plate: "#BC4B2F",
+      logos: [LIVRA.logo],
+      plate: LIVRA.plate,
       name,
       line: l === "pt" ? "App de leitura · iOS, Android e web" : "Reading app · iOS, Android and web",
-      screen: { kind: "app", src: "/livra/app-inicio.webp" },
+      screen: { kind: "app", src: LIVRA.screen },
     };
   }
   const s = stores.find((x) => x.caseSlug === caseSlug);
@@ -121,7 +133,7 @@ export default async function HomePage({
       href: `/work/${p.slug}`,
       cover:
         p.slug === "livra"
-          ? { kind: "app", srcs: ["/livra/app-liga.webp", "/livra/app-inicio.webp", "/livra/app-lura.webp"] }
+          ? { kind: "app", srcs: ["/livra/app-liga.webp", LIVRA.screen, "/livra/app-lura.webp"], plate: LIVRA.plate, mark: LIVRA.logo }
           : brandOf(p.slug)
             ? { kind: "logo", ...brandOf(p.slug)! }
             : p.cover
