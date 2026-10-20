@@ -108,6 +108,7 @@
   },
   "contact": {
     "title": "Contact",
+    "lede": "Email me at hello@jpgaspar.dev or send a short note here: Shopify builds, headless storefronts, front-end roles. São Paulo, UTC−3, with full overlap on US Eastern hours.",
     "name": "Name",
     "email": "Email",
     "message": "Message",

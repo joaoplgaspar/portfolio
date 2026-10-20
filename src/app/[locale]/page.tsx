@@ -4,6 +4,7 @@ import type { Locale } from "@/i18n/routing";
 import { pageMeta } from "@/lib/metadata";
 import { siteConfig } from "@/lib/site";
 import JsonLd from "@/components/seo/JsonLd";
+import { graph, personNode, websiteNode, webPageNode } from "@/lib/schema";
 import HomeSheet from "@/components/sheet/HomeSheet";
 import TitleBlock from "@/components/sheet/TitleBlock";
 import { isShown } from "@/components/figures/registry";
@@ -176,14 +177,7 @@ export default async function HomePage({
       ),
   ];
 
-  const person = {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    name: siteConfig.name,
-    url: siteConfig.url,
-    jobTitle: siteConfig.role,
-    sameAs: [siteConfig.social.linkedin, siteConfig.social.github].filter(Boolean),
-  };
+  const ld = graph(websiteNode(l), personNode(l), webPageNode(l, "/", siteConfig.name));
 
   const [first, last] = [
     siteConfig.name.split(" ").slice(0, -1).join(" "),
@@ -192,7 +186,7 @@ export default async function HomePage({
 
   return (
     <>
-      <JsonLd data={person} />
+      <JsonLd data={ld} />
       <HomeSheet
         locale={l}
         legends={legends}

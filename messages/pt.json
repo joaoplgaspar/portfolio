@@ -108,6 +108,7 @@
   },
   "contact": {
     "title": "Contato",
+    "lede": "Escreva para hello@jpgaspar.dev ou deixe uma mensagem curta aqui: lojas Shopify, storefronts headless, vagas de front-end. São Paulo, UTC−3.",
     "name": "Nome",
     "email": "E-mail",
     "message": "Mensagem",

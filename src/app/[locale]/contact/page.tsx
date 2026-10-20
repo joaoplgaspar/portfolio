@@ -12,7 +12,7 @@ import { fetchPublishedProjects } from "@/data/projects";
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "contact" });
-  return pageMeta({ locale: locale as Locale, path: "/contact", title: t("title"), description: t("title") });
+  return pageMeta({ locale: locale as Locale, path: "/contact", title: t("title"), description: t("lede") });
 }
 
 /** Contato: o e-mail e um formulário curto. Nada de "disponível para". */

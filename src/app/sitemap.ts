@@ -18,7 +18,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...projects.map((p) => `/work/${p.slug}`),
   ];
 
-  return all.map((path) => {
+  const pages: MetadataRoute.Sitemap = all.map((path) => {
     const suffix = path === "/" ? "" : path;
     const enUrl = `${siteConfig.url}${suffix}`;
     const ptUrl = `${siteConfig.url}/pt${suffix}`;
@@ -27,4 +27,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       alternates: { languages: { en: enUrl, pt: ptUrl } },
     };
   });
+  return [...pages, { url: `${siteConfig.url}/resume` }];
 }
