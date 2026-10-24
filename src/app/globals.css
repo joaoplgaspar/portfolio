@@ -254,6 +254,11 @@ html {
 .sheet {
   padding: calc(var(--pad) + 52px + var(--gut)) calc(var(--pad) + var(--gut))
     calc(var(--pad) + var(--gut));
+  /* Rede de segurança: o que ainda vazar é cortado na folha, sem virar
+     rolagem lateral no celular. `clip`, não `hidden`: não cria contêiner de
+     rolagem (sticky continua funcionando). O harness ignora este corte
+     (scripts/mobile-check.mjs), então vazamento novo ainda aparece lá. */
+  overflow-x: clip;
 }
 .nav-link {
   position: relative;
@@ -275,6 +280,76 @@ html {
   bottom: -5px;
   height: 1.5px;
   background: var(--accent);
+}
+
+/* Menu do celular: uma folha que desce do cabeçalho até o pé da moldura,
+   desenrolada por clip-path; os itens sobem em cascata logo atrás. Fechar é
+   o mesmo caminho, mais curto, e o visibility só apaga depois do recorte. */
+.sheet-menu {
+  position: fixed;
+  top: calc(var(--pad) + 52px);
+  left: calc(var(--pad) + 1px);
+  right: calc(var(--pad) + 1px);
+  bottom: calc(var(--pad) + 1px);
+  display: flex;
+  flex-direction: column;
+  padding: var(--gut);
+  padding-bottom: max(var(--gut), env(safe-area-inset-bottom));
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: var(--bg);
+  clip-path: inset(0 0 100% 0);
+  visibility: hidden;
+  transition:
+    clip-path 420ms var(--ease-sym),
+    visibility 0s linear 420ms;
+}
+.sheet-menu[data-open="true"] {
+  clip-path: inset(0 0 0 0);
+  visibility: visible;
+  transition:
+    clip-path 640ms var(--ease),
+    visibility 0s;
+}
+.sheet-menu .menu-item {
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity 200ms var(--ease),
+    transform 200ms var(--ease);
+}
+.sheet-menu[data-open="true"] .menu-item {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 480ms var(--ease) calc(140ms + var(--i, 0) * 45ms),
+    transform 720ms var(--ease) calc(140ms + var(--i, 0) * 45ms);
+}
+@media (min-width: 768px) {
+  .sheet-menu {
+    display: none;
+  }
+}
+.menu-link {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  padding: 14px 0 12px;
+  font-weight: 200;
+  font-size: clamp(2.1rem, 11vw, 3rem);
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  color: var(--muted);
+}
+.menu-link[aria-current="page"] {
+  color: var(--fg);
+}
+.menu-num {
+  min-width: 1.6em;
+  color: var(--faint);
+}
+.menu-link[aria-current="page"] .menu-num {
+  color: var(--accent);
 }
 
 /* ── Carimbo (title block) ──────────────────────────────────────

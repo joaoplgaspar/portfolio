@@ -49,9 +49,9 @@ export default function StoreCard({
       <Link href={href} className="group block">
         {frame}
       </Link>
-      <div className="mt-2 flex items-baseline justify-between gap-3">
-        <h3 className="t-small">{store.name}</h3>
-        <span className="t-small shrink-0 text-faint">
+      <div className="mt-2 flex flex-wrap items-baseline justify-between gap-x-3 gap-y-0.5">
+        <h3 className="t-small min-w-0">{store.name}</h3>
+        <span className="t-small min-w-0 text-faint">
           {storeMeta(store, locale)}
         </span>
       </div>

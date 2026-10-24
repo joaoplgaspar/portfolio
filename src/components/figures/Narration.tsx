@@ -49,7 +49,8 @@ export default function Narration({
 
   return (
     <div>
-      <div className="flex items-center gap-3">
+      {/* Quebra em telas estreitas (320px): o contador desce em vez de vazar. */}
+      <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
         <div className="seg shrink-0" role="group">
           <button type="button" className="ctl !h-8 !px-2.5" onClick={prev} aria-label={labels.prev}>
             ←
