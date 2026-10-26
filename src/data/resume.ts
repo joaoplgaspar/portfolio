@@ -52,8 +52,8 @@ export const resume = {
       ],
       bullets: [
         "Build complete Shopify stores alone, 30+ pages, from theme sections to product page, cart and checkout, in Liquid and Hydrogen. Live work includes Fujifilm Brazil, Qix Skate Shop and UV Line.",
+        "Tech lead for Integralmédica and Darkness, two sports-nutrition brands on one Shopify admin: headless Hydrogen storefronts, Shopify Functions, custom apps and checkout extensions.",
         "Led the squad on Roland and Boss Brazil's headless Hydrogen storefronts. Drove the architecture of the agency's first shared cart: one cart and one checkout across two brand domains, chosen over synced carts to rule out race conditions.",
-        "Tech lead for Integralmédica and Darkness, two brands on one Shopify admin: per-brand account areas, checkout extensions, promotion rules in Shopify Functions and custom apps.",
         "Built HSM / Singularity alone: a headless storefront for two education brands and a custom app that withholds federal taxes at checkout for business buyers (checkout UI extension, discount and validation Functions, admin settings).",
         "Work from a shared, versioned base of sections with automated checks at several widths, so a fix made in one store reaches the next one.",
         "Promoted twice in 15 months: intern to junior, then to squad leader.",
